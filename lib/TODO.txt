@@ -1,0 +1,7 @@
+- Finish implementing the sortWidgets() method (and figure out where to call it)
+- Keep implementing context menu (and adapt other widgets as well)
+- Push to GitHub
+- Implement main.dart
+
+- TEST (write tests and try it with DWTP)
+- Figure out how to publish a package and use it for my CS project (https://docs.flutter.dev/development/packages-and-plugins/developing-packages)
