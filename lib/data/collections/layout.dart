@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:ui_maker/data/collections/widget.dart';
+import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/utils/layout_types.dart';
 import 'package:ui_maker/utils/sort_types.dart';
 
@@ -47,7 +47,7 @@ class Layout {
   Id id = Isar.autoIncrement;
 
   /// The widgets that a particular layout has
-  IsarLinks<Widget> widgets = IsarLinks<Widget>();
+  IsarLinks<WidgetSettings> widgets = IsarLinks<WidgetSettings>();
 
   /// The structure of the layout; by default it is columns,
   /// but horizontal rows are also supported, as well as no layout

@@ -1,44 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:ui_maker/data/collections/widget.dart' as data;
+import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/app/widgets/creator_context_menu.dart';
 
-class SettingsDropdown extends StatefulWidget {
-  data.Widget setting;
+class CreatorDropdown extends StatefulWidget {
+  WidgetSettings widgetSetting;
   Items items;
-  SettingsDropdown({
+  CreatorDropdown({
     super.key,
-    required this.setting,
+    required this.widgetSetting,
     required this.items,
   });
 
   @override
-  State<SettingsDropdown> createState() => _SettingsDropdownState();
+  State<CreatorDropdown> createState() => _CreatorDropdownState();
 }
 
-class _SettingsDropdownState extends State<SettingsDropdown> {
+class _CreatorDropdownState extends State<CreatorDropdown> {
   @override
   Widget build(BuildContext context) {
     // If an individual widget, display a form option with validation
-    (widget.setting.individual)
-        ? SettingsContextMenu(
-            setting: widget.setting,
-            settingsWidget: DropdownButtonFormField(
+    (widget.widgetSetting.individual)
+        ? CreatorContextMenu(
+            widgetSetting: widget.widgetSetting,
+            creatorWidget: DropdownButtonFormField(
               items: populateDropdown(widget.items),
               // value: widget.setting.enabled,
-              dropdownColor: inputTypeColor(widget.setting.inputType),
-              hint: Text(widget.setting.description ?? ''),
-              onChanged: (widget.setting.enabled)
+              dropdownColor: inputTypeColor(widget.widgetSetting.inputType),
+              hint: Text(widget.widgetSetting.description ?? ''),
+              onChanged: (widget.widgetSetting.enabled)
                   ? (value) {
                       setState(() {
-                        widget.setting.mapValues
-                            .addAll({widget.setting.title: value});
+                        widget.widgetSetting.mapValues
+                            .addAll({widget.widgetSetting.title: value});
                       });
                     }
                   : null,
               // ? Autovalidate mode?
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: widget.setting.validation != null
-                  ? widget.setting.validation
+              validator: widget.widgetSetting.validation != null
+                  ? widget.widgetSetting.validation
                   : (value) {
                       if (value == null) {
                         return 'Please select an option';
@@ -47,18 +47,18 @@ class _SettingsDropdownState extends State<SettingsDropdown> {
                     },
             ),
           )
-        : SettingsContextMenu(
-            setting: widget.setting,
-            settingsWidget: DropdownButton(
+        : CreatorContextMenu(
+            widgetSetting: widget.widgetSetting,
+            creatorWidget: DropdownButton(
                 items: populateDropdown(widget.items),
-                value: widget.setting.enabled,
-                dropdownColor: inputTypeColor(widget.setting.inputType),
-                hint: Text(widget.setting.description ?? ''),
-                onChanged: (widget.setting.enabled)
+                value: widget.widgetSetting.enabled,
+                dropdownColor: inputTypeColor(widget.widgetSetting.inputType),
+                hint: Text(widget.widgetSetting.description ?? ''),
+                onChanged: (widget.widgetSetting.enabled)
                     ? (value) {
                         setState(() {
-                          widget.setting.mapValues
-                              .addAll({widget.setting.title: value});
+                          widget.widgetSetting.mapValues
+                              .addAll({widget.widgetSetting.title: value});
                         });
                       }
                     : null),

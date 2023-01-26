@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 
 void main() {
   runApp(const MyApp());
@@ -112,4 +113,15 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+}
+
+void initializeLogging() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    dynamic e = record.error;
+    String m = e.toString();
+    print(
+        '${record.loggerName}: ${record.level.name}: ${record.message} ${m != 'null' ? m : ''}');
+  });
+  Logger.root.info("Logger initialized.");
 }

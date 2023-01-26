@@ -5,8 +5,9 @@ import 'package:ui_maker/app/widgets/creator_field.dart';
 import 'package:ui_maker/app/widgets/creator_card.dart';
 import 'package:ui_maker/app/widgets/creator_dropdown.dart';
 import 'package:ui_maker/app/widgets/creator_checkbox.dart';
-import 'package:ui_maker/data/collections/widget.dart' as data;
+import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_maker/utils/widget_types.dart';
 
 // On using the creator bar to drag and drop a settings widget,
 // a settings object is CREATED.
@@ -14,8 +15,8 @@ import 'package:flutter/material.dart';
 // for efficiency's sake.
 // The CreatorBar is only available for programs and gamemodes.
 class CreatorBar extends StatefulWidget {
-  data.Widget widget;
-  CreatorBar({super.key, required this.widget});
+  WidgetSettings widgetSetting;
+  CreatorBar({super.key, required this.widgetSetting});
 
   @override
   State<CreatorBar> createState() => _CreatorBarState();
@@ -34,26 +35,27 @@ class _CreatorBarState extends State<CreatorBar> {
         onTap: () => setState(() {
           visible = !visible;
           if (visible) {
-            Map<SettingsWidgets, data.Widget> settings =
-                createSettings(SettingsWidgets.values);
+            Map<WidgetType, WidgetSettings> widgetSettings =
+                createWidgetSettings(WidgetType.values);
             items = [
-              SettingsCheckbox(setting: settings[SettingsWidgets.checkbox]!),
-              SettingsCard(setting: settings[SettingsWidgets.card]!),
-              SettingsField(
-                  setting: settings[SettingsWidgets.numField]!,
-                  settingsWidget: SettingsWidgets.numField),
-              SettingsDropdown(
-                  setting: settings[SettingsWidgets.textField]!,
+              CreatorCheckbox(
+                  widgetSetting: widgetSettings[WidgetType.checkbox]!),
+              CreatorCard(widgetSetting: widgetSettings[WidgetType.card]!),
+              CreatorField(
+                  widgetSetting: widgetSettings[WidgetType.numField]!,
+                  widgetType: WidgetType.numField),
+              CreatorDropdown(
+                  widgetSetting: widgetSettings[WidgetType.textField]!,
                   items: Items.inputs),
-              SettingsDropdown(
-                  setting: settings[SettingsWidgets.inputTypesDropdown]!,
+              CreatorDropdown(
+                  widgetSetting: widgetSettings[WidgetType.dropdown]!,
                   items: Items.inputTypes),
-              SettingsDropdown(
-                  setting: settings[SettingsWidgets.filtersDropdown]!,
+              CreatorDropdown(
+                  widgetSetting: widgetSettings[WidgetType.filtersDropdown]!,
                   items: Items.filters),
-              SettingsField(
-                  setting: settings[SettingsWidgets.textField]!,
-                  settingsWidget: SettingsWidgets.textField),
+              CreatorField(
+                  widgetSetting: widgetSettings[WidgetType.textField]!,
+                  widgetType: WidgetType.textField),
             ];
           }
         }),
@@ -64,7 +66,7 @@ class _CreatorBarState extends State<CreatorBar> {
           for (Widget widget in items) {
             return widget;
           }
-          throw Exception('No SettingsWidgets were created for the create bar');
+          throw Exception('No WidgetType were created for the create bar');
         },
         itemCount: items.length,
         separatorBuilder: (context, index) {

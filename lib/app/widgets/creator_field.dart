@@ -1,71 +1,74 @@
-import 'package:ui_maker/data/collections/widget.dart' as data;
+import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_maker/app/widgets/creator_context_menu.dart';
+import 'package:ui_maker/utils/widget_types.dart';
 
-class SettingsField extends StatefulWidget {
-  data.Widget setting;
-  SettingsWidgets settingsWidget;
+class CreatorField extends StatefulWidget {
+  WidgetSettings widgetSetting;
+  WidgetType widgetType;
   bool title;
   bool description;
-  SettingsField({
+  CreatorField({
     super.key,
-    required this.setting,
-    required this.settingsWidget,
+    required this.widgetSetting,
+    required this.widgetType,
     this.title = true,
     this.description = false,
   });
 
   @override
-  State<SettingsField> createState() => _SettingsFieldState();
+  State<CreatorField> createState() => _CreatorFieldState();
 }
 
-class _SettingsFieldState extends State<SettingsField> {
+class _CreatorFieldState extends State<CreatorField> {
   TextEditingController controller = TextEditingController();
   late Color fieldColor;
   @override
   void initState() {
     if (widget.title) {
-      controller.text = widget.setting.title;
+      controller.text = widget.widgetSetting.title;
     } else if (widget.description) {
-      controller.text = widget.setting.description ?? '';
-    } else if (widget.setting.mapValues.containsKey(widget.setting.title)) {
-      controller.text = widget.setting.mapValues[widget.setting.title];
+      controller.text = widget.widgetSetting.description ?? '';
+    } else if (widget.widgetSetting.mapValues
+        .containsKey(widget.widgetSetting.title)) {
+      controller.text =
+          widget.widgetSetting.mapValues[widget.widgetSetting.title];
     }
-    fieldColor = inputTypeColor(widget.setting.inputType);
+    fieldColor = inputTypeColor(widget.widgetSetting.inputType);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     // If an individual widget, display a form option with validation
-    (widget.setting.individual)
+    (widget.widgetSetting.individual)
         ? TextFormField(
             controller: controller,
             style: TextStyle(
               decorationColor: fieldColor,
             ),
-            keyboardType: widget.settingsWidget == SettingsWidgets.numField
+            keyboardType: widget.widgetType == WidgetType.numField
                 ? TextInputType.number
                 : TextInputType.text,
             onFieldSubmitted: (value) {
               if (widget.title) {
                 setState(() {
-                  widget.setting.title = controller.text;
+                  widget.widgetSetting.title = controller.text;
                 });
               } else if (widget.description) {
                 setState(() {
-                  widget.setting.description = controller.text;
+                  widget.widgetSetting.description = controller.text;
                 });
               } else {
                 setState(() {
-                  widget.setting.mapValues.addAll(
-                      {widget.setting.title: int.parse(controller.text)});
+                  widget.widgetSetting.mapValues.addAll(
+                      {widget.widgetSetting.title: int.parse(controller.text)});
                 });
               }
             },
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: widget.setting.validation != null
-                ? widget.setting.validation
+            validator: widget.widgetSetting.validation != null
+                ? widget.widgetSetting.validation
                 : ((value) {
                     if (value == null) {
                       return 'Please enter some text';
@@ -73,29 +76,30 @@ class _SettingsFieldState extends State<SettingsField> {
                     return null;
                   }),
           )
-        : SettingsContextMenu(
-            setting: widget.setting,
-            settingsWidget: TextField(
+        : CreatorContextMenu(
+            widgetSetting: widget.widgetSetting,
+            creatorWidget: TextField(
               controller: controller,
               style: TextStyle(
                 decorationColor: fieldColor,
               ),
-              keyboardType: widget.settingsWidget == SettingsWidgets.numField
+              keyboardType: widget.widgetType == WidgetType.numField
                   ? TextInputType.number
                   : TextInputType.text,
               onSubmitted: (value) {
                 if (widget.title) {
                   setState(() {
-                    widget.setting.title = controller.text;
+                    widget.widgetSetting.title = controller.text;
                   });
                 } else if (widget.description) {
                   setState(() {
-                    widget.setting.description = controller.text;
+                    widget.widgetSetting.description = controller.text;
                   });
                 } else {
                   setState(() {
-                    widget.setting.mapValues.addAll(
-                        {widget.setting.title: int.parse(controller.text)});
+                    widget.widgetSetting.mapValues.addAll({
+                      widget.widgetSetting.title: int.parse(controller.text)
+                    });
                   });
                 }
               },

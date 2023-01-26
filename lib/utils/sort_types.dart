@@ -1,12 +1,13 @@
 import 'package:ui_maker/data/collections/layout.dart';
-import 'package:ui_maker/data/collections/widget.dart';
+import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:isar/isar.dart';
 import 'package:ui_maker/data/isar_db.dart';
 
 /// A class for handling the sorting of the widgets in a CreatorArea
 class SortTypes {
   /// Sorts the provided widgets by the given index
-  Future<List<Widget>> sortWidgets(SortTypesEnum sortType, Id layoutId) async {
+  Future<List<WidgetSettings>> sortWidgets(
+      SortTypesEnum sortType, Id layoutId) async {
     // Fetch db and layout from db
     Isar isarDB = await db.isarDB;
     Layout? layout =
@@ -14,15 +15,15 @@ class SortTypes {
     assert(layout != null);
     switch (sortType) {
       case SortTypesEnum.title:
-        return await isarDB.widgets.where().sortByTitleDesc().findAll();
+        return await isarDB.widgetSettings.where().sortByTitleDesc().findAll();
       case SortTypesEnum.color:
-        return await isarDB.widgets.where().sortByColor().findAll();
+        return await isarDB.widgetSettings.where().sortByColor().findAll();
       case SortTypesEnum.widgetType:
-        return await isarDB.widgets.where().sortByWidgetType().findAll();
+        return await isarDB.widgetSettings.where().sortByWidgetType().findAll();
     }
   }
 
-  Future<List<Widget>> filterWidgets(
+  Future<List<WidgetSettings>> filterWidgets(
       SortTypesEnum sortType, Id layoutId, dynamic value) async {
     // Fetch db
     Isar isarDB = await db.isarDB;

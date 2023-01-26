@@ -2,54 +2,54 @@ import 'dart:convert';
 
 import 'package:ui_maker/utils/sort_types.dart';
 import 'package:ui_maker/app/widgets/creator_dialog.dart';
-import 'package:ui_maker/data/collections/widget.dart' as data;
+import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_maker/app/widgets/creator_context_menu.dart';
 import 'package:ui_maker/app/widgets/creator_checkbox.dart';
 
-class SettingsCheckbox extends StatefulWidget {
-  data.Widget setting;
-  SettingsCheckbox({super.key, required this.setting});
+class CreatorCheckbox extends StatefulWidget {
+  WidgetSettings widgetSetting;
+  CreatorCheckbox({super.key, required this.widgetSetting});
 
   @override
-  State<SettingsCheckbox> createState() => _SettingsCheckboxState();
+  State<CreatorCheckbox> createState() => _CreatorCheckboxState();
 }
 
-class _SettingsCheckboxState extends State<SettingsCheckbox> {
+class _CreatorCheckboxState extends State<CreatorCheckbox> {
   @override
   Widget build(BuildContext context) {
     // If an individual widget, display a form option with validation
-    (widget.setting.individual)
-        ? SettingsContextMenu(
-            setting: widget.setting,
-            settingsWidget: CheckboxListTileFormField(
+    (widget.widgetSetting.individual)
+        ? CreatorContextMenu(
+            widgetSetting: widget.widgetSetting,
+            creatorWidget: CheckboxListTileFormField(
               initialValue: false,
-              activeColor: inputTypeColor(widget.setting.inputType),
+              activeColor: inputTypeColor(widget.widgetSetting.inputType),
               onChanged: (value) {
                 setState(() {
-                  widget.setting.mapValues
-                      .addAll({widget.setting.title: value});
+                  widget.widgetSetting.mapValues
+                      .addAll({widget.widgetSetting.title: value});
                 });
               },
               autovalidateMode: AutovalidateMode.onUserInteraction,
-              title: Text(widget.setting.title),
-              validator: widget.setting.validation != null
-                  ? widget.setting.validation
+              title: Text(widget.widgetSetting.title),
+              validator: widget.widgetSetting.validation != null
+                  ? widget.widgetSetting.validation
                   : null,
             ),
           )
-        : SettingsContextMenu(
-            setting: widget.setting,
-            settingsWidget: CheckboxListTile(
+        : CreatorContextMenu(
+            widgetSetting: widget.widgetSetting,
+            creatorWidget: CheckboxListTile(
               value: true,
-              tileColor: inputTypeColor(widget.setting.inputType),
+              tileColor: inputTypeColor(widget.widgetSetting.inputType),
               onChanged: (value) {
                 setState(() {
-                  widget.setting.mapValues
-                      .addAll({widget.setting.title: value});
+                  widget.widgetSetting.mapValues
+                      .addAll({widget.widgetSetting.title: value});
                 });
               },
-              title: Text(widget.setting.title),
+              title: Text(widget.widgetSetting.title),
             ),
           );
     throw Exception("Settings checkbox failed to render");

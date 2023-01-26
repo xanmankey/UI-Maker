@@ -1,29 +1,35 @@
 // A widget for structuring entries in the character gallery
 import 'dart:convert';
 
+import 'package:isar/isar.dart';
 import 'package:ui_maker/app/widgets/creator_dropdown.dart';
-import 'package:ui_maker/data/collections/widget.dart' as data;
+import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_maker/data/isar_db.dart';
 
-class SettingsDialog extends StatefulWidget {
-  List<data.Widget>? dialogSettings;
-  data.Widget cardSetting;
-  SettingsDialog({super.key, required this.cardSetting, this.dialogSettings});
+class CreatorDialog extends StatefulWidget {
+  List<WidgetSettings>? widgetSettings;
+  WidgetSettings cardSetting;
+  CreatorDialog({super.key, required this.cardSetting, this.widgetSettings});
 
   @override
-  State<SettingsDialog> createState() => _SettingsDialogState();
+  State<CreatorDialog> createState() => _CreatorDialogState();
 }
 
-class _SettingsDialogState extends State<SettingsDialog> {
+class _CreatorDialogState extends State<CreatorDialog> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  late Storage storage;
+  late Isar isarDB;
 
-  data.Widget inputTypesDropdown =
-      createSettings([SettingsWidgets.inputTypesDropdown])[
-          SettingsWidgets.inputTypesDropdown]!;
-  data.Widget checkboxDropdown =
-      createSettings([SettingsWidgets.checkbox])[SettingsWidgets.checkbox]!;
+  @override
+  initState() async {
+    isarDB = await db.isarDB;
+  }
+
+  WidgetSettings inputTypesDropdown = createSettings(
+      [WidgetType.inputTypesDropdown])[WidgetType.inputTypesDropdown]!;
+  WidgetSettings checkboxDropdown =
+      createSettings([WidgetType.checkbox])[WidgetType.checkbox]!;
 
   @override
   void initState() {
@@ -50,19 +56,19 @@ class _SettingsDialogState extends State<SettingsDialog> {
             ),
           ),
           for (Widget widget
-              in generateSettingsWidgets(widget.dialogSettings ?? []))
+              in generateSettingsWidgets(widget.widgetSettings ?? []))
             widget,
-          SettingsDropdown(
-              setting: inputTypesDropdown, items: Items.inputTypes),
+          CreatorDropdown(
+              widgetSetting: inputTypesDropdown, items: Items.inputTypes),
           IconButton(
             iconSize: 36,
             icon: const Icon(Icons.delete),
             onPressed: () async {
               setState(() async {
                 await storage.deleteSettings([
-                  for (data.Widget setting in [
+                  for (WidgetSettings setting in [
                     widget.cardSetting
-                  ]..addAll(widget.dialogSettings ?? []))
+                  ]..addAll(widget.widgetSettings ?? []))
                     setting.id
                 ]);
               });

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:isar/isar.dart';
 import 'package:ui_maker/utils/widget_types.dart';
 
-part 'widget.g.dart';
+part 'widget_settings.g.dart';
 
 /// A collection for storing all user_created widgets and their info
 ///
@@ -19,9 +19,6 @@ part 'widget.g.dart';
 ///   /// An optional description (hint text) for a widget
 ///   /// Can be set via context menu (right click)
 ///   String? description;
-///
-///   /// A custom validation function, in case it is ncessary
-///   String? Function(dynamic)? validation;
 ///
 ///   /// The color value of the widget;
 ///   /// retrieved from flutter after a widget is created,
@@ -65,7 +62,7 @@ part 'widget.g.dart';
 ///
 ///
 @collection
-class Widget {
+class WidgetSettings {
   /// The id of each widget; autoincremented by Isar
   Id id = Isar.autoIncrement;
 
@@ -77,6 +74,11 @@ class Widget {
   /// Can be set via context menu (right click)
   String? description;
 
+  /// A bool to determine if the widget is enabled or not;
+  /// defaults to true
+  bool enabled = true;
+
+  // TODO: in addition to the below problem of custom validation type,
   /// I originally had plans to support a custom validation function,
   /// but isar doesn't support Function type.
   /// A custom validation function, in case it is necessary.
@@ -109,7 +111,7 @@ class Widget {
 
   /// Specifying extra widgets if your widget object is a layered widget,
   /// e.g. creator_card
-  IsarLink<Widget> widgets = IsarLink<Widget>();
+  IsarLink<WidgetSettings> widgets = IsarLink<WidgetSettings>();
 
   @override
   String toString() {

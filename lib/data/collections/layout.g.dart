@@ -45,7 +45,7 @@ const LayoutSchema = CollectionSchema(
     r'widgets': LinkSchema(
       id: 4285643237229661806,
       name: r'widgets',
-      target: r'Widget',
+      target: r'WidgetSettings',
       single: false,
     )
   },
@@ -145,7 +145,8 @@ List<IsarLinkBase<dynamic>> _layoutGetLinks(Layout object) {
 
 void _layoutAttach(IsarCollection<dynamic> col, Id id, Layout object) {
   object.id = id;
-  object.widgets.attach(col, col.isar.collection<Widget>(), r'widgets', id);
+  object.widgets
+      .attach(col, col.isar.collection<WidgetSettings>(), r'widgets', id);
 }
 
 extension LayoutQueryWhereSort on QueryBuilder<Layout, Layout, QWhere> {
@@ -397,7 +398,7 @@ extension LayoutQueryObject on QueryBuilder<Layout, Layout, QFilterCondition> {}
 
 extension LayoutQueryLinks on QueryBuilder<Layout, Layout, QFilterCondition> {
   QueryBuilder<Layout, Layout, QAfterFilterCondition> widgets(
-      FilterQuery<Widget> q) {
+      FilterQuery<WidgetSettings> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'widgets');
     });

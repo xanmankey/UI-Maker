@@ -2,38 +2,38 @@ import 'dart:convert';
 
 import 'package:ui_maker/utils/sort_types.dart';
 import 'package:ui_maker/app/widgets/creator_dialog.dart';
-import 'package:ui_maker/data/collections/widget.dart' as data;
+import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_maker/app/widgets/creator_context_menu.dart';
 
 // This goes inside a horizontal ListView
-class SettingsCard extends StatefulWidget {
-  data.Widget setting;
-  List<data.Widget>? dialogSettings;
-  SettingsCard({super.key, required this.setting, this.dialogSettings});
+class CreatorCard extends StatefulWidget {
+  WidgetSettings widgetSetting;
+  List<WidgetSettings>? dialogSettings;
+  CreatorCard({super.key, required this.widgetSetting, this.dialogSettings});
 
   @override
-  State<SettingsCard> createState() => _SettingsCardState();
+  State<CreatorCard> createState() => _CreatorCardState();
 }
 
-class _SettingsCardState extends State<SettingsCard> {
+class _CreatorCardState extends State<CreatorCard> {
   @override
   Widget build(BuildContext context) {
-    return SettingsContextMenu(
-      setting: widget.setting,
-      settingsWidget: GestureDetector(
+    return CreatorContextMenu(
+      widgetSetting: widget.widgetSetting,
+      creatorWidget: GestureDetector(
         onTap: (() => showDialog(
             context: context,
-            builder: (context) => SettingsDialog(
-                  cardSetting: widget.setting,
-                  dialogSettings: widget.dialogSettings,
+            builder: (context) => CreatorDialog(
+                  cardSetting: widget.widgetSetting,
+                  widgetSettings: widget.dialogSettings,
                 ))),
         child: Card(
-          color: widget.setting.enabled
-              ? inputTypeColor(widget.setting.inputType)
+          color: widget.widgetSetting.enabled
+              ? inputTypeColor(widget.widgetSetting.inputType)
               : Colors.grey,
           child: Text(
-            widget.setting.title,
+            widget.widgetSetting.title,
           ),
         ),
       ),

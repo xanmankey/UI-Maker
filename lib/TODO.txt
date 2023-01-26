@@ -1,7 +1,15 @@
 - Finish implementing the sortWidgets() method (and figure out where to call it)
 - Keep implementing context menu (and adapt other widgets as well)
-- Push to GitHub
 - Implement main.dart
 
 - TEST (write tests and try it with DWTP)
 - Figure out how to publish a package and use it for my CS project (https://docs.flutter.dev/development/packages-and-plugins/developing-packages)
+
+MY MAIN GOAL:
+Create a system where a widget can be dragged in, custom properties can be defined,
+and you can sort by those properties to either order or filter widgets
+ALL WITHOUT allowing the user to change the database structure and maintaining layout for next time
+
+SUBGOALS:
+Make it as easy to develop new 'Creator' widgets as possible
+Satisfy pub dev points requirements

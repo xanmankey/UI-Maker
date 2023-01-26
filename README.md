@@ -1,16 +1,11 @@
 # ui_maker
 
-A new Flutter project.
+> Isn't flutter already a tool for building UIs?
 
-## Getting Started
+Yes, in the same way that a game engine is a tool for building a game. The purpose of this package is to help make the process more accessible by enabling users to drag and drop widgets, easily sort by an index, and reorganize the UI as they see fit. This also gives app designers more freedom as they get to define specific areas (using the ```CreatorArea``` widget) where users can add their own widgets from a selection. 
 
-This project is a starting point for a Flutter application.
+## Q&A
 
-A few resources to get you started if this is your first Flutter project:
+> Can I add a widget to the CreatorBar widgets?
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Yes, although only the provided widgets have been tested. Note that if you want right click functionality, you will need to wrap your widget with the ```CreatorContextMenu``` widget.

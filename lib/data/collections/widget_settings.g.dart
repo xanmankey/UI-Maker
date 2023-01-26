@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'widget.dart';
+part of 'widget_settings.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
@@ -9,13 +9,13 @@ part of 'widget.dart';
 // coverage:ignore-file
 // ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, prefer_const_constructors, lines_longer_than_80_chars, require_trailing_commas, inference_failure_on_function_invocation, unnecessary_parenthesis, unnecessary_raw_strings, unnecessary_null_checks, join_return_with_assignment, prefer_final_locals, avoid_js_rounded_ints, avoid_positional_boolean_parameters
 
-extension GetWidgetCollection on Isar {
-  IsarCollection<Widget> get widgets => this.collection();
+extension GetWidgetSettingsCollection on Isar {
+  IsarCollection<WidgetSettings> get widgetSettings => this.collection();
 }
 
-const WidgetSchema = CollectionSchema(
-  name: r'Widget',
-  id: -9010514747698676556,
+const WidgetSettingsSchema = CollectionSchema(
+  name: r'WidgetSettings',
+  id: 4820156579752087572,
   properties: {
     r'color': PropertySchema(
       id: 0,
@@ -27,37 +27,42 @@ const WidgetSchema = CollectionSchema(
       name: r'description',
       type: IsarType.string,
     ),
-    r'offsetX': PropertySchema(
+    r'enabled': PropertySchema(
       id: 2,
+      name: r'enabled',
+      type: IsarType.bool,
+    ),
+    r'offsetX': PropertySchema(
+      id: 3,
       name: r'offsetX',
       type: IsarType.double,
     ),
     r'offsetY': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'offsetY',
       type: IsarType.double,
     ),
     r'title': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'title',
       type: IsarType.string,
     ),
     r'values': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'values',
       type: IsarType.string,
     ),
     r'widgetType': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'widgetType',
       type: IsarType.byte,
-      enumMap: _WidgetwidgetTypeEnumValueMap,
+      enumMap: _WidgetSettingswidgetTypeEnumValueMap,
     )
   },
-  estimateSize: _widgetEstimateSize,
-  serialize: _widgetSerialize,
-  deserialize: _widgetDeserialize,
-  deserializeProp: _widgetDeserializeProp,
+  estimateSize: _widgetSettingsEstimateSize,
+  serialize: _widgetSettingsSerialize,
+  deserialize: _widgetSettingsDeserialize,
+  deserializeProp: _widgetSettingsDeserializeProp,
   idName: r'id',
   indexes: {
     r'title': IndexSchema(
@@ -102,21 +107,21 @@ const WidgetSchema = CollectionSchema(
   },
   links: {
     r'widgets': LinkSchema(
-      id: -1306453724581487875,
+      id: 1560134347547876117,
       name: r'widgets',
-      target: r'Widget',
+      target: r'WidgetSettings',
       single: true,
     )
   },
   embeddedSchemas: {},
-  getId: _widgetGetId,
-  getLinks: _widgetGetLinks,
-  attach: _widgetAttach,
+  getId: _widgetSettingsGetId,
+  getLinks: _widgetSettingsGetLinks,
+  attach: _widgetSettingsAttach,
   version: '3.0.5',
 );
 
-int _widgetEstimateSize(
-  Widget object,
+int _widgetSettingsEstimateSize(
+  WidgetSettings object,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
@@ -132,42 +137,44 @@ int _widgetEstimateSize(
   return bytesCount;
 }
 
-void _widgetSerialize(
-  Widget object,
+void _widgetSettingsSerialize(
+  WidgetSettings object,
   IsarWriter writer,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
   writer.writeLong(offsets[0], object.color);
   writer.writeString(offsets[1], object.description);
-  writer.writeDouble(offsets[2], object.offsetX);
-  writer.writeDouble(offsets[3], object.offsetY);
-  writer.writeString(offsets[4], object.title);
-  writer.writeString(offsets[5], object.values);
-  writer.writeByte(offsets[6], object.widgetType.index);
+  writer.writeBool(offsets[2], object.enabled);
+  writer.writeDouble(offsets[3], object.offsetX);
+  writer.writeDouble(offsets[4], object.offsetY);
+  writer.writeString(offsets[5], object.title);
+  writer.writeString(offsets[6], object.values);
+  writer.writeByte(offsets[7], object.widgetType.index);
 }
 
-Widget _widgetDeserialize(
+WidgetSettings _widgetSettingsDeserialize(
   Id id,
   IsarReader reader,
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Widget();
+  final object = WidgetSettings();
   object.color = reader.readLong(offsets[0]);
   object.description = reader.readStringOrNull(offsets[1]);
+  object.enabled = reader.readBool(offsets[2]);
   object.id = id;
-  object.offsetX = reader.readDouble(offsets[2]);
-  object.offsetY = reader.readDouble(offsets[3]);
-  object.title = reader.readString(offsets[4]);
-  object.values = reader.readString(offsets[5]);
-  object.widgetType =
-      _WidgetwidgetTypeValueEnumMap[reader.readByteOrNull(offsets[6])] ??
-          WidgetType.card;
+  object.offsetX = reader.readDouble(offsets[3]);
+  object.offsetY = reader.readDouble(offsets[4]);
+  object.title = reader.readString(offsets[5]);
+  object.values = reader.readString(offsets[6]);
+  object.widgetType = _WidgetSettingswidgetTypeValueEnumMap[
+          reader.readByteOrNull(offsets[7])] ??
+      WidgetType.card;
   return object;
 }
 
-P _widgetDeserializeProp<P>(
+P _widgetSettingsDeserializeProp<P>(
   IsarReader reader,
   int propertyId,
   int offset,
@@ -179,29 +186,32 @@ P _widgetDeserializeProp<P>(
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readBool(offset)) as P;
     case 3:
       return (reader.readDouble(offset)) as P;
     case 4:
-      return (reader.readString(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 5:
       return (reader.readString(offset)) as P;
     case 6:
-      return (_WidgetwidgetTypeValueEnumMap[reader.readByteOrNull(offset)] ??
+      return (reader.readString(offset)) as P;
+    case 7:
+      return (_WidgetSettingswidgetTypeValueEnumMap[
+              reader.readByteOrNull(offset)] ??
           WidgetType.card) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
 }
 
-const _WidgetwidgetTypeEnumValueMap = {
+const _WidgetSettingswidgetTypeEnumValueMap = {
   'card': 0,
   'dropdown': 1,
   'checkbox': 2,
   'numField': 3,
   'textField': 4,
 };
-const _WidgetwidgetTypeValueEnumMap = {
+const _WidgetSettingswidgetTypeValueEnumMap = {
   0: WidgetType.card,
   1: WidgetType.dropdown,
   2: WidgetType.checkbox,
@@ -209,27 +219,30 @@ const _WidgetwidgetTypeValueEnumMap = {
   4: WidgetType.textField,
 };
 
-Id _widgetGetId(Widget object) {
+Id _widgetSettingsGetId(WidgetSettings object) {
   return object.id;
 }
 
-List<IsarLinkBase<dynamic>> _widgetGetLinks(Widget object) {
+List<IsarLinkBase<dynamic>> _widgetSettingsGetLinks(WidgetSettings object) {
   return [object.widgets];
 }
 
-void _widgetAttach(IsarCollection<dynamic> col, Id id, Widget object) {
+void _widgetSettingsAttach(
+    IsarCollection<dynamic> col, Id id, WidgetSettings object) {
   object.id = id;
-  object.widgets.attach(col, col.isar.collection<Widget>(), r'widgets', id);
+  object.widgets
+      .attach(col, col.isar.collection<WidgetSettings>(), r'widgets', id);
 }
 
-extension WidgetQueryWhereSort on QueryBuilder<Widget, Widget, QWhere> {
-  QueryBuilder<Widget, Widget, QAfterWhere> anyId() {
+extension WidgetSettingsQueryWhereSort
+    on QueryBuilder<WidgetSettings, WidgetSettings, QWhere> {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhere> anyId() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(const IdWhereClause.any());
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhere> anyColor() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhere> anyColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'color'),
@@ -237,7 +250,7 @@ extension WidgetQueryWhereSort on QueryBuilder<Widget, Widget, QWhere> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhere> anyWidgetType() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhere> anyWidgetType() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'widgetType'),
@@ -246,8 +259,10 @@ extension WidgetQueryWhereSort on QueryBuilder<Widget, Widget, QWhere> {
   }
 }
 
-extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
-  QueryBuilder<Widget, Widget, QAfterWhereClause> idEqualTo(Id id) {
+extension WidgetSettingsQueryWhere
+    on QueryBuilder<WidgetSettings, WidgetSettings, QWhereClause> {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause> idEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IdWhereClause.between(
         lower: id,
@@ -256,7 +271,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> idNotEqualTo(Id id) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause> idNotEqualTo(
+      Id id) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -278,7 +294,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> idGreaterThan(Id id,
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause> idGreaterThan(
+      Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -287,7 +304,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> idLessThan(Id id,
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause> idLessThan(
+      Id id,
       {bool include = false}) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
@@ -296,7 +314,7 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> idBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause> idBetween(
     Id lowerId,
     Id upperId, {
     bool includeLower = true,
@@ -312,7 +330,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> titleEqualTo(String title) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause> titleEqualTo(
+      String title) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'title',
@@ -321,8 +340,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> titleNotEqualTo(
-      String title) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      titleNotEqualTo(String title) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -356,7 +375,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> colorEqualTo(int color) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause> colorEqualTo(
+      int color) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'color',
@@ -365,7 +385,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> colorNotEqualTo(int color) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      colorNotEqualTo(int color) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -399,7 +420,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> colorGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      colorGreaterThan(
     int color, {
     bool include = false,
   }) {
@@ -413,7 +435,7 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> colorLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause> colorLessThan(
     int color, {
     bool include = false,
   }) {
@@ -427,7 +449,7 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> colorBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause> colorBetween(
     int lowerColor,
     int upperColor, {
     bool includeLower = true,
@@ -444,8 +466,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> widgetTypeEqualTo(
-      WidgetType widgetType) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      widgetTypeEqualTo(WidgetType widgetType) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
         indexName: r'widgetType',
@@ -454,8 +476,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> widgetTypeNotEqualTo(
-      WidgetType widgetType) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      widgetTypeNotEqualTo(WidgetType widgetType) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
@@ -489,7 +511,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> widgetTypeGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      widgetTypeGreaterThan(
     WidgetType widgetType, {
     bool include = false,
   }) {
@@ -503,7 +526,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> widgetTypeLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      widgetTypeLessThan(
     WidgetType widgetType, {
     bool include = false,
   }) {
@@ -517,7 +541,8 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterWhereClause> widgetTypeBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      widgetTypeBetween(
     WidgetType lowerWidgetType,
     WidgetType upperWidgetType, {
     bool includeLower = true,
@@ -535,8 +560,10 @@ extension WidgetQueryWhere on QueryBuilder<Widget, Widget, QWhereClause> {
   }
 }
 
-extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> colorEqualTo(int value) {
+extension WidgetSettingsQueryFilter
+    on QueryBuilder<WidgetSettings, WidgetSettings, QFilterCondition> {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      colorEqualTo(int value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'color',
@@ -545,7 +572,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> colorGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      colorGreaterThan(
     int value, {
     bool include = false,
   }) {
@@ -558,7 +586,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> colorLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      colorLessThan(
     int value, {
     bool include = false,
   }) {
@@ -571,7 +600,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> colorBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      colorBetween(
     int lower,
     int upper, {
     bool includeLower = true,
@@ -588,7 +618,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionIsNull() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
         property: r'description',
@@ -596,7 +627,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionIsNotNull() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
         property: r'description',
@@ -604,7 +636,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionEqualTo(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionEqualTo(
     String? value, {
     bool caseSensitive = true,
   }) {
@@ -617,7 +650,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionGreaterThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -632,7 +666,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionLessThan(
     String? value, {
     bool include = false,
     bool caseSensitive = true,
@@ -647,7 +682,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionBetween(
     String? lower,
     String? upper, {
     bool includeLower = true,
@@ -666,7 +702,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionStartsWith(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -679,7 +716,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionEndsWith(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -692,9 +730,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'description',
@@ -704,9 +741,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'description',
@@ -716,7 +752,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionIsEmpty() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'description',
@@ -725,7 +762,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> descriptionIsNotEmpty() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      descriptionIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'description',
@@ -734,7 +772,18 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> idEqualTo(Id value) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      enabledEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'enabled',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition> idEqualTo(
+      Id value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'id',
@@ -743,7 +792,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> idGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      idGreaterThan(
     Id value, {
     bool include = false,
   }) {
@@ -756,7 +806,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> idLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      idLessThan(
     Id value, {
     bool include = false,
   }) {
@@ -769,7 +820,7 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> idBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition> idBetween(
     Id lower,
     Id upper, {
     bool includeLower = true,
@@ -786,7 +837,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> offsetXEqualTo(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      offsetXEqualTo(
     double value, {
     double epsilon = Query.epsilon,
   }) {
@@ -799,7 +851,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> offsetXGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      offsetXGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -814,7 +867,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> offsetXLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      offsetXLessThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -829,7 +883,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> offsetXBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      offsetXBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -848,7 +903,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> offsetYEqualTo(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      offsetYEqualTo(
     double value, {
     double epsilon = Query.epsilon,
   }) {
@@ -861,7 +917,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> offsetYGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      offsetYGreaterThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -876,7 +933,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> offsetYLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      offsetYLessThan(
     double value, {
     bool include = false,
     double epsilon = Query.epsilon,
@@ -891,7 +949,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> offsetYBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      offsetYBetween(
     double lower,
     double upper, {
     bool includeLower = true,
@@ -910,7 +969,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleEqualTo(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -923,7 +983,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -938,7 +999,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -953,7 +1015,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -972,7 +1035,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleStartsWith(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -985,7 +1049,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleEndsWith(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -998,9 +1063,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'title',
@@ -1010,9 +1074,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'title',
@@ -1022,7 +1085,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleIsEmpty() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'title',
@@ -1031,7 +1095,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> titleIsNotEmpty() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      titleIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'title',
@@ -1040,7 +1105,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesEqualTo(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesEqualTo(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1053,7 +1119,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesGreaterThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1068,7 +1135,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesLessThan(
     String value, {
     bool include = false,
     bool caseSensitive = true,
@@ -1083,7 +1151,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesBetween(
     String lower,
     String upper, {
     bool includeLower = true,
@@ -1102,7 +1171,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesStartsWith(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesStartsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1115,7 +1185,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesEndsWith(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesEndsWith(
     String value, {
     bool caseSensitive = true,
   }) {
@@ -1128,9 +1199,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesContains(
-      String value,
-      {bool caseSensitive = true}) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesContains(String value, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.contains(
         property: r'values',
@@ -1140,9 +1210,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesMatches(
-      String pattern,
-      {bool caseSensitive = true}) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesMatches(String pattern, {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.matches(
         property: r'values',
@@ -1152,7 +1221,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesIsEmpty() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'values',
@@ -1161,7 +1231,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> valuesIsNotEmpty() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      valuesIsNotEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         property: r'values',
@@ -1170,8 +1241,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> widgetTypeEqualTo(
-      WidgetType value) {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetTypeEqualTo(WidgetType value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
         property: r'widgetType',
@@ -1180,7 +1251,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> widgetTypeGreaterThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetTypeGreaterThan(
     WidgetType value, {
     bool include = false,
   }) {
@@ -1193,7 +1265,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> widgetTypeLessThan(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetTypeLessThan(
     WidgetType value, {
     bool include = false,
   }) {
@@ -1206,7 +1279,8 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> widgetTypeBetween(
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetTypeBetween(
     WidgetType lower,
     WidgetType upper, {
     bool includeLower = true,
@@ -1224,298 +1298,360 @@ extension WidgetQueryFilter on QueryBuilder<Widget, Widget, QFilterCondition> {
   }
 }
 
-extension WidgetQueryObject on QueryBuilder<Widget, Widget, QFilterCondition> {}
+extension WidgetSettingsQueryObject
+    on QueryBuilder<WidgetSettings, WidgetSettings, QFilterCondition> {}
 
-extension WidgetQueryLinks on QueryBuilder<Widget, Widget, QFilterCondition> {
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> widgets(
-      FilterQuery<Widget> q) {
+extension WidgetSettingsQueryLinks
+    on QueryBuilder<WidgetSettings, WidgetSettings, QFilterCondition> {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition> widgets(
+      FilterQuery<WidgetSettings> q) {
     return QueryBuilder.apply(this, (query) {
       return query.link(q, r'widgets');
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterFilterCondition> widgetsIsNull() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetsIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'widgets', 0, true, 0, true);
     });
   }
 }
 
-extension WidgetQuerySortBy on QueryBuilder<Widget, Widget, QSortBy> {
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByColor() {
+extension WidgetSettingsQuerySortBy
+    on QueryBuilder<WidgetSettings, WidgetSettings, QSortBy> {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> sortByColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'color', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByColorDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> sortByColorDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'color', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByDescription() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByDescription() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByDescriptionDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByDescriptionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByOffsetX() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> sortByEnabled() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'enabled', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByEnabledDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'enabled', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> sortByOffsetX() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'offsetX', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByOffsetXDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByOffsetXDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'offsetX', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByOffsetY() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> sortByOffsetY() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'offsetY', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByOffsetYDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByOffsetYDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'offsetY', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByTitle() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> sortByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByTitleDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> sortByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByValues() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> sortByValues() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'values', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByValuesDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByValuesDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'values', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByWidgetType() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByWidgetType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'widgetType', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> sortByWidgetTypeDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByWidgetTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'widgetType', Sort.desc);
     });
   }
 }
 
-extension WidgetQuerySortThenBy on QueryBuilder<Widget, Widget, QSortThenBy> {
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByColor() {
+extension WidgetSettingsQuerySortThenBy
+    on QueryBuilder<WidgetSettings, WidgetSettings, QSortThenBy> {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'color', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByColorDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByColorDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'color', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByDescription() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByDescription() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByDescriptionDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByDescriptionDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'description', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenById() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByEnabled() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'enabled', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByEnabledDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'enabled', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByIdDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByIdDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByOffsetX() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByOffsetX() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'offsetX', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByOffsetXDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByOffsetXDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'offsetX', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByOffsetY() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByOffsetY() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'offsetY', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByOffsetYDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByOffsetYDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'offsetY', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByTitle() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByTitle() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByTitleDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByTitleDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'title', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByValues() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByValues() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'values', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByValuesDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByValuesDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'values', Sort.desc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByWidgetType() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByWidgetType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'widgetType', Sort.asc);
     });
   }
 
-  QueryBuilder<Widget, Widget, QAfterSortBy> thenByWidgetTypeDesc() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByWidgetTypeDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'widgetType', Sort.desc);
     });
   }
 }
 
-extension WidgetQueryWhereDistinct on QueryBuilder<Widget, Widget, QDistinct> {
-  QueryBuilder<Widget, Widget, QDistinct> distinctByColor() {
+extension WidgetSettingsQueryWhereDistinct
+    on QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> {
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> distinctByColor() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'color');
     });
   }
 
-  QueryBuilder<Widget, Widget, QDistinct> distinctByDescription(
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> distinctByDescription(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'description', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Widget, Widget, QDistinct> distinctByOffsetX() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> distinctByEnabled() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'enabled');
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> distinctByOffsetX() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'offsetX');
     });
   }
 
-  QueryBuilder<Widget, Widget, QDistinct> distinctByOffsetY() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> distinctByOffsetY() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'offsetY');
     });
   }
 
-  QueryBuilder<Widget, Widget, QDistinct> distinctByTitle(
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> distinctByTitle(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'title', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Widget, Widget, QDistinct> distinctByValues(
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> distinctByValues(
       {bool caseSensitive = true}) {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'values', caseSensitive: caseSensitive);
     });
   }
 
-  QueryBuilder<Widget, Widget, QDistinct> distinctByWidgetType() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct>
+      distinctByWidgetType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'widgetType');
     });
   }
 }
 
-extension WidgetQueryProperty on QueryBuilder<Widget, Widget, QQueryProperty> {
-  QueryBuilder<Widget, int, QQueryOperations> idProperty() {
+extension WidgetSettingsQueryProperty
+    on QueryBuilder<WidgetSettings, WidgetSettings, QQueryProperty> {
+  QueryBuilder<WidgetSettings, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
     });
   }
 
-  QueryBuilder<Widget, int, QQueryOperations> colorProperty() {
+  QueryBuilder<WidgetSettings, int, QQueryOperations> colorProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'color');
     });
   }
 
-  QueryBuilder<Widget, String?, QQueryOperations> descriptionProperty() {
+  QueryBuilder<WidgetSettings, String?, QQueryOperations>
+      descriptionProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'description');
     });
   }
 
-  QueryBuilder<Widget, double, QQueryOperations> offsetXProperty() {
+  QueryBuilder<WidgetSettings, bool, QQueryOperations> enabledProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'enabled');
+    });
+  }
+
+  QueryBuilder<WidgetSettings, double, QQueryOperations> offsetXProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'offsetX');
     });
   }
 
-  QueryBuilder<Widget, double, QQueryOperations> offsetYProperty() {
+  QueryBuilder<WidgetSettings, double, QQueryOperations> offsetYProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'offsetY');
     });
   }
 
-  QueryBuilder<Widget, String, QQueryOperations> titleProperty() {
+  QueryBuilder<WidgetSettings, String, QQueryOperations> titleProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'title');
     });
   }
 
-  QueryBuilder<Widget, String, QQueryOperations> valuesProperty() {
+  QueryBuilder<WidgetSettings, String, QQueryOperations> valuesProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'values');
     });
   }
 
-  QueryBuilder<Widget, WidgetType, QQueryOperations> widgetTypeProperty() {
+  QueryBuilder<WidgetSettings, WidgetType, QQueryOperations>
+      widgetTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'widgetType');
     });

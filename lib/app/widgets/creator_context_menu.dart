@@ -1,37 +1,40 @@
-// A context menu for right-clicking SettingsWidgets
-import 'package:ui_maker/data/collections/widget.dart' as data;
-import 'package:native_context_menu/native_context_menu.dart';
+// A context menu for right-clicking WidgetType
+import 'package:isar/isar.dart';
+import 'package:ui_maker/data/collections/widget_settings.dart';
+import 'package:ui_maker/data/isar_db.dart';
+import 'package:native_context_menu/native_context_menu.dart' as NCM;
 import 'package:flutter/material.dart';
 import 'package:ui_maker/utils/sort_types.dart';
 
 // I'll need to make specific menus for each widget
 // But I CAN make a template to make that process easier
 
-class SettingsContextMenu extends StatefulWidget {
-  data.Widget setting;
-  Widget settingsWidget;
+class CreatorContextMenu extends StatefulWidget {
+  WidgetSettings widgetSetting;
+  Widget creatorWidget;
   // Not sure if setState will propogate down to the settingsWidget
   // Function(void Function()) setState;
 
-  SettingsContextMenu({
+  CreatorContextMenu({
     super.key,
-    required this.setting,
-    required this.settingsWidget,
+    required this.widgetSetting,
+    required this.creatorWidget,
   });
 
   @override
-  State<SettingsContextMenu> createState() => _SettingsContextMenuState();
+  State<CreatorContextMenu> createState() => _CreatorContextMenuState();
 }
 
-class _SettingsContextMenuState extends State<SettingsContextMenu> {
+class _CreatorContextMenuState extends State<CreatorContextMenu> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  Storage storage = Storage();
+  late Isar isarDB;
 
   @override
-  void initState() {
-    titleController.text = widget.setting.title;
-    descriptionController.text = widget.setting.description ?? '';
+  void initState() async {
+    titleController.text = widget.widgetSetting.title;
+    descriptionController.text = widget.widgetSetting.description ?? '';
+    isarDB = await db.isarDB;
     super.initState();
   }
 
@@ -49,7 +52,7 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
                     )),
               );
               setState(() {
-                widget.setting.title = titleController.text;
+                widget.widgetSetting.title = titleController.text;
               });
             }),
         NCM.MenuItem(
@@ -62,7 +65,7 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
                     )),
               );
               setState(() {
-                widget.setting.title = descriptionController.text;
+                widget.widgetSetting.title = descriptionController.text;
               });
             }),
         NCM.MenuItem(
@@ -72,7 +75,7 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
               title: "Enable",
               onSelected: () {
                 setState(() {
-                  widget.setting.enabled = true;
+                  widget.widgetSetting.enabled = true;
                 });
               },
             ),
@@ -80,7 +83,7 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
               title: "Disable",
               onSelected: () {
                 setState(() {
-                  widget.setting.enabled = false;
+                  widget.widgetSetting.enabled = false;
                 });
               },
             ),
@@ -96,15 +99,15 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
                         "Are you sure you want to delete this setting?"),
                     content: IconButton(
                       onPressed: () async {
-                        await storage.deleteSettings(
-                            widget.setting.group ?? [widget.setting.id]);
+                        await db.deleteSettings(widget.widgetSetting.group ??
+                            [widget.widgetSetting.id]);
                       },
                       icon: const Icon(Icons.delete),
                     ),
                   )),
             );
             setState(() {
-              widget.setting.title = descriptionController.text;
+              widget.widgetSetting.title = descriptionController.text;
             });
           },
         ),
@@ -115,7 +118,7 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
               title: InputTypes.button.toString(),
               onSelected: () {
                 setState(() {
-                  widget.setting.inputType = InputTypes.button;
+                  widget.widgetSetting.inputType = InputTypes.button;
                 });
               },
             ),
@@ -123,7 +126,7 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
               title: InputTypes.trigger.toString(),
               onSelected: () {
                 setState(() {
-                  widget.setting.inputType = InputTypes.trigger;
+                  widget.widgetSetting.inputType = InputTypes.trigger;
                 });
               },
             ),
@@ -131,7 +134,7 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
               title: InputTypes.stick.toString(),
               onSelected: () {
                 setState(() {
-                  widget.setting.inputType = InputTypes.stick;
+                  widget.widgetSetting.inputType = InputTypes.stick;
                 });
               },
             ),
@@ -139,7 +142,7 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
               title: 'none',
               onSelected: () {
                 setState(() {
-                  widget.setting.inputType = null;
+                  widget.widgetSetting.inputType = null;
                 });
               },
             ),
@@ -153,19 +156,20 @@ class _SettingsContextMenuState extends State<SettingsContextMenu> {
                     content: IconButton(
                       onPressed: () async {
                         await storage.deleteSettings(
-                            widget.setting.group ?? [widget.setting.id]);
+                            widget.widgetSetting.group ??
+                                [widget.widgetSetting.id]);
                       },
                       icon: const Icon(Icons.delete),
                     ),
                   )),
             );
             setState(() {
-              widget.setting.title = descriptionController.text;
+              widget.widgetSetting.title = descriptionController.text;
             });
           },
         ),
       ],
-      child: widget.settingsWidget,
+      child: widget.creatorWidget,
     );
   }
 }
