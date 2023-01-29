@@ -10,6 +10,9 @@ Create a system where a widget can be dragged in, custom properties can be defin
 and you can sort by those properties to either order or filter widgets
 ALL WITHOUT allowing the user to change the database structure and maintaining layout for next time
 
+- How in the world would I handle sorting by custom properties?
+- That's one of the reasons the SortTypes enum exists
+
 SUBGOALS:
 Make it as easy to develop new 'Creator' widgets as possible
 Satisfy pub dev points requirements

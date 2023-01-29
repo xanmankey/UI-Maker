@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:ui_maker/utils/sort_types.dart';
-import 'package:ui_maker/app/widgets/creator_dialog.dart';
+import 'package:ui_maker/app/widgets/utility/custom_dialog.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_maker/app/widgets/creator_context_menu.dart';
+import 'package:ui_maker/app/creator_context_menu.dart';
 
 // This goes inside a horizontal ListView
 class CreatorCard extends StatefulWidget {
@@ -30,7 +30,7 @@ class _CreatorCardState extends State<CreatorCard> {
                 ))),
         child: Card(
           color: widget.widgetSetting.enabled
-              ? inputTypeColor(widget.widgetSetting.inputType)
+              ? Color(widget.widgetSetting.color)
               : Colors.grey,
           child: Text(
             widget.widgetSetting.title,

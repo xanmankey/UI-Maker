@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
-import 'package:ui_maker/app/widgets/creator_context_menu.dart';
+import 'package:ui_maker/app/creator_context_menu.dart';
 
 class CreatorDropdown extends StatefulWidget {
   WidgetSettings widgetSetting;

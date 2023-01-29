@@ -7,6 +7,7 @@ enum WidgetType {
   numField,
   textField,
   imageSelector;
+  // get types => WidgetType.values;
 }
 
 /// A function for creating the default settings for a widget

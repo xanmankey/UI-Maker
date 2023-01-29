@@ -1,6 +1,6 @@
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_maker/app/widgets/creator_context_menu.dart';
+import 'package:ui_maker/app/creator_context_menu.dart';
 import 'package:ui_maker/utils/widget_types.dart';
 
 class CreatorField extends StatefulWidget {

@@ -1,3 +1,6 @@
 - In order to make development of creator widgets easier, I would need to figure out what's shared
 between all creator widgets and possibly implement inheritance of some kind
-- 
+
+WHAT DO ALL CREATOR WIDGETS HAVE IN COMMON?
+- All Stateful
+- All (except dialog) wrapped inside creator context menu

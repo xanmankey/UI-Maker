@@ -1,11 +1,12 @@
-import 'package:ui_maker/app/widgets/creator_checkbox.dart';
-import 'package:ui_maker/app/widgets/creator_dropdown.dart';
-import 'package:ui_maker/app/widgets/creator_field.dart';
+import 'package:ui_maker/app/widgets/creator/creator_image.dart';
+import 'package:ui_maker/app/widgets/creator/creator_checkbox.dart';
+import 'package:ui_maker/app/widgets/creator/creator_dropdown.dart';
+import 'package:ui_maker/app/widgets/creator/creator_field.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/utils/widget_types.dart';
 
 /// A function for creating a widget based off of widget data
-generateWidgets(List<WidgetSettings> widgets) {
+generateWidgets(List<WidgetSettings> widgets, List<dynamic>? items) {
   List<WidgetSettings> widgets = [];
   for (WidgetSettings widgetSettings in widgets) {
     switch (widgetSettings.widgetType) {
@@ -23,10 +24,14 @@ generateWidgets(List<WidgetSettings> widgets) {
             widgetSetting: widgetSetting, widgetType: WidgetType.textField));
         break;
       case WidgetType.dropdown:
+        assert(items != null);
         widgets.add(CreatorDropdown(
           widgetSetting: widgetSetting,
-          items: Items.inputTypes,
+          items: items!,
         ));
+        break;
+      case WidgetType.imageSelector:
+        widgets.add(CreatorImage());
         break;
       // case WidgetType.inputsDropdown:
       //   widgets.add(SettingsDropdown(

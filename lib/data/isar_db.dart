@@ -19,7 +19,7 @@ class DB {
           WidgetSettingsSchema,
           LayoutSchema,
         ],
-        title: "db",
+        name: "db",
       );
     }
     return isarDB;

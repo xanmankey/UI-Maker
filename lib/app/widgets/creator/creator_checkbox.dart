@@ -1,10 +1,10 @@
 import 'dart:convert';
 
 import 'package:ui_maker/utils/sort_types.dart';
-import 'package:ui_maker/app/widgets/creator_dialog.dart';
+import 'package:ui_maker/app/widgets/utility/custom_dialog.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_maker/app/widgets/creator_context_menu.dart';
+import 'package:ui_maker/app/creator_context_menu.dart';
 import 'package:ui_maker/app/widgets/creator_checkbox.dart';
 
 class CreatorCheckbox extends StatefulWidget {

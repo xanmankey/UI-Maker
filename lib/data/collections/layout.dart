@@ -55,17 +55,12 @@ class Layout {
   @enumerated
   LayoutType layoutType = LayoutType.columns;
 
-  /// How the widgets should be sorted; widget sorting only occurs if the
-  /// layout type is not LayoutType.none
-  @enumerated
-  late SortTypesEnum sortType;
-
   /// A boolean to determine whether the widgets should be filtered or sorted
   bool filter = false;
 
   @override
   String toString() {
-    return '''$id: {layoutType: $layoutType, sortType: $sortType, filter: 
+    return '''$id: {layoutType: $layoutType, widgets: ${widgets.toList()}, filter: 
     $filter}''';
   }
 }

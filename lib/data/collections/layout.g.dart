@@ -27,12 +27,6 @@ const LayoutSchema = CollectionSchema(
       name: r'layoutType',
       type: IsarType.byte,
       enumMap: _LayoutlayoutTypeEnumValueMap,
-    ),
-    r'sortType': PropertySchema(
-      id: 2,
-      name: r'sortType',
-      type: IsarType.byte,
-      enumMap: _LayoutsortTypeEnumValueMap,
     )
   },
   estimateSize: _layoutEstimateSize,
@@ -73,7 +67,6 @@ void _layoutSerialize(
 ) {
   writer.writeBool(offsets[0], object.filter);
   writer.writeByte(offsets[1], object.layoutType.index);
-  writer.writeByte(offsets[2], object.sortType.index);
 }
 
 Layout _layoutDeserialize(
@@ -88,9 +81,6 @@ Layout _layoutDeserialize(
   object.layoutType =
       _LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offsets[1])] ??
           LayoutType.columns;
-  object.sortType =
-      _LayoutsortTypeValueEnumMap[reader.readByteOrNull(offsets[2])] ??
-          SortTypesEnum.title;
   return object;
 }
 
@@ -106,9 +96,6 @@ P _layoutDeserializeProp<P>(
     case 1:
       return (_LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           LayoutType.columns) as P;
-    case 2:
-      return (_LayoutsortTypeValueEnumMap[reader.readByteOrNull(offset)] ??
-          SortTypesEnum.title) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -123,16 +110,6 @@ const _LayoutlayoutTypeValueEnumMap = {
   0: LayoutType.columns,
   1: LayoutType.rows,
   2: LayoutType.none,
-};
-const _LayoutsortTypeEnumValueMap = {
-  'title': 0,
-  'color': 1,
-  'widgetType': 2,
-};
-const _LayoutsortTypeValueEnumMap = {
-  0: SortTypesEnum.title,
-  1: SortTypesEnum.color,
-  2: SortTypesEnum.widgetType,
 };
 
 Id _layoutGetId(Layout object) {
@@ -339,59 +316,6 @@ extension LayoutQueryFilter on QueryBuilder<Layout, Layout, QFilterCondition> {
       ));
     });
   }
-
-  QueryBuilder<Layout, Layout, QAfterFilterCondition> sortTypeEqualTo(
-      SortTypesEnum value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'sortType',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Layout, Layout, QAfterFilterCondition> sortTypeGreaterThan(
-    SortTypesEnum value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'sortType',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Layout, Layout, QAfterFilterCondition> sortTypeLessThan(
-    SortTypesEnum value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'sortType',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<Layout, Layout, QAfterFilterCondition> sortTypeBetween(
-    SortTypesEnum lower,
-    SortTypesEnum upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'sortType',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
 }
 
 extension LayoutQueryObject on QueryBuilder<Layout, Layout, QFilterCondition> {}
@@ -478,18 +402,6 @@ extension LayoutQuerySortBy on QueryBuilder<Layout, Layout, QSortBy> {
       return query.addSortBy(r'layoutType', Sort.desc);
     });
   }
-
-  QueryBuilder<Layout, Layout, QAfterSortBy> sortBySortType() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sortType', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Layout, Layout, QAfterSortBy> sortBySortTypeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sortType', Sort.desc);
-    });
-  }
 }
 
 extension LayoutQuerySortThenBy on QueryBuilder<Layout, Layout, QSortThenBy> {
@@ -528,18 +440,6 @@ extension LayoutQuerySortThenBy on QueryBuilder<Layout, Layout, QSortThenBy> {
       return query.addSortBy(r'layoutType', Sort.desc);
     });
   }
-
-  QueryBuilder<Layout, Layout, QAfterSortBy> thenBySortType() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sortType', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Layout, Layout, QAfterSortBy> thenBySortTypeDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'sortType', Sort.desc);
-    });
-  }
 }
 
 extension LayoutQueryWhereDistinct on QueryBuilder<Layout, Layout, QDistinct> {
@@ -552,12 +452,6 @@ extension LayoutQueryWhereDistinct on QueryBuilder<Layout, Layout, QDistinct> {
   QueryBuilder<Layout, Layout, QDistinct> distinctByLayoutType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'layoutType');
-    });
-  }
-
-  QueryBuilder<Layout, Layout, QDistinct> distinctBySortType() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'sortType');
     });
   }
 }
@@ -578,12 +472,6 @@ extension LayoutQueryProperty on QueryBuilder<Layout, Layout, QQueryProperty> {
   QueryBuilder<Layout, LayoutType, QQueryOperations> layoutTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'layoutType');
-    });
-  }
-
-  QueryBuilder<Layout, SortTypesEnum, QQueryOperations> sortTypeProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'sortType');
     });
   }
 }

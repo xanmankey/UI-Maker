@@ -35,7 +35,6 @@ class _CreatorDialogState extends State<CreatorDialog> {
   void initState() {
     titleController.text = widget.cardSetting.title;
     descriptionController.text = widget.cardSetting.description ?? '';
-    storage = Storage();
     super.initState();
   }
 

@@ -210,6 +210,7 @@ const _WidgetSettingswidgetTypeEnumValueMap = {
   'checkbox': 2,
   'numField': 3,
   'textField': 4,
+  'imageSelector': 5,
 };
 const _WidgetSettingswidgetTypeValueEnumMap = {
   0: WidgetType.card,
@@ -217,6 +218,7 @@ const _WidgetSettingswidgetTypeValueEnumMap = {
   2: WidgetType.checkbox,
   3: WidgetType.numField,
   4: WidgetType.textField,
+  5: WidgetType.imageSelector,
 };
 
 Id _widgetSettingsGetId(WidgetSettings object) {

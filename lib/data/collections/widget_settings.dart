@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'package:isar/isar.dart';
 import 'package:ui_maker/utils/widget_types.dart';
@@ -107,7 +108,8 @@ class WidgetSettings {
   Map<String, dynamic> mapValues = {};
 
   String get values => jsonEncode(mapValues);
-  set values(String json) => mapValues = jsonDecode(json);
+  set values(String json) => mapValues = SplayTreeMap<String, dynamic>.from(
+      jsonDecode(json), (key, value) => key.compareTo(value));
 
   /// Specifying extra widgets if your widget object is a layered widget,
   /// e.g. creator_card
