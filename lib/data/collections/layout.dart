@@ -55,6 +55,9 @@ class Layout {
   @enumerated
   LayoutType layoutType = LayoutType.columns;
 
+  /// The number of listviews alloted by the layout
+  int numGroups = 4;
+
   /// A boolean to determine whether the widgets should be filtered or sorted
   bool filter = false;
 

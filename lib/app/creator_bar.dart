@@ -9,11 +9,14 @@ import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_maker/utils/widget_types.dart';
 
-// On using the creator bar to drag and drop a settings widget,
-// a settings object is CREATED.
-// The settings widgets (and thus, the settings objects) are only created if the creator bar is OPENED
-// for efficiency's sake.
-// The CreatorBar is only available for programs and gamemodes.
+/// A toolbar widget that appears at the bottom of your screen for dragging
+/// and dropping creator widgets. If you want to create a creator widget,
+/// right now you can add it manually via the ```CreatorBar```, but I am
+/// considering a folder-based workaround
+///
+/// ```
+///
+/// ```
 class CreatorBar extends StatefulWidget {
   WidgetSettings widgetSetting;
   CreatorBar({super.key, required this.widgetSetting});

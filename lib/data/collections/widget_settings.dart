@@ -96,6 +96,14 @@ class WidgetSettings {
   late double offsetX;
   late double offsetY;
 
+  /// The listview number the widget is a part of
+  @Index()
+  late int listviewNum;
+
+  /// The widget's index in that listview (if LayoutType not none)
+  @Index()
+  late int listviewIndex;
+
   /// The type of widget selected from the creator bar;
   /// used for recreating the widget
   @Index()
@@ -113,7 +121,7 @@ class WidgetSettings {
 
   /// Specifying extra widgets if your widget object is a layered widget,
   /// e.g. creator_card
-  IsarLink<WidgetSettings> widgets = IsarLink<WidgetSettings>();
+  IsarLinks<WidgetSettings> widgets = IsarLinks<WidgetSettings>();
 
   @override
   String toString() {

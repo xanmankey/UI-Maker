@@ -16,3 +16,23 @@ ALL WITHOUT allowing the user to change the database structure and maintaining l
 SUBGOALS:
 Make it as easy to develop new 'Creator' widgets as possible
 Satisfy pub dev points requirements
+
+CURRENT TODOS
+- creator_area (using draggable) 
+- custom_dialog
+- generate_widgets
+- creator_bar
+
+POSSIBLE REFACTORING
+- CreatorBase
+
+Once I've done these, I have to look into testing the package
+- First, try a dry-run for publishing to make sure it's ready in that regard (dart pub publish --dry-run)
+! You can publish a package as a prerelease: https://dart.dev/tools/pub/publishing#publishing-prereleases
+! Once a package is published, it will ALWAYS remain so (don't publish until you're confident). 
+You can mark a package as discontinued though.
+
+- I'll probably just make a test example main.dart file for using the creator widget; 
+e.g. the provider package HAS no main.dart but it DOES have one under the examples folder
+
+DOCUMENT THOROUGHLY before publishing

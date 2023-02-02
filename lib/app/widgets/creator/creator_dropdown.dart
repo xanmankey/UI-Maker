@@ -1,14 +1,77 @@
 import 'package:flutter/material.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/app/creator_context_menu.dart';
+import 'package:ui_maker/data/utility/widget_settings_keys.dart';
+import 'package:ui_maker/app/widgets/utility/dropdown_item_creator.dart';
 
+// POTENTIAL ISSUES:
+// FutureBuilder with dropdown
+//
+
+/// A dropdown widget that can be dragged in the UI by the user
+/// to create a custom UI. Useful for more dynamic selections and input,
+/// while still maintaining clean(ish) UI.
+/// The dropdown widget has its own dialog in the ```DropdownItemCreator```
+///
+/// ```
+/// class CreatorDropdown extends StatefulWidget {
+///   WidgetSettings widgetSetting;
+///   CreatorDropdown({
+///     super.key,
+///     required this.widgetSetting,
+///   });
+///
+///   @override
+///   State<CreatorDropdown> createState() => _CreatorDropdownState();
+/// }
+///
+/// class _CreatorDropdownState extends State<CreatorDropdown> {
+///   late DropdownMenuTypes dropdownInputType = DropdownMenuTypes.string;
+///   @override
+///   Widget build(BuildContext context) {
+///     return CreatorContextMenu(
+///         widgetSetting: widget.widgetSetting,
+///         creatorWidget: (widget.widgetSetting.mapValues
+///                 .containsKey(WidgetSettingsKeys.items.name))
+///             ? DropdownButton(
+///                 items: valueToItem(widget
+///                     .widgetSetting.mapValues[WidgetSettingsKeys.items.name]),
+///                 // value: widget.widgetSetting.enabled,
+///                 dropdownColor: Color(widget.widgetSetting.color),
+///                 hint: Text(widget.widgetSetting.description ?? ''),
+///                 onChanged: (widget.widgetSetting.enabled)
+///                     ? (value) {
+///                         setState(() {
+///                           widget.widgetSetting.mapValues
+///                               .addAll({widget.widgetSetting.title: value});
+///                         });
+///                       }
+///                     : null)
+///             : FutureBuilder(
+///                 future: getItems(context),
+///                 builder: ((context, snapshot) {
+///                   return DropdownButton(
+///                       items: snapshot.data,
+///                       // value: widget.widgetSetting.enabled,
+///                       dropdownColor: Color(widget.widgetSetting.color),
+///                       hint: Text(widget.widgetSetting.description ?? ''),
+///                       onChanged: (widget.widgetSetting.enabled)
+///                           ? (value) {
+///                               setState(() {
+///                                 widget.widgetSetting.mapValues.addAll(
+///                                     {widget.widgetSetting.title: value});
+///                               });
+///                             }
+///                           : null);
+///                 })));
+///   }
+/// }
+/// ```
 class CreatorDropdown extends StatefulWidget {
   WidgetSettings widgetSetting;
-  Items items;
   CreatorDropdown({
     super.key,
     required this.widgetSetting,
-    required this.items,
   });
 
   @override
@@ -16,43 +79,18 @@ class CreatorDropdown extends StatefulWidget {
 }
 
 class _CreatorDropdownState extends State<CreatorDropdown> {
+  late DropdownMenuTypes dropdownInputType = DropdownMenuTypes.string;
   @override
   Widget build(BuildContext context) {
-    // If an individual widget, display a form option with validation
-    (widget.widgetSetting.individual)
-        ? CreatorContextMenu(
-            widgetSetting: widget.widgetSetting,
-            creatorWidget: DropdownButtonFormField(
-              items: populateDropdown(widget.items),
-              // value: widget.setting.enabled,
-              dropdownColor: inputTypeColor(widget.widgetSetting.inputType),
-              hint: Text(widget.widgetSetting.description ?? ''),
-              onChanged: (widget.widgetSetting.enabled)
-                  ? (value) {
-                      setState(() {
-                        widget.widgetSetting.mapValues
-                            .addAll({widget.widgetSetting.title: value});
-                      });
-                    }
-                  : null,
-              // ? Autovalidate mode?
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              validator: widget.widgetSetting.validation != null
-                  ? widget.widgetSetting.validation
-                  : (value) {
-                      if (value == null) {
-                        return 'Please select an option';
-                      }
-                      return null;
-                    },
-            ),
-          )
-        : CreatorContextMenu(
-            widgetSetting: widget.widgetSetting,
-            creatorWidget: DropdownButton(
-                items: populateDropdown(widget.items),
-                value: widget.widgetSetting.enabled,
-                dropdownColor: inputTypeColor(widget.widgetSetting.inputType),
+    return CreatorContextMenu(
+        widgetSetting: widget.widgetSetting,
+        creatorWidget: (widget.widgetSetting.mapValues
+                .containsKey(WidgetSettingsKeys.items.name))
+            ? DropdownButton(
+                items: valueToItem(widget
+                    .widgetSetting.mapValues[WidgetSettingsKeys.items.name]),
+                // value: widget.widgetSetting.enabled,
+                dropdownColor: Color(widget.widgetSetting.color),
                 hint: Text(widget.widgetSetting.description ?? ''),
                 onChanged: (widget.widgetSetting.enabled)
                     ? (value) {
@@ -61,33 +99,37 @@ class _CreatorDropdownState extends State<CreatorDropdown> {
                               .addAll({widget.widgetSetting.title: value});
                         });
                       }
-                    : null),
-          );
-    throw Exception("Settings dropdown failed to render");
+                    : null)
+            : FutureBuilder(
+                future: getItems(context),
+                builder: ((context, snapshot) {
+                  return DropdownButton(
+                      items: snapshot.data,
+                      // value: widget.widgetSetting.enabled,
+                      dropdownColor: Color(widget.widgetSetting.color),
+                      hint: Text(widget.widgetSetting.description ?? ''),
+                      onChanged: (widget.widgetSetting.enabled)
+                          ? (value) {
+                              setState(() {
+                                widget.widgetSetting.mapValues.addAll(
+                                    {widget.widgetSetting.title: value});
+                              });
+                            }
+                          : null);
+                })));
   }
 }
 
-List<DropdownMenuItem<String>> populateDropdown(Items items) {
-  switch (items) {
-    case Items.inputs:
-      return [
-        for (Inputs inputs in items.inputsIterable)
-          DropdownMenuItem<String>(child: Text(text: inputs.toString()))
-      ];
-    case Items.inputTypes:
-      return [
-        for (InputTypes inputTypes in items.inputTypesIterable)
-          DropdownMenuItem<String>(child: Text(text: inputTypes.toString()))
-      ];
-    case Items.filters:
-      return [
-        for (Filters filters in items.filtersIterable)
-          DropdownMenuItem<String>(child: Text(text: filters.toString()))
-      ];
-    case Items.devices:
-      return [
-        for (Device device in items.filtersIterable)
-          DropdownMenuItem<String>(child: Text(text: device.toString()))
-      ];
-  }
+/// A function for returning the DropdownMenuItems from the ```DropdownItemCreator```
+/// dialog
+///
+/// ```
+/// Future<List<DropdownMenuItem<String>>?> getItems(BuildContext context) async {
+///   await showDialog(
+///       context: context, builder: (context) => const DropdownItemCreator());
+/// }
+/// ```
+Future<List<DropdownMenuItem<String>>?> getItems(BuildContext context) async {
+  await showDialog(
+      context: context, builder: (context) => const DropdownItemCreator());
 }

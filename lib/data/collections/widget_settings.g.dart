@@ -32,28 +32,38 @@ const WidgetSettingsSchema = CollectionSchema(
       name: r'enabled',
       type: IsarType.bool,
     ),
-    r'offsetX': PropertySchema(
+    r'listviewIndex': PropertySchema(
       id: 3,
+      name: r'listviewIndex',
+      type: IsarType.long,
+    ),
+    r'listviewNum': PropertySchema(
+      id: 4,
+      name: r'listviewNum',
+      type: IsarType.long,
+    ),
+    r'offsetX': PropertySchema(
+      id: 5,
       name: r'offsetX',
       type: IsarType.double,
     ),
     r'offsetY': PropertySchema(
-      id: 4,
+      id: 6,
       name: r'offsetY',
       type: IsarType.double,
     ),
     r'title': PropertySchema(
-      id: 5,
+      id: 7,
       name: r'title',
       type: IsarType.string,
     ),
     r'values': PropertySchema(
-      id: 6,
+      id: 8,
       name: r'values',
       type: IsarType.string,
     ),
     r'widgetType': PropertySchema(
-      id: 7,
+      id: 9,
       name: r'widgetType',
       type: IsarType.byte,
       enumMap: _WidgetSettingswidgetTypeEnumValueMap,
@@ -110,7 +120,7 @@ const WidgetSettingsSchema = CollectionSchema(
       id: 1560134347547876117,
       name: r'widgets',
       target: r'WidgetSettings',
-      single: true,
+      single: false,
     )
   },
   embeddedSchemas: {},
@@ -146,11 +156,13 @@ void _widgetSettingsSerialize(
   writer.writeLong(offsets[0], object.color);
   writer.writeString(offsets[1], object.description);
   writer.writeBool(offsets[2], object.enabled);
-  writer.writeDouble(offsets[3], object.offsetX);
-  writer.writeDouble(offsets[4], object.offsetY);
-  writer.writeString(offsets[5], object.title);
-  writer.writeString(offsets[6], object.values);
-  writer.writeByte(offsets[7], object.widgetType.index);
+  writer.writeLong(offsets[3], object.listviewIndex);
+  writer.writeLong(offsets[4], object.listviewNum);
+  writer.writeDouble(offsets[5], object.offsetX);
+  writer.writeDouble(offsets[6], object.offsetY);
+  writer.writeString(offsets[7], object.title);
+  writer.writeString(offsets[8], object.values);
+  writer.writeByte(offsets[9], object.widgetType.index);
 }
 
 WidgetSettings _widgetSettingsDeserialize(
@@ -164,12 +176,14 @@ WidgetSettings _widgetSettingsDeserialize(
   object.description = reader.readStringOrNull(offsets[1]);
   object.enabled = reader.readBool(offsets[2]);
   object.id = id;
-  object.offsetX = reader.readDouble(offsets[3]);
-  object.offsetY = reader.readDouble(offsets[4]);
-  object.title = reader.readString(offsets[5]);
-  object.values = reader.readString(offsets[6]);
+  object.listviewIndex = reader.readLong(offsets[3]);
+  object.listviewNum = reader.readLong(offsets[4]);
+  object.offsetX = reader.readDouble(offsets[5]);
+  object.offsetY = reader.readDouble(offsets[6]);
+  object.title = reader.readString(offsets[7]);
+  object.values = reader.readString(offsets[8]);
   object.widgetType = _WidgetSettingswidgetTypeValueEnumMap[
-          reader.readByteOrNull(offsets[7])] ??
+          reader.readByteOrNull(offsets[9])] ??
       WidgetType.card;
   return object;
 }
@@ -188,14 +202,18 @@ P _widgetSettingsDeserializeProp<P>(
     case 2:
       return (reader.readBool(offset)) as P;
     case 3:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 4:
-      return (reader.readDouble(offset)) as P;
+      return (reader.readLong(offset)) as P;
     case 5:
-      return (reader.readString(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 6:
-      return (reader.readString(offset)) as P;
+      return (reader.readDouble(offset)) as P;
     case 7:
+      return (reader.readString(offset)) as P;
+    case 8:
+      return (reader.readString(offset)) as P;
+    case 9:
       return (_WidgetSettingswidgetTypeValueEnumMap[
               reader.readByteOrNull(offset)] ??
           WidgetType.card) as P;
@@ -840,6 +858,118 @@ extension WidgetSettingsQueryFilter
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      listviewIndexEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'listviewIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      listviewIndexGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'listviewIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      listviewIndexLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'listviewIndex',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      listviewIndexBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'listviewIndex',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      listviewNumEqualTo(int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'listviewNum',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      listviewNumGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'listviewNum',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      listviewNumLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'listviewNum',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      listviewNumBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'listviewNum',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
       offsetXEqualTo(
     double value, {
     double epsilon = Query.epsilon,
@@ -1313,9 +1443,56 @@ extension WidgetSettingsQueryLinks
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      widgetsIsNull() {
+      widgetsLengthEqualTo(int length) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'widgets', length, true, length, true);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetsIsEmpty() {
     return QueryBuilder.apply(this, (query) {
       return query.linkLength(r'widgets', 0, true, 0, true);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetsIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'widgets', 0, false, 999999, true);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetsLengthLessThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'widgets', 0, true, length, include);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetsLengthGreaterThan(
+    int length, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(r'widgets', length, include, 999999, true);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      widgetsLengthBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.linkLength(
+          r'widgets', lower, includeLower, upper, includeUpper);
     });
   }
 }
@@ -1358,6 +1535,34 @@ extension WidgetSettingsQuerySortBy
       sortByEnabledDesc() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'enabled', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByListviewIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listviewIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByListviewIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listviewIndex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByListviewNum() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listviewNum', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByListviewNumDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listviewNum', Sort.desc);
     });
   }
 
@@ -1480,6 +1685,34 @@ extension WidgetSettingsQuerySortThenBy
     });
   }
 
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByListviewIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listviewIndex', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByListviewIndexDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listviewIndex', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByListviewNum() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listviewNum', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByListviewNumDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'listviewNum', Sort.desc);
+    });
+  }
+
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByOffsetX() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'offsetX', Sort.asc);
@@ -1567,6 +1800,20 @@ extension WidgetSettingsQueryWhereDistinct
     });
   }
 
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct>
+      distinctByListviewIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'listviewIndex');
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct>
+      distinctByListviewNum() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'listviewNum');
+    });
+  }
+
   QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> distinctByOffsetX() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'offsetX');
@@ -1625,6 +1872,18 @@ extension WidgetSettingsQueryProperty
   QueryBuilder<WidgetSettings, bool, QQueryOperations> enabledProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'enabled');
+    });
+  }
+
+  QueryBuilder<WidgetSettings, int, QQueryOperations> listviewIndexProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'listviewIndex');
+    });
+  }
+
+  QueryBuilder<WidgetSettings, int, QQueryOperations> listviewNumProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'listviewNum');
     });
   }
 

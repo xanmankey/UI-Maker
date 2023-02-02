@@ -27,6 +27,11 @@ const LayoutSchema = CollectionSchema(
       name: r'layoutType',
       type: IsarType.byte,
       enumMap: _LayoutlayoutTypeEnumValueMap,
+    ),
+    r'numGroups': PropertySchema(
+      id: 2,
+      name: r'numGroups',
+      type: IsarType.long,
     )
   },
   estimateSize: _layoutEstimateSize,
@@ -67,6 +72,7 @@ void _layoutSerialize(
 ) {
   writer.writeBool(offsets[0], object.filter);
   writer.writeByte(offsets[1], object.layoutType.index);
+  writer.writeLong(offsets[2], object.numGroups);
 }
 
 Layout _layoutDeserialize(
@@ -81,6 +87,7 @@ Layout _layoutDeserialize(
   object.layoutType =
       _LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offsets[1])] ??
           LayoutType.columns;
+  object.numGroups = reader.readLong(offsets[2]);
   return object;
 }
 
@@ -96,6 +103,8 @@ P _layoutDeserializeProp<P>(
     case 1:
       return (_LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           LayoutType.columns) as P;
+    case 2:
+      return (reader.readLong(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
   }
@@ -316,6 +325,59 @@ extension LayoutQueryFilter on QueryBuilder<Layout, Layout, QFilterCondition> {
       ));
     });
   }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> numGroupsEqualTo(
+      int value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'numGroups',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> numGroupsGreaterThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'numGroups',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> numGroupsLessThan(
+    int value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'numGroups',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> numGroupsBetween(
+    int lower,
+    int upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'numGroups',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
 }
 
 extension LayoutQueryObject on QueryBuilder<Layout, Layout, QFilterCondition> {}
@@ -402,6 +464,18 @@ extension LayoutQuerySortBy on QueryBuilder<Layout, Layout, QSortBy> {
       return query.addSortBy(r'layoutType', Sort.desc);
     });
   }
+
+  QueryBuilder<Layout, Layout, QAfterSortBy> sortByNumGroups() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'numGroups', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterSortBy> sortByNumGroupsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'numGroups', Sort.desc);
+    });
+  }
 }
 
 extension LayoutQuerySortThenBy on QueryBuilder<Layout, Layout, QSortThenBy> {
@@ -440,6 +514,18 @@ extension LayoutQuerySortThenBy on QueryBuilder<Layout, Layout, QSortThenBy> {
       return query.addSortBy(r'layoutType', Sort.desc);
     });
   }
+
+  QueryBuilder<Layout, Layout, QAfterSortBy> thenByNumGroups() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'numGroups', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterSortBy> thenByNumGroupsDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'numGroups', Sort.desc);
+    });
+  }
 }
 
 extension LayoutQueryWhereDistinct on QueryBuilder<Layout, Layout, QDistinct> {
@@ -452,6 +538,12 @@ extension LayoutQueryWhereDistinct on QueryBuilder<Layout, Layout, QDistinct> {
   QueryBuilder<Layout, Layout, QDistinct> distinctByLayoutType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'layoutType');
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QDistinct> distinctByNumGroups() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'numGroups');
     });
   }
 }
@@ -472,6 +564,12 @@ extension LayoutQueryProperty on QueryBuilder<Layout, Layout, QQueryProperty> {
   QueryBuilder<Layout, LayoutType, QQueryOperations> layoutTypeProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'layoutType');
+    });
+  }
+
+  QueryBuilder<Layout, int, QQueryOperations> numGroupsProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'numGroups');
     });
   }
 }
