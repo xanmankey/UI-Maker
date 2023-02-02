@@ -7,8 +7,6 @@ import 'package:ui_maker/data/isar_db.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/utils/layout_types.dart';
 
-// TODO: DOCUMENT AND REORGANIZE for planning
-
 /// An area dedicated to draggable widgets that can be added to the UI.
 /// Widgets should only be placed in designated ```CreatorArea``` widgets
 /// so the database backend can handle UI settings and generation accordingly
@@ -55,7 +53,7 @@ class _CreatorAreaState extends State<CreatorArea> {
           // How can I check the index of something in a ListView?
           switch (widget.layout.layoutType) {
             case LayoutType.columns:
-              // Create $numGroups columns for widgets to be placed
+              // Create $numGroups columns (actually listViews) for widgets to be placed
               return Row(
                 children: [
                   for (int i = 0; i < widget.layout.numGroups; i++)
@@ -67,25 +65,34 @@ class _CreatorAreaState extends State<CreatorArea> {
                 ],
               );
             case LayoutType.rows:
-              // Create $numGroups rows for widgets to be placed
+              // Create $numGroups rows (actually listViews) for widgets to be placed
               return Column(
                 children: [
                   for (int i = 0; i < widget.layout.numGroups; i++)
                     ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (context, index) {
-                        // return generateWidgets(widgetList[i]);
+                        return generateWidgets(widgetList[i]);
                       },
                     )
                 ],
               );
             case LayoutType.none:
               // Allow widgets to be placed wherever in a specified area
-              return Expanded(child: Container());
+              return Expanded(
+                  child: Column(
+                children: [
+                  for (List<WidgetSettings> widgetSettings in widgetList)
+                    generateWidgets(widgetSettings, positioned: true)
+                ],
+              ));
           }
         }),
         onAcceptWithDetails: (details) {
-          // Write data to db
+          // Write new widget data to db?
+          // GOAL: write offset and widget type data, and update
+          // the rest via context menu and other settings
+          final Object? payload = details.data;
         },
         onMove: (details) {
           // A function for determining where the widgets CAN be moved

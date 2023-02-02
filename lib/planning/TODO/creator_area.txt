@@ -1,0 +1,20 @@
+- Takes a layout as input
+- Uses the layout.numGroups property to get a list of numGroups lists of widgets
+
+CREATOR_BASE TODO
+- If I could check if a child has changed/been rebuilt, I could update the settings here
+- This would reduce database calls, but I'm not sure how to check that
+
+POTENTIAL PROBLEMS
+- Does the details value in onAcceptWithDetails allow me 
+to access or write an instance of WidgetSettings? It doesn't seem like it...
+
+TODO
+- onAcceptWithDetails
+- onMove
+
+
+CREATOR_WIDGETS TODO
+- Implement draggable with them (or perhaps re-impement creator base; might 
+work better here)
+

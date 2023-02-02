@@ -5,6 +5,7 @@ import 'package:ui_maker/app/utils/generate_widget_settings.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/data/isar_db.dart';
 import 'package:ui_maker/utils/widget_types.dart';
+import 'package:ui_maker/data/collections/layout.dart';
 
 // Scrapped this idea for the moment because I wasn't sure of the best way
 // to go about implementation
@@ -15,36 +16,28 @@ import 'package:ui_maker/utils/widget_types.dart';
 /// - They all contain a database which is loaded during initState() - build
 /// - They all take a widgetSetting instance as input (if one is not passed,
 /// a default one is created) to represent widget values and information
-/*
-class CreatorBase extends InheritedWidget {
+class CreatorBase extends StatefulWidget {
   WidgetSettings? widgetSetting;
   WidgetType widgetType;
   Widget creatorWidget;
-  Future<Isar> isarDB;
   CreatorBase({
     super.key,
     required this.creatorWidget,
     required this.widgetType,
     this.widgetSetting,
-  })  : isarDB = db.isarDB,
-        super(child: creatorWidget);
-
-  static CreatorBase? of(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<CreatorBase>();
-  }
+  });
 
   @override
-  bool updateShouldNotify(CreatorBase oldWidget) {
-    return widgetSetting != oldWidget.widgetSetting;
-  }
+  State<CreatorBase> createState() => _CreatorBaseState();
 }
 
 class _CreatorBaseState extends State<CreatorBase> {
+  late Isar isarDB;
   @override
   initState() async {
-    widget.db = await db.isarDB;
     widget.widgetSetting ??=
         generateWidgetSettings([widget.widgetType], context)[widget.widgetType];
+    isarDB = await db.isarDB;
     super.initState();
   }
 
@@ -52,8 +45,20 @@ class _CreatorBaseState extends State<CreatorBase> {
   Widget build(BuildContext context) {
     return CreatorContextMenu(
       widgetSetting: widget.widgetSetting!,
-      creatorWidget: widget.creatorWidget,
+      creatorWidget: Draggable(
+        feedback: widget.creatorWidget,
+        child: widget.creatorWidget,
+        onDragCompleted: () async {
+          // Write Initial WidgetSettings data to widget settings
+          // On any change to widgetSettings, data is also written
+          // if (await isarDB.widgetSettings.get(widget.widgetSetting!.id) !=
+          //     null) {
+          //   isarDB.widgetSettings.delete(widget.widgetSetting!.id);
+          // }
+          isarDB
+              .writeTxn(() => isarDB.widgetSettings.put(widget.widgetSetting!));
+        },
+      ),
     );
   }
 }
-*/
