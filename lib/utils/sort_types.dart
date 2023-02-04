@@ -1,3 +1,7 @@
+library ui_maker;
+
+export 'sort_types.dart';
+
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:isar/isar.dart';

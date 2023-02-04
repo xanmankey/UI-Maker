@@ -1,3 +1,7 @@
+library ui_maker;
+
+export 'isar_db.dart';
+
 import 'package:isar/isar.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';

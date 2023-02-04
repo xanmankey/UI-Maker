@@ -1,3 +1,7 @@
+library ui_maker;
+
+export 'creator_bar.dart';
+
 // A toolbar supporting various drag and drop flutter widgets
 // to aid in program and gamemode creation
 

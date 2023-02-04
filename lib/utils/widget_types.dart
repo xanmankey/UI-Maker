@@ -1,3 +1,7 @@
+library ui_maker;
+
+export 'widget_types.dart';
+
 import 'package:ui_maker/data/collections/widget_settings.dart';
 
 enum WidgetType {

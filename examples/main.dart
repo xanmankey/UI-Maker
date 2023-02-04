@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
+// TODO: should I reorganize my package to work with one import statement?
+// Does that mean it all needs to be in one file?
+import 'package:ui_maker/app/creator_area.dart';
 
 void main() {
   runApp(const MyApp());

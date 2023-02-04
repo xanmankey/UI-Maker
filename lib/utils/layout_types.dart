@@ -1,3 +1,7 @@
+library ui_maker;
+
+export 'layout_types.dart';
+
 enum LayoutType {
   columns,
   rows,

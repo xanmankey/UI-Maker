@@ -1,3 +1,7 @@
+library ui_maker;
+
+export 'widget_settings_keys.dart';
+
 /// An enumerator with constants used as keys for specific widget data
 /// in the widget_settings mapValues map. The main purpose is to provide
 /// a method for consistency for accessing and writing map values

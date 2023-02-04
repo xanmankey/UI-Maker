@@ -1,3 +1,7 @@
+library ui_maker;
+
+export 'creator_area.dart';
+
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:ui_maker/app/utils/generate_widgets.dart';

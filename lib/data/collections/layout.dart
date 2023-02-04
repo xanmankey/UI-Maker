@@ -1,7 +1,11 @@
+// Note that the part command also includes the settings as part of the library
+library ui_maker;
+
+export 'layout.dart';
+
 import 'package:isar/isar.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/utils/layout_types.dart';
-import 'package:ui_maker/utils/sort_types.dart';
 
 part 'layout.g.dart';
 
