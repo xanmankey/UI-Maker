@@ -1,10 +1,6 @@
-library ui_maker;
-
-export 'creator_base.dart';
-
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
-import 'package:ui_maker/app/creator_context_menu.dart';
+import 'package:ui_maker/app/widgets/creator_context_menu.dart';
 import 'package:ui_maker/app/utils/generate_widget_settings.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/data/isar_db.dart';

@@ -1,7 +1,3 @@
-library ui_maker;
-
-export 'creator_checkbox.dart';
-
 import 'package:ui_maker/app/widgets/utility/creator_base.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';

@@ -1,7 +1,3 @@
-library ui_maker;
-
-export 'generate_widgets.dart';
-
 import 'package:flutter/material.dart';
 import 'package:ui_maker/app/widgets/creator/creator_card.dart';
 import 'package:ui_maker/app/widgets/creator/creator_image.dart';

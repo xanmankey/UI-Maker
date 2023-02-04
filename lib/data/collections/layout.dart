@@ -1,7 +1,4 @@
 // Note that the part command also includes the settings as part of the library
-library ui_maker;
-
-export 'layout.dart';
 
 import 'package:isar/isar.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';

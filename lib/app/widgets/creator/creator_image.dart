@@ -1,7 +1,3 @@
-library ui_maker;
-
-export 'creator_image.dart';
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';

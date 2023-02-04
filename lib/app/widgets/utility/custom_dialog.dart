@@ -1,7 +1,3 @@
-library ui_maker;
-
-export 'custom_dialog.dart';
-
 // A widget for structuring entries in the character gallery
 import 'package:isar/isar.dart';
 import 'package:ui_maker/app/creator_area.dart';

@@ -1,7 +1,3 @@
-library ui_maker;
-
-export 'dropdown_item_creator.dart';
-
 // A dialog for creating dropdown items
 import 'package:flutter/material.dart';
 

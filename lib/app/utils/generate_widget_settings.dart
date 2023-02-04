@@ -1,7 +1,3 @@
-library ui_maker;
-
-export 'generate_widget_settings.dart';
-
 import 'package:flutter/material.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/utils/widget_types.dart';

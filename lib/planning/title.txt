@@ -1,6 +1,0 @@
-- A folder for planning purposes and files
-- Contains the TODO folder with files dedicated to some of the larger tasks, such as:
-    - CreatorArea
-    - generateWidgets()
-    - CustomDialog
-    - CreatorBar

@@ -1,7 +1,3 @@
-library ui_maker;
-
-export 'creator_context_menu.dart';
-
 // A context menu for right-clicking WidgetType
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:isar/isar.dart';

@@ -1,7 +1,3 @@
-library ui_maker;
-
-export 'creator_card.dart';
-
 import 'package:ui_maker/app/widgets/utility/creator_base.dart';
 import 'package:ui_maker/app/widgets/utility/custom_dialog.dart';
 import 'package:ui_maker/data/collections/layout.dart';

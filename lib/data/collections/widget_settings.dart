@@ -1,7 +1,3 @@
-library ui_maker;
-
-export 'widget_settings.dart';
-
 import 'dart:collection';
 import 'dart:convert';
 import 'package:isar/isar.dart';
