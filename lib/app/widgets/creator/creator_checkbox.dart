@@ -1,6 +1,7 @@
+import 'package:ui_maker/app/widgets/utility/creator_base.dart';
+import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_maker/app/creator_context_menu.dart';
 
 /// A checkbox widget that can be dragged in the UI by the user
 /// to create a custom UI. Useful for simple on-and-off states
@@ -8,7 +9,12 @@ import 'package:ui_maker/app/creator_context_menu.dart';
 /// ```
 /// class CreatorCheckbox extends StatefulWidget {
 ///   WidgetSettings widgetSetting;
-///   CreatorCheckbox({super.key, required this.widgetSetting});
+///   Layout layout;
+///   CreatorCheckbox({
+///     super.key,
+///     required this.widgetSetting,
+///     required this.layout,
+///   });
 ///
 ///   @override
 ///   State<CreatorCheckbox> createState() => _CreatorCheckboxState();
@@ -17,8 +23,10 @@ import 'package:ui_maker/app/creator_context_menu.dart';
 /// class _CreatorCheckboxState extends State<CreatorCheckbox> {
 ///   @override
 ///   Widget build(BuildContext context) {
-///     return CreatorContextMenu(
+///     return CreatorBase(
 ///       widgetSetting: widget.widgetSetting,
+///       widgetType: widget.widgetSetting.widgetType,
+///       layout: widget.layout,
 ///       creatorWidget: CheckboxListTile(
 ///         value: true,
 ///         tileColor: Color(widget.widgetSetting.color),
@@ -33,10 +41,16 @@ import 'package:ui_maker/app/creator_context_menu.dart';
 ///     );
 ///   }
 /// }
+
 /// ```
 class CreatorCheckbox extends StatefulWidget {
   WidgetSettings widgetSetting;
-  CreatorCheckbox({super.key, required this.widgetSetting});
+  Layout layout;
+  CreatorCheckbox({
+    super.key,
+    required this.widgetSetting,
+    required this.layout,
+  });
 
   @override
   State<CreatorCheckbox> createState() => _CreatorCheckboxState();
@@ -45,8 +59,10 @@ class CreatorCheckbox extends StatefulWidget {
 class _CreatorCheckboxState extends State<CreatorCheckbox> {
   @override
   Widget build(BuildContext context) {
-    return CreatorContextMenu(
+    return CreatorBase(
       widgetSetting: widget.widgetSetting,
+      widgetType: widget.widgetSetting.widgetType,
+      layout: widget.layout,
       creatorWidget: CheckboxListTile(
         value: true,
         tileColor: Color(widget.widgetSetting.color),

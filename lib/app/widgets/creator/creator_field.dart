@@ -1,6 +1,7 @@
+import 'package:ui_maker/app/widgets/utility/creator_base.dart';
+import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_maker/app/creator_context_menu.dart';
 import 'package:ui_maker/data/utility/widget_settings_keys.dart';
 import 'package:ui_maker/utils/widget_types.dart';
 
@@ -13,10 +14,12 @@ import 'package:ui_maker/utils/widget_types.dart';
 ///   WidgetType widgetType;
 ///   bool title;
 ///   bool description;
+///   Layout layout;
 ///   CreatorField({
 ///     super.key,
 ///     required this.widgetSetting,
 ///     required this.widgetType,
+///     required this.layout,
 ///     this.title = true,
 ///     this.description = false,
 ///   });
@@ -43,8 +46,10 @@ import 'package:ui_maker/utils/widget_types.dart';
 ///
 ///   @override
 ///   Widget build(BuildContext context) {
-///     return CreatorContextMenu(
+///     return CreatorBase(
 ///       widgetSetting: widget.widgetSetting,
+///       widgetType: widget.widgetType,
+///       layout: widget.layout,
 ///       creatorWidget: TextFormField(
 ///         controller: controller,
 ///         style: TextStyle(
@@ -86,10 +91,12 @@ class CreatorField extends StatefulWidget {
   WidgetType widgetType;
   bool title;
   bool description;
+  Layout layout;
   CreatorField({
     super.key,
     required this.widgetSetting,
     required this.widgetType,
+    required this.layout,
     this.title = true,
     this.description = false,
   });
@@ -116,8 +123,10 @@ class _CreatorFieldState extends State<CreatorField> {
 
   @override
   Widget build(BuildContext context) {
-    return CreatorContextMenu(
+    return CreatorBase(
       widgetSetting: widget.widgetSetting,
+      widgetType: widget.widgetType,
+      layout: widget.layout,
       creatorWidget: TextFormField(
         controller: controller,
         style: TextStyle(

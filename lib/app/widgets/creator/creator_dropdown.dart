@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ui_maker/app/widgets/utility/creator_base.dart';
+import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
-import 'package:ui_maker/app/creator_context_menu.dart';
 import 'package:ui_maker/data/utility/widget_settings_keys.dart';
 import 'package:ui_maker/app/widgets/utility/dropdown_item_creator.dart';
 
-// POTENTIAL ISSUES:
+// TODO: POTENTIAL ISSUES:
 // FutureBuilder with dropdown
-//
 
 /// A dropdown widget that can be dragged in the UI by the user
 /// to create a custom UI. Useful for more dynamic selections and input,
@@ -16,9 +16,11 @@ import 'package:ui_maker/app/widgets/utility/dropdown_item_creator.dart';
 /// ```
 /// class CreatorDropdown extends StatefulWidget {
 ///   WidgetSettings widgetSetting;
+///   Layout layout;
 ///   CreatorDropdown({
 ///     super.key,
 ///     required this.widgetSetting,
+///     required this.layout,
 ///   });
 ///
 ///   @override
@@ -29,8 +31,10 @@ import 'package:ui_maker/app/widgets/utility/dropdown_item_creator.dart';
 ///   late DropdownMenuTypes dropdownInputType = DropdownMenuTypes.string;
 ///   @override
 ///   Widget build(BuildContext context) {
-///     return CreatorContextMenu(
+///     return CreatorBase(
 ///         widgetSetting: widget.widgetSetting,
+///         widgetType: widget.widgetSetting.widgetType,
+///         layout: widget.layout,
 ///         creatorWidget: (widget.widgetSetting.mapValues
 ///                 .containsKey(WidgetSettingsKeys.items.name))
 ///             ? DropdownButton(
@@ -69,9 +73,11 @@ import 'package:ui_maker/app/widgets/utility/dropdown_item_creator.dart';
 /// ```
 class CreatorDropdown extends StatefulWidget {
   WidgetSettings widgetSetting;
+  Layout layout;
   CreatorDropdown({
     super.key,
     required this.widgetSetting,
+    required this.layout,
   });
 
   @override
@@ -82,8 +88,10 @@ class _CreatorDropdownState extends State<CreatorDropdown> {
   late DropdownMenuTypes dropdownInputType = DropdownMenuTypes.string;
   @override
   Widget build(BuildContext context) {
-    return CreatorContextMenu(
+    return CreatorBase(
         widgetSetting: widget.widgetSetting,
+        widgetType: widget.widgetSetting.widgetType,
+        layout: widget.layout,
         creatorWidget: (widget.widgetSetting.mapValues
                 .containsKey(WidgetSettingsKeys.items.name))
             ? DropdownButton(

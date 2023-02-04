@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:ui_maker/app/creator_context_menu.dart';
+import 'package:ui_maker/app/widgets/utility/creator_base.dart';
+import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/data/utility/widget_settings_keys.dart';
 
@@ -12,7 +14,8 @@ import 'package:ui_maker/data/utility/widget_settings_keys.dart';
 /// ```
 /// class CreatorImage extends StatefulWidget {
 ///   WidgetSettings widgetSetting;
-///   CreatorImage({super.key, required this.widgetSetting});
+///   Layout layout;
+///   CreatorImage({super.key, required this.widgetSetting, required this.layout});
 ///
 ///   @override
 ///   State<CreatorImage> createState() => _CreatorImageState();
@@ -22,8 +25,10 @@ import 'package:ui_maker/data/utility/widget_settings_keys.dart';
 ///   File? image;
 ///   @override
 ///   Widget build(BuildContext context) {
-///     return CreatorContextMenu(
+///     return CreatorBase(
 ///       widgetSetting: widget.widgetSetting,
+///       widgetType: widget.widgetSetting.widgetType,
+///       layout: widget.layout,
 ///       creatorWidget: ElevatedButton(
 ///           onPressed: () async {
 ///             FilePickerResult? result = await FilePicker.platform.pickFiles();
@@ -43,7 +48,8 @@ import 'package:ui_maker/data/utility/widget_settings_keys.dart';
 /// ```
 class CreatorImage extends StatefulWidget {
   WidgetSettings widgetSetting;
-  CreatorImage({super.key, required this.widgetSetting});
+  Layout layout;
+  CreatorImage({super.key, required this.widgetSetting, required this.layout});
 
   @override
   State<CreatorImage> createState() => _CreatorImageState();
@@ -53,8 +59,10 @@ class _CreatorImageState extends State<CreatorImage> {
   File? image;
   @override
   Widget build(BuildContext context) {
-    return CreatorContextMenu(
+    return CreatorBase(
       widgetSetting: widget.widgetSetting,
+      widgetType: widget.widgetSetting.widgetType,
+      layout: widget.layout,
       creatorWidget: ElevatedButton(
           onPressed: () async {
             FilePickerResult? result = await FilePicker.platform.pickFiles();

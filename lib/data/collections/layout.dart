@@ -52,13 +52,19 @@ class Layout {
   /// The structure of the layout; by default it is columns,
   /// but horizontal rows are also supported, as well as no layout
   /// (widgets will retain their current position)
+  @Index()
   @enumerated
   LayoutType layoutType = LayoutType.columns;
 
   /// The number of listviews alloted by the layout
+  @Index()
   int numGroups = 4;
 
+  late double width;
+  late double height;
+
   /// A boolean to determine whether the widgets should be filtered or sorted
+  @Index()
   bool filter = false;
 
   @override

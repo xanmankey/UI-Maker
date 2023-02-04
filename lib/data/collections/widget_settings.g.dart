@@ -101,6 +101,32 @@ const WidgetSettingsSchema = CollectionSchema(
         )
       ],
     ),
+    r'listviewNum': IndexSchema(
+      id: 8814354607143194053,
+      name: r'listviewNum',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'listviewNum',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
+    r'listviewIndex': IndexSchema(
+      id: 1148815002659656814,
+      name: r'listviewIndex',
+      unique: false,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'listviewIndex',
+          type: IndexType.value,
+          caseSensitive: false,
+        )
+      ],
+    ),
     r'widgetType': IndexSchema(
       id: -40241655692754270,
       name: r'widgetType',
@@ -266,6 +292,22 @@ extension WidgetSettingsQueryWhereSort
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
         const IndexWhereClause.any(indexName: r'color'),
+      );
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhere> anyListviewNum() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'listviewNum'),
+      );
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhere> anyListviewIndex() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(
+        const IndexWhereClause.any(indexName: r'listviewIndex'),
       );
     });
   }
@@ -481,6 +523,192 @@ extension WidgetSettingsQueryWhere
         lower: [lowerColor],
         includeLower: includeLower,
         upper: [upperColor],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewNumEqualTo(int listviewNum) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'listviewNum',
+        value: [listviewNum],
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewNumNotEqualTo(int listviewNum) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'listviewNum',
+              lower: [],
+              upper: [listviewNum],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'listviewNum',
+              lower: [listviewNum],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'listviewNum',
+              lower: [listviewNum],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'listviewNum',
+              lower: [],
+              upper: [listviewNum],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewNumGreaterThan(
+    int listviewNum, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'listviewNum',
+        lower: [listviewNum],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewNumLessThan(
+    int listviewNum, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'listviewNum',
+        lower: [],
+        upper: [listviewNum],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewNumBetween(
+    int lowerListviewNum,
+    int upperListviewNum, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'listviewNum',
+        lower: [lowerListviewNum],
+        includeLower: includeLower,
+        upper: [upperListviewNum],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewIndexEqualTo(int listviewIndex) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'listviewIndex',
+        value: [listviewIndex],
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewIndexNotEqualTo(int listviewIndex) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'listviewIndex',
+              lower: [],
+              upper: [listviewIndex],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'listviewIndex',
+              lower: [listviewIndex],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'listviewIndex',
+              lower: [listviewIndex],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'listviewIndex',
+              lower: [],
+              upper: [listviewIndex],
+              includeUpper: false,
+            ));
+      }
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewIndexGreaterThan(
+    int listviewIndex, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'listviewIndex',
+        lower: [listviewIndex],
+        includeLower: include,
+        upper: [],
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewIndexLessThan(
+    int listviewIndex, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'listviewIndex',
+        lower: [],
+        upper: [listviewIndex],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
+      listviewIndexBetween(
+    int lowerListviewIndex,
+    int upperListviewIndex, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'listviewIndex',
+        lower: [lowerListviewIndex],
+        includeLower: includeLower,
+        upper: [upperListviewIndex],
         includeUpper: includeUpper,
       ));
     });
