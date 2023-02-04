@@ -99,9 +99,8 @@ import 'package:ui_maker/utils/widget_types.dart';
 
 /// ```
 class CreatorBar extends StatefulWidget {
-  WidgetSettings widgetSetting;
   Layout layout;
-  CreatorBar({super.key, required this.widgetSetting, required this.layout});
+  CreatorBar({super.key, required this.layout});
 
   @override
   State<CreatorBar> createState() => _CreatorBarState();

@@ -1,5 +1,5 @@
 name: ui_maker
-description: A new Flutter project.
+description: A flutter package for user UI-creation using draggable widgets and the isar database solution.
 version: 1.0.0+1
 homepage: https://github.com/xanmankey/UI-Maker
 
@@ -14,7 +14,6 @@ dependencies:
   isar: ^3.0.5
   native_context_menu: ^0.2.2+5
   flutter_colorpicker: ^1.0.3
-  draggable_widget: ^2.0.0
   build_runner: ^2.3.3
   isar_flutter_libs: ^3.0.5
   isar_generator: ^3.0.5

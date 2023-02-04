@@ -47,6 +47,9 @@ class Layout {
   /// The id of each widget; autoincremented by Isar
   Id id = Isar.autoIncrement;
 
+  @Index(unique: true)
+  late String layoutName;
+
   /// The widgets that a particular layout has
   IsarLinks<WidgetSettings> widgets = IsarLinks<WidgetSettings>();
 

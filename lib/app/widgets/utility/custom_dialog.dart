@@ -1,6 +1,6 @@
 // A widget for structuring entries in the character gallery
 import 'package:isar/isar.dart';
-import 'package:ui_maker/app/creator_area.dart';
+import 'package:ui_maker/app/widgets/creator_area.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';

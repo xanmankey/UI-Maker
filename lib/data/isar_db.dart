@@ -133,10 +133,15 @@ import 'package:logging/logging.dart';
 /// ```
 class DB {
   late Future<Isar> isarDB;
+  bool logging;
   Logger logger = Logger('data');
 
-  DB() {
+  DB(this.logging) {
     isarDB = openDB();
+    // If this isn't called, no output is logged
+    if (logging) {
+      initializeLogging();
+    }
   }
 
   Future<Isar> openDB() async {
@@ -357,4 +362,17 @@ class DB {
 }
 
 /// Instantiation of the DB class
-DB db = DB();
+/// TODO: change this to false once ready to publish
+DB db = DB(true);
+
+// A method for handling logging
+void initializeLogging() {
+  Logger.root.level = Level.ALL;
+  Logger.root.onRecord.listen((record) {
+    dynamic e = record.error;
+    String m = e.toString();
+    print(
+        '${record.loggerName}: ${record.level.name}: ${record.message} ${m != 'null' ? m : ''}');
+  });
+  Logger.root.info("Logger initialized.");
+}

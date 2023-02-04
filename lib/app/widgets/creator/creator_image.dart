@@ -5,7 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:ui_maker/app/widgets/utility/creator_base.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
-import 'package:ui_maker/data/utility/widget_settings_keys.dart';
+import 'package:ui_maker/data/utils/widget_settings_keys.dart';
 
 /// A button widget that uses the file_picker pub dev package
 /// to display an image from selection. Defaults to Icons.image.

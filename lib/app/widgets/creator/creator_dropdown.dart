@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ui_maker/app/widgets/utility/creator_base.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
-import 'package:ui_maker/data/utility/widget_settings_keys.dart';
+import 'package:ui_maker/data/utils/widget_settings_keys.dart';
 import 'package:ui_maker/app/widgets/utility/dropdown_item_creator.dart';
 
 // TODO: POTENTIAL ISSUES:
