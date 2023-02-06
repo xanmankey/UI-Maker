@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:ui_maker/ui_maker.dart';
 
-// Now what in the world do I want main.dart to look like?
-// Also, because I'm using a database solution how do I not screw up my publication
-// of the library based on my example data?
-
-// TODO: I would love a scaffold (although that wouldn't account for dialogs;
-// I'd need to isolate that code so it can be reused) that AUTOMATICALLY creates
-// a layout with
+// CURRENT WORRIES
+// - I incorrectly handled working w/ the db on the backend (e.g. I don't
+// write data in generative functions)
+// - I should start using EXAMPLES of the code as documentation
+// (the copy and pasting of the entire thing was just for me; or maybe
+// I should combine the two)
+// - NOTHING'S BEEN TESTED
 
 void main() {
   runApp(MyApp());
