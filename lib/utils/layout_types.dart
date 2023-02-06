@@ -3,6 +3,20 @@ enum LayoutType {
   rows,
   none;
 
+  @override
+  String toString() {
+    switch (this) {
+      case LayoutType.columns:
+        return "columns";
+      case LayoutType.rows:
+        return "rows";
+      case LayoutType.none:
+        return "none";
+      default:
+        return "columns";
+    }
+  }
+
   static LayoutType fromString(String string) {
     switch (string) {
       case "rows":
