@@ -6,10 +6,6 @@ import 'package:ui_maker/data/isar_db.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/utils/layout_types.dart';
 
-// TODO: based on custom_dialog, I'm assuming the creator_area
-// handles ALL widget and options rendering
-// This would be really nice, but will take some time to work out
-
 /// An area dedicated to draggable widgets that can be added to the UI.
 /// Widgets should only be placed in designated ```CreatorArea``` widgets
 /// so the database backend can handle UI settings and generation accordingly
@@ -390,7 +386,7 @@ class _CreatorAreaState extends State<CreatorArea> {
           */
                   )
               : Container();
-          throw Exception("Creator area build error");
+          return Container();
         }));
   }
 }

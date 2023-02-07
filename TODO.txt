@@ -1,2 +1,5 @@
 - Once I'm SATISFIED with testing and how the package works, 
 THEN I'll start copying and going into greater detail for documentation
+
+CURRENT PROBLEM
+- Creator area build error (ran all the way until this? I'll need to restructure my code I guess...)
