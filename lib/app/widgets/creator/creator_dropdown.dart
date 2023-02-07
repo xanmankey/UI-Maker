@@ -86,6 +86,18 @@ class CreatorDropdown extends StatefulWidget {
 
 class _CreatorDropdownState extends State<CreatorDropdown> {
   late DropdownMenuTypes dropdownInputType = DropdownMenuTypes.string;
+  List<DropdownMenuItem<String>>? items;
+
+  @override
+  void initState() {
+    if (widget.widgetSetting.mapValues
+        .containsKey(WidgetSettingsKeys.items.name)) {
+      items = valueToItem(
+          widget.widgetSetting.mapValues[WidgetSettingsKeys.items.name]);
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CreatorBase(
@@ -95,16 +107,19 @@ class _CreatorDropdownState extends State<CreatorDropdown> {
         creatorWidget: (widget.widgetSetting.mapValues
                 .containsKey(WidgetSettingsKeys.items.name))
             ? DropdownButton(
-                items: valueToItem(widget
-                    .widgetSetting.mapValues[WidgetSettingsKeys.items.name]),
-                // value: widget.widgetSetting.enabled,
+                items: items,
+                value: (widget.widgetSetting.mapValues
+                        .containsKey(WidgetSettingsKeys.currentItem.name))
+                    ? widget.widgetSetting
+                        .mapValues[WidgetSettingsKeys.currentItem.name]
+                    : items!.first.value,
                 dropdownColor: Color(widget.widgetSetting.color),
                 hint: Text(widget.widgetSetting.description ?? ''),
                 onChanged: (widget.widgetSetting.enabled)
                     ? (value) {
                         setState(() {
-                          widget.widgetSetting.mapValues
-                              .addAll({widget.widgetSetting.title: value});
+                          widget.widgetSetting.mapValues.addAll(
+                              {WidgetSettingsKeys.currentItem.name: value});
                         });
                       }
                     : null)
@@ -113,14 +128,21 @@ class _CreatorDropdownState extends State<CreatorDropdown> {
                 builder: ((context, snapshot) {
                   return DropdownButton(
                       items: snapshot.data,
-                      // value: widget.widgetSetting.enabled,
+                      value: (widget.widgetSetting.mapValues
+                              .containsKey(WidgetSettingsKeys.currentItem.name))
+                          ? widget.widgetSetting
+                              .mapValues[WidgetSettingsKeys.currentItem.name]
+                          : (snapshot.hasData)
+                              ? snapshot.data!.first.value
+                              : null,
                       dropdownColor: Color(widget.widgetSetting.color),
                       hint: Text(widget.widgetSetting.description ?? ''),
                       onChanged: (widget.widgetSetting.enabled)
                           ? (value) {
                               setState(() {
-                                widget.widgetSetting.mapValues.addAll(
-                                    {widget.widgetSetting.title: value});
+                                widget.widgetSetting.mapValues.addAll({
+                                  WidgetSettingsKeys.currentItem.name: value
+                                });
                               });
                             }
                           : null);

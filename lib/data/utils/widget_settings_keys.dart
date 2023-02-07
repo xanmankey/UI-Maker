@@ -34,24 +34,31 @@
 enum WidgetSettingsKeys {
   // Dropdown widget items
   items,
+  // Dropdown widget current item
+  currentItem,
   // The path to an image
   imagePath,
   // A custom text field validator
   validator,
-  // An extra text value, e.g. if you have a text field with a value
-  // that isn't a title or description
-  fieldText;
+  // The value of a text field
+  fieldText,
+  // The value of a checkbox
+  checkboxState;
 
   WidgetSettingsKeys? fromString(String setting) {
     switch (setting) {
       case "items":
         return WidgetSettingsKeys.items;
+      case "currentItem":
+        return WidgetSettingsKeys.currentItem;
       case "imagePath":
         return WidgetSettingsKeys.imagePath;
       case "validator":
         return WidgetSettingsKeys.validator;
       case "fieldText":
         return WidgetSettingsKeys.fieldText;
+      case "checkboxState":
+        return WidgetSettingsKeys.checkboxState;
       default:
         return null;
     }

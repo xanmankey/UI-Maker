@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
-import 'package:logging/logging.dart';
+import 'package:ui_maker/utils/logging.dart';
 
 /// A class for creating and retrieving the Isar database instance.
 /// Also defines widget filter, sort, update, and delete functions.
@@ -57,7 +57,7 @@ import 'package:logging/logging.dart';
 ///           return [];
 ///       }
 ///     } catch (e, stacktrace) {
-///       logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+///       logger.warning("$stacktrace: $e");
 ///       return [];
 ///     }
 ///   }
@@ -99,7 +99,7 @@ import 'package:logging/logging.dart';
 ///           .findAll();
 ///       return widgetSettings;
 ///     } catch (e, stacktrace) {
-///       logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+///       logger.warning("$stacktrace: $e");
 ///       return [];
 ///     }
 ///   }
@@ -112,7 +112,7 @@ import 'package:logging/logging.dart';
 ///       List<int> ids = await db.widgetSettings.putAll(widgetSettings);
 ///       return await db.widgetSettings.getAll(ids);
 ///     } catch (e, stacktrace) {
-///       logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+///       logger.warning("$stacktrace: $e");
 ///       return null;
 ///     }
 ///   }
@@ -125,7 +125,7 @@ import 'package:logging/logging.dart';
 ///           await db.widgetSettings.deleteAll(characterIds);
 ///       return numCharactersDeleted;
 ///     } catch (e, stacktrace) {
-///       logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+///       logger.warning("$stacktrace: $e");
 ///       return null;
 ///     }
 ///   }
@@ -134,14 +134,9 @@ import 'package:logging/logging.dart';
 class DB {
   late Future<Isar> isarDB;
   bool logging;
-  Logger logger = Logger('data');
 
   DB({this.logging = false}) {
     isarDB = openDB();
-    // If this isn't called, no output is logged
-    if (logging) {
-      initializeLogging();
-    }
   }
 
   Future<Isar> openDB() async {
@@ -275,7 +270,7 @@ class DB {
           .findAll();
       return widgetSettings;
     } catch (e, stacktrace) {
-      logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+      logger.warning("$stacktrace: $e");
       return [];
     }
   }
@@ -288,7 +283,7 @@ class DB {
       List<int> ids = await db.widgetSettings.putAll(widgetSettings);
       return await db.widgetSettings.getAll(ids);
     } catch (e, stacktrace) {
-      logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+      logger.warning("$stacktrace: $e");
       return null;
     }
   }
@@ -300,7 +295,7 @@ class DB {
       int numDeleted = await db.widgetSettings.deleteAll(widgetSettingsIds);
       return numDeleted;
     } catch (e, stacktrace) {
-      logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+      logger.warning("$stacktrace: $e");
       return null;
     }
   }
@@ -389,7 +384,7 @@ class DB {
           .findAll();
       return layouts;
     } catch (e, stacktrace) {
-      logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+      logger.warning("$stacktrace: $e");
       return [];
     }
   }
@@ -401,7 +396,7 @@ class DB {
       List<int> ids = await db.layouts.putAll(layouts);
       return await db.layouts.getAll(ids);
     } catch (e, stacktrace) {
-      logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+      logger.warning("$stacktrace: $e");
       return null;
     }
   }
@@ -413,7 +408,7 @@ class DB {
       int numDeleted = await db.widgetSettings.deleteAll(layoutIds);
       return numDeleted;
     } catch (e, stacktrace) {
-      logger.warning("Whoops, that's an error! \n $e \n $stacktrace");
+      logger.warning("$stacktrace: $e");
       return null;
     }
   }
@@ -422,15 +417,3 @@ class DB {
 /// Instantiation of the DB class
 /// TODO: change this to false once ready to publish
 DB db = DB(logging: true);
-
-// A method for handling logging
-void initializeLogging() {
-  Logger.root.level = Level.ALL;
-  Logger.root.onRecord.listen((record) {
-    dynamic e = record.error;
-    String m = e.toString();
-    print(
-        '${record.loggerName}: ${record.level.name}: ${record.message} ${m != 'null' ? m : ''}');
-  });
-  Logger.root.info("Logger initialized.");
-}

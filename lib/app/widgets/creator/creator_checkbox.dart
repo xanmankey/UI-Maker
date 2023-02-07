@@ -2,6 +2,7 @@ import 'package:ui_maker/app/widgets/utility/creator_base.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_maker/data/utils/widget_settings_keys.dart';
 
 /// A checkbox widget that can be dragged in the UI by the user
 /// to create a custom UI. Useful for simple on-and-off states
@@ -57,6 +58,20 @@ class CreatorCheckbox extends StatefulWidget {
 }
 
 class _CreatorCheckboxState extends State<CreatorCheckbox> {
+  late bool checkboxState;
+
+  @override
+  void initState() {
+    if (widget.widgetSetting.mapValues
+        .containsKey(WidgetSettingsKeys.checkboxState.name)) {
+      checkboxState =
+          widget.widgetSetting.mapValues[WidgetSettingsKeys.checkboxState.name];
+    } else {
+      checkboxState = true;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return CreatorBase(
@@ -64,12 +79,12 @@ class _CreatorCheckboxState extends State<CreatorCheckbox> {
       widgetType: widget.widgetSetting.widgetType,
       layout: widget.layout,
       creatorWidget: CheckboxListTile(
-        value: true,
+        value: checkboxState,
         tileColor: Color(widget.widgetSetting.color),
         onChanged: (value) {
           setState(() {
             widget.widgetSetting.mapValues
-                .addAll({widget.widgetSetting.title: value});
+                .addAll({WidgetSettingsKeys.checkboxState.name: value});
           });
         },
         title: Text(widget.widgetSetting.title),

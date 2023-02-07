@@ -3,3 +3,9 @@ THEN I'll start copying and going into greater detail for documentation
 
 CURRENT PROBLEM
 - Creator area build error (ran all the way until this? I'll need to restructure my code I guess...)
+
+(almost) NO POINT IN DEBUGGING VIA FLUTTER RUN until I've written and ran successful tests
+
+I do need to rework the creator widgets to more fully incorporate the WidgetSettingsKeys enum
+
+TOMMOROW my goal is to ACTUALLY start testing (hopefully); today was just prep
