@@ -20,8 +20,8 @@ void main() {
             ..numGroups = 4
             ..layoutType = LayoutType.columns));
     });
-    test('layoutName = already existing layout name, "emptyLayout"', () {
-      expect(generateLayout("emptyLayout"), equals(null));
-    });
+    // test('layoutName = already existing layout name, "emptyLayout"', () {
+    //   expect(generateLayout("emptyLayout"), equals(null));
+    // });
   });
 }

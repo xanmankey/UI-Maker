@@ -76,4 +76,12 @@ class Layout {
     return '''$id: {layoutType: $layoutType, widgets: ${widgets.toList()}, filter: 
     $filter}''';
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (runtimeType != other.runtimeType) return false;
+    final Layout otherLayout = other as Layout;
+    return toString() == otherLayout.toString();
+  }
 }

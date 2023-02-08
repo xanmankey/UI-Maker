@@ -1,5 +1,6 @@
 import 'dart:collection';
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
 import 'package:ui_maker/utils/widget_types.dart';
 
@@ -93,16 +94,16 @@ class WidgetSettings {
 
   /// The current screen offset of the widget
   /// (in case layoutType is set to LayoutType.none in the layout collection)
-  late double offsetX;
-  late double offsetY;
+  double? offsetX;
+  double? offsetY;
 
   /// The listview number the widget is a part of
   @Index()
-  late int listviewNum;
+  int? listviewNum;
 
   /// The widget's index in that listview (if LayoutType not none)
   @Index()
-  late int listviewIndex;
+  int? listviewIndex;
 
   /// The type of widget selected from the creator bar;
   /// used for recreating the widget
@@ -128,5 +129,14 @@ class WidgetSettings {
     return '''$id: {title: $title, description: $description, values: $values,
     widgetType: $widgetType, color: $color, offset: 
     ($offsetX, $offsetY)}''';
+  }
+
+  // Check that all variables have the same string value
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (runtimeType != other.runtimeType) return false;
+    WidgetSettings otherSettings = other as WidgetSettings;
+    return toString() == otherSettings.toString();
   }
 }

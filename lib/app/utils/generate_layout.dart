@@ -8,8 +8,7 @@ import 'package:ui_maker/utils/logging.dart';
 // TODO: e.g. I feel like this one should, because it needs to check if the
 // layoutName is unique...
 
-/// A function for creating layout instances; if the layoutName is unique, it is
-/// written to the database.
+/// A function for creating layout instances
 ///
 /// ```
 /// Layout generateLayout(
@@ -26,23 +25,28 @@ import 'package:ui_maker/utils/logging.dart';
 ///   return layout;
 /// }
 /// ```
-Layout? generateLayout(
+Layout generateLayout(
   String layoutName, {
   bool filter = false,
   int numGroups = 4,
   LayoutType layoutType = LayoutType.columns,
+  // bool write = false
 }) {
-  try {
-    Layout layout = Layout()
-      ..filter = filter
-      ..layoutName = layoutName
-      ..numGroups = numGroups
-      ..layoutType = layoutType;
-    // write layout
-    db.updateLayouts([layout]);
-    return layout;
-  } catch (e, stacktrace) {
-    logger.warning("$stacktrace: $e");
-    return null;
-  }
+  Layout layout = Layout()
+    ..filter = filter
+    ..layoutName = layoutName
+    ..numGroups = numGroups
+    ..layoutType = layoutType;
+  // write layout
+  // if (write) {
+  //   Future<List<Layout?>?> layouts = db.updateLayouts([layout]);
+  //   // .then() returns a new future; it doesn't actually block the code...
+  //   // so what do I do? Can I make generateLayout synchronous?
+  //   layouts.then((value) {
+  //     if (value == null) {
+  //       return null;
+  //     }
+  //   });
+  // }
+  return layout;
 }

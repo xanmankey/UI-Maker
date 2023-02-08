@@ -27,19 +27,24 @@ const LayoutSchema = CollectionSchema(
       name: r'height',
       type: IsarType.double,
     ),
-    r'layoutType': PropertySchema(
+    r'layoutName': PropertySchema(
       id: 2,
+      name: r'layoutName',
+      type: IsarType.string,
+    ),
+    r'layoutType': PropertySchema(
+      id: 3,
       name: r'layoutType',
       type: IsarType.byte,
       enumMap: _LayoutlayoutTypeEnumValueMap,
     ),
     r'numGroups': PropertySchema(
-      id: 3,
+      id: 4,
       name: r'numGroups',
       type: IsarType.long,
     ),
     r'width': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'width',
       type: IsarType.double,
     )
@@ -50,6 +55,19 @@ const LayoutSchema = CollectionSchema(
   deserializeProp: _layoutDeserializeProp,
   idName: r'id',
   indexes: {
+    r'layoutName': IndexSchema(
+      id: 3865651608717070949,
+      name: r'layoutName',
+      unique: true,
+      replace: false,
+      properties: [
+        IndexPropertySchema(
+          name: r'layoutName',
+          type: IndexType.hash,
+          caseSensitive: true,
+        )
+      ],
+    ),
     r'layoutType': IndexSchema(
       id: -2393727137416813581,
       name: r'layoutType',
@@ -111,6 +129,7 @@ int _layoutEstimateSize(
   Map<Type, List<int>> allOffsets,
 ) {
   var bytesCount = offsets.last;
+  bytesCount += 3 + object.layoutName.length * 3;
   return bytesCount;
 }
 
@@ -122,9 +141,10 @@ void _layoutSerialize(
 ) {
   writer.writeBool(offsets[0], object.filter);
   writer.writeDouble(offsets[1], object.height);
-  writer.writeByte(offsets[2], object.layoutType.index);
-  writer.writeLong(offsets[3], object.numGroups);
-  writer.writeDouble(offsets[4], object.width);
+  writer.writeString(offsets[2], object.layoutName);
+  writer.writeByte(offsets[3], object.layoutType.index);
+  writer.writeLong(offsets[4], object.numGroups);
+  writer.writeDouble(offsets[5], object.width);
 }
 
 Layout _layoutDeserialize(
@@ -137,11 +157,12 @@ Layout _layoutDeserialize(
   object.filter = reader.readBool(offsets[0]);
   object.height = reader.readDouble(offsets[1]);
   object.id = id;
+  object.layoutName = reader.readString(offsets[2]);
   object.layoutType =
-      _LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offsets[2])] ??
+      _LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offsets[3])] ??
           LayoutType.columns;
-  object.numGroups = reader.readLong(offsets[3]);
-  object.width = reader.readDouble(offsets[4]);
+  object.numGroups = reader.readLong(offsets[4]);
+  object.width = reader.readDouble(offsets[5]);
   return object;
 }
 
@@ -157,11 +178,13 @@ P _layoutDeserializeProp<P>(
     case 1:
       return (reader.readDouble(offset)) as P;
     case 2:
+      return (reader.readString(offset)) as P;
+    case 3:
       return (_LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           LayoutType.columns) as P;
-    case 3:
-      return (reader.readLong(offset)) as P;
     case 4:
+      return (reader.readLong(offset)) as P;
+    case 5:
       return (reader.readDouble(offset)) as P;
     default:
       throw IsarError('Unknown property with id $propertyId');
@@ -191,6 +214,61 @@ void _layoutAttach(IsarCollection<dynamic> col, Id id, Layout object) {
   object.id = id;
   object.widgets
       .attach(col, col.isar.collection<WidgetSettings>(), r'widgets', id);
+}
+
+extension LayoutByIndex on IsarCollection<Layout> {
+  Future<Layout?> getByLayoutName(String layoutName) {
+    return getByIndex(r'layoutName', [layoutName]);
+  }
+
+  Layout? getByLayoutNameSync(String layoutName) {
+    return getByIndexSync(r'layoutName', [layoutName]);
+  }
+
+  Future<bool> deleteByLayoutName(String layoutName) {
+    return deleteByIndex(r'layoutName', [layoutName]);
+  }
+
+  bool deleteByLayoutNameSync(String layoutName) {
+    return deleteByIndexSync(r'layoutName', [layoutName]);
+  }
+
+  Future<List<Layout?>> getAllByLayoutName(List<String> layoutNameValues) {
+    final values = layoutNameValues.map((e) => [e]).toList();
+    return getAllByIndex(r'layoutName', values);
+  }
+
+  List<Layout?> getAllByLayoutNameSync(List<String> layoutNameValues) {
+    final values = layoutNameValues.map((e) => [e]).toList();
+    return getAllByIndexSync(r'layoutName', values);
+  }
+
+  Future<int> deleteAllByLayoutName(List<String> layoutNameValues) {
+    final values = layoutNameValues.map((e) => [e]).toList();
+    return deleteAllByIndex(r'layoutName', values);
+  }
+
+  int deleteAllByLayoutNameSync(List<String> layoutNameValues) {
+    final values = layoutNameValues.map((e) => [e]).toList();
+    return deleteAllByIndexSync(r'layoutName', values);
+  }
+
+  Future<Id> putByLayoutName(Layout object) {
+    return putByIndex(r'layoutName', object);
+  }
+
+  Id putByLayoutNameSync(Layout object, {bool saveLinks = true}) {
+    return putByIndexSync(r'layoutName', object, saveLinks: saveLinks);
+  }
+
+  Future<List<Id>> putAllByLayoutName(List<Layout> objects) {
+    return putAllByIndex(r'layoutName', objects);
+  }
+
+  List<Id> putAllByLayoutNameSync(List<Layout> objects,
+      {bool saveLinks = true}) {
+    return putAllByIndexSync(r'layoutName', objects, saveLinks: saveLinks);
+  }
 }
 
 extension LayoutQueryWhereSort on QueryBuilder<Layout, Layout, QWhere> {
@@ -288,6 +366,51 @@ extension LayoutQueryWhere on QueryBuilder<Layout, Layout, QWhereClause> {
         upper: upperId,
         includeUpper: includeUpper,
       ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterWhereClause> layoutNameEqualTo(
+      String layoutName) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.equalTo(
+        indexName: r'layoutName',
+        value: [layoutName],
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterWhereClause> layoutNameNotEqualTo(
+      String layoutName) {
+    return QueryBuilder.apply(this, (query) {
+      if (query.whereSort == Sort.asc) {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'layoutName',
+              lower: [],
+              upper: [layoutName],
+              includeUpper: false,
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'layoutName',
+              lower: [layoutName],
+              includeLower: false,
+              upper: [],
+            ));
+      } else {
+        return query
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'layoutName',
+              lower: [layoutName],
+              includeLower: false,
+              upper: [],
+            ))
+            .addWhereClause(IndexWhereClause.between(
+              indexName: r'layoutName',
+              lower: [],
+              upper: [layoutName],
+              includeUpper: false,
+            ));
+      }
     });
   }
 
@@ -641,6 +764,136 @@ extension LayoutQueryFilter on QueryBuilder<Layout, Layout, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameEqualTo(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'layoutName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameGreaterThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'layoutName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameLessThan(
+    String value, {
+    bool include = false,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'layoutName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameBetween(
+    String lower,
+    String upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'layoutName',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameStartsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.startsWith(
+        property: r'layoutName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameEndsWith(
+    String value, {
+    bool caseSensitive = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.endsWith(
+        property: r'layoutName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameContains(
+      String value,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.contains(
+        property: r'layoutName',
+        value: value,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameMatches(
+      String pattern,
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.matches(
+        property: r'layoutName',
+        wildcard: pattern,
+        caseSensitive: caseSensitive,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameIsEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'layoutName',
+        value: '',
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutNameIsNotEmpty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        property: r'layoutName',
+        value: '',
+      ));
+    });
+  }
+
   QueryBuilder<Layout, Layout, QAfterFilterCondition> layoutTypeEqualTo(
       LayoutType value) {
     return QueryBuilder.apply(this, (query) {
@@ -895,6 +1148,18 @@ extension LayoutQuerySortBy on QueryBuilder<Layout, Layout, QSortBy> {
     });
   }
 
+  QueryBuilder<Layout, Layout, QAfterSortBy> sortByLayoutName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'layoutName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterSortBy> sortByLayoutNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'layoutName', Sort.desc);
+    });
+  }
+
   QueryBuilder<Layout, Layout, QAfterSortBy> sortByLayoutType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'layoutType', Sort.asc);
@@ -969,6 +1234,18 @@ extension LayoutQuerySortThenBy on QueryBuilder<Layout, Layout, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Layout, Layout, QAfterSortBy> thenByLayoutName() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'layoutName', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterSortBy> thenByLayoutNameDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'layoutName', Sort.desc);
+    });
+  }
+
   QueryBuilder<Layout, Layout, QAfterSortBy> thenByLayoutType() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'layoutType', Sort.asc);
@@ -1019,6 +1296,13 @@ extension LayoutQueryWhereDistinct on QueryBuilder<Layout, Layout, QDistinct> {
     });
   }
 
+  QueryBuilder<Layout, Layout, QDistinct> distinctByLayoutName(
+      {bool caseSensitive = true}) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'layoutName', caseSensitive: caseSensitive);
+    });
+  }
+
   QueryBuilder<Layout, Layout, QDistinct> distinctByLayoutType() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'layoutType');
@@ -1054,6 +1338,12 @@ extension LayoutQueryProperty on QueryBuilder<Layout, Layout, QQueryProperty> {
   QueryBuilder<Layout, double, QQueryOperations> heightProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'height');
+    });
+  }
+
+  QueryBuilder<Layout, String, QQueryOperations> layoutNameProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'layoutName');
     });
   }
 

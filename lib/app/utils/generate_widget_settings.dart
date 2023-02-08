@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
+import 'package:ui_maker/data/isar_db.dart';
 import 'package:ui_maker/utils/widget_types.dart';
 
 /// A function for creating the creator bar settings objects
@@ -28,12 +29,19 @@ import 'package:ui_maker/utils/widget_types.dart';
 /// }
 /// ```
 Map<WidgetType, WidgetSettings> generateWidgetSettings(
-    List<WidgetType> widgets, BuildContext? context,
-    {String? title,
-    String? description,
-    bool? enabled,
-    int? color,
-    Map<String, dynamic>? mapValues}) {
+  List<WidgetType> widgets,
+  BuildContext? context, {
+  String? title,
+  String? description,
+  bool? enabled,
+  int? color,
+  double? offsetX,
+  double? offsetY,
+  int? listviewNum,
+  int? listviewIndex,
+  Map<String, dynamic>? mapValues,
+  // bool write = false,
+}) {
   Map<WidgetType, WidgetSettings> items = {};
   for (WidgetType widget in widgets) {
     items.addAll({
@@ -42,10 +50,23 @@ Map<WidgetType, WidgetSettings> generateWidgetSettings(
         ..description = description ?? ''
         ..enabled = enabled ?? true
         ..color = color ?? getColor(context, widget)
+        ..offsetX = offsetX
+        ..offsetY = offsetY
+        ..listviewNum = listviewNum
+        ..listviewIndex = listviewIndex
         ..mapValues = mapValues ?? {}
         ..widgetType = widget
     });
   }
+  // if (write) {
+  //   Future<List<WidgetSettings?>?> settings = db.updateWidgetSettings(
+  //       [for (WidgetSettings setting in items.values) setting]);
+  //   settings.then((value) {
+  //     if (value == null) {
+  //       return null;
+  //     }
+  //   });
+  // }
   return items;
 }
 
