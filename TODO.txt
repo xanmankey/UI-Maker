@@ -9,3 +9,5 @@ CURRENT PROBLEM
 I do need to rework the creator widgets to more fully incorporate the WidgetSettingsKeys enum
 
 TOMMOROW my goal is to ACTUALLY start testing (hopefully); today was just prep
+
+FIGURE OUT whether I'm using MapValues or widgets

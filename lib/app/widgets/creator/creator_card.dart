@@ -53,12 +53,7 @@ import 'package:flutter/material.dart';
 class CreatorCard extends StatefulWidget {
   Layout layout;
   WidgetSettings widgetSetting;
-  List<WidgetSettings>? dialogSettings;
-  CreatorCard(
-      {super.key,
-      required this.widgetSetting,
-      required this.layout,
-      this.dialogSettings});
+  CreatorCard({super.key, required this.widgetSetting, required this.layout});
 
   @override
   State<CreatorCard> createState() => _CreatorCardState();
@@ -76,7 +71,7 @@ class _CreatorCardState extends State<CreatorCard> {
             context: context,
             builder: (context) => CreatorDialog(
                   cardSetting: widget.widgetSetting,
-                  widgetSettings: widget.dialogSettings,
+                  widgetSettings: widget.widgetSetting.widgets.toList(),
                   layout: widget.layout,
                 ))),
         child: Card(

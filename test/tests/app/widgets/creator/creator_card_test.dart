@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter_test/flutter_test.dart';
 import 'package:ui_maker/ui_maker.dart';
-import 'package:test/test.dart';
+// import 'package:test/test.dart';
 
 import '../../../../utils.dart';
 
@@ -11,22 +11,30 @@ import '../../../../utils.dart';
 /// - Mock data for simulation (if applicable)
 /// - GIVE THE USER FAITH IN THE CODE
 
+// TODO: need to look into how to do a flutter_test here
+// Each widget should have tested interaction
+
 void main() {
-  // setUpAll(() async {
-  //   await testUtils.ensureInitialized();
-  // });
-  // group('`generateLayout()`', () {
-  //   test('layoutName = "layoutName"', () {
-  //     expect(
-  //         generateLayout("layoutName"),
-  //         equals(Layout()
-  //           ..layoutName = "layoutName"
-  //           ..filter = false
-  //           ..numGroups = 4
-  //           ..layoutType = LayoutType.columns));
-  //   });
-  // test('layoutName = already existing layout name, "emptyLayout"', () {
-  //   expect(generateLayout("emptyLayout"), equals(null));
-  // });
-  // });
+  setUpAll(() async {
+    await testUtils.ensureInitialized();
+  });
+  group('`CreatorCard()`', () {
+    test(
+        '''Layout layout = , WidgetSettings widgetSetting = , List<WidgetSettings>? = ''',
+        () {
+      expect(
+          CreatorCard(
+            layout: TestUtils.emptyLayout,
+            widgetSetting: TestUtils.card,
+          ),
+          equals(Layout()
+            ..layoutName = "layoutName"
+            ..filter = false
+            ..numGroups = 4
+            ..layoutType = LayoutType.columns));
+    });
+    test('default params, simulate click', () {
+      expect(generateLayout("emptyLayout"), equals(null));
+    });
+  });
 }

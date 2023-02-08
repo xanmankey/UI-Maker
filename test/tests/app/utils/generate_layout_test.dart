@@ -12,10 +12,10 @@ import '../../../utils.dart';
 /// - GIVE THE USER FAITH IN THE CODE
 
 void main() {
+  setUpAll(() async {
+    await testUtils.ensureInitialized();
+  });
   group('`generateLayout()`', () {
-    setUpAll(() async {
-      await testUtils.ensureInitialized();
-    });
     test('layoutName = "layoutName"', () {
       expect(
           generateLayout("layoutName", width: 10, height: 10),

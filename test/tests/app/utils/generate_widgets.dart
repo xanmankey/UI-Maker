@@ -20,12 +20,11 @@ void main() {
         'List<WidgetSettings> widgetSettings = [], Layout layout = TestUtils.layouts["emptyLayout"]',
         () {
       expect(
-          generateWidgets([TestUtils.widgetSettings["Checkbox"]!],
-              TestUtils.layouts["emptyLayout"]!),
+          generateWidgets([TestUtils.checkbox], TestUtils.emptyLayout),
           equals([
             CreatorCheckbox(
-              widgetSetting: TestUtils.widgetSettings["Checkbox"]!,
-              layout: TestUtils.layouts["emptyLayout"]!,
+              widgetSetting: TestUtils.checkbox,
+              layout: TestUtils.emptyLayout,
             ),
           ]));
     });

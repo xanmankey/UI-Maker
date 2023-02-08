@@ -29,8 +29,11 @@ import 'package:ui_maker/app/utils/generate_layout.dart';
 
 class CreatorScaffold extends StatefulWidget {
   String layoutName;
+  // In case you want to have some widgets load be default
+  Layout? layout;
   AppBar? appBar;
-  CreatorScaffold({super.key, required this.layoutName, this.appBar});
+  CreatorScaffold(
+      {super.key, required this.layoutName, this.layout, this.appBar});
 
   @override
   State<CreatorScaffold> createState() => _CreatorScaffoldState();
@@ -41,7 +44,11 @@ class _CreatorScaffoldState extends State<CreatorScaffold> {
 
   @override
   void initState() {
-    layout = generateLayout(widget.layoutName);
+    if (widget.layout != null) {
+      layout = widget.layout!;
+    } else {
+      layout = generateLayout(widget.layoutName);
+    }
     super.initState();
   }
 
