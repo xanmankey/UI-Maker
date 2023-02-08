@@ -137,6 +137,16 @@ class WidgetSettings {
     if (identical(this, other)) return true;
     if (runtimeType != other.runtimeType) return false;
     WidgetSettings otherSettings = other as WidgetSettings;
-    return toString() == otherSettings.toString();
+    return id == otherSettings.id &&
+        title == otherSettings.title &&
+        description == otherSettings.description &&
+        enabled == otherSettings.enabled &&
+        color == otherSettings.color &&
+        offsetX == otherSettings.offsetX &&
+        offsetY == otherSettings.offsetY &&
+        listviewNum == otherSettings.listviewNum &&
+        listviewIndex == otherSettings.listviewIndex &&
+        widgetType == otherSettings.widgetType &&
+        mapValues.length == otherSettings.mapValues.length;
   }
 }

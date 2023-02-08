@@ -12,6 +12,9 @@ import '../../../utils.dart';
 /// - GIVE THE USER FAITH IN THE CODE
 
 void main() {
+  setUpAll(() async {
+    await testUtils.ensureInitialized();
+  });
   group('`generateWidgets()`', () {
     test(
         'List<WidgetSettings> widgetSettings = [], Layout layout = TestUtils.layouts["emptyLayout"]',

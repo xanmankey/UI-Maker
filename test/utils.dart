@@ -112,7 +112,14 @@ class TestUtils {
     if (Platform.environment.containsKey('FLUTTER_TEST')) {
       isarDB = openDB();
       WidgetsFlutterBinding.ensureInitialized();
-      writeTestDB();
+      // writeTestDB();
+    }
+  }
+
+  Future<void> ensureInitialized() async {
+    if (Platform.environment.containsKey('FLUTTER_TEST')) {
+      WidgetsFlutterBinding.ensureInitialized();
+      await writeTestDB();
     }
   }
 
@@ -131,7 +138,7 @@ class TestUtils {
     return isarDB;
   }
 
-  void writeTestDB() async {
+  Future<void> writeTestDB() async {
     // Write test data
     // No error handling; if this function fails, TESTS FAIL
     Isar db = await isarDB;

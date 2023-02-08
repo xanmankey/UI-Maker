@@ -1,4 +1,5 @@
 // Functions for initializing a layout for a UI_Maker screen
+import 'package:flutter/material.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/isar_db.dart';
 import 'package:ui_maker/utils/layout_types.dart';
@@ -29,6 +30,8 @@ Layout generateLayout(
   String layoutName, {
   bool filter = false,
   int numGroups = 4,
+  double? width,
+  double? height,
   LayoutType layoutType = LayoutType.columns,
   // bool write = false
 }) {
@@ -36,7 +39,11 @@ Layout generateLayout(
     ..filter = filter
     ..layoutName = layoutName
     ..numGroups = numGroups
-    ..layoutType = layoutType;
+    ..layoutType = layoutType
+    ..width = width ??
+        MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width
+    ..height = height ??
+        MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
   // write layout
   // if (write) {
   //   Future<List<Layout?>?> layouts = db.updateLayouts([layout]);

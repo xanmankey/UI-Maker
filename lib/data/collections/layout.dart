@@ -82,6 +82,13 @@ class Layout {
     if (identical(this, other)) return true;
     if (runtimeType != other.runtimeType) return false;
     final Layout otherLayout = other as Layout;
-    return toString() == otherLayout.toString();
+    return id == otherLayout.id &&
+        layoutName == otherLayout.layoutName &&
+        layoutType == otherLayout.layoutType &&
+        widgets.length == otherLayout.widgets.length &&
+        filter == otherLayout.filter &&
+        numGroups == otherLayout.numGroups &&
+        width == otherLayout.width &&
+        height == otherLayout.height;
   }
 }

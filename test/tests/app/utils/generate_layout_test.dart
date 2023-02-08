@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ui_maker/ui_maker.dart';
 import 'package:test/test.dart';
 
+import '../../../utils.dart';
+
 /// TESTS SHOULD:
 /// - Check all parameters
 /// - Check rendering (if applicable)
@@ -11,13 +13,18 @@ import 'package:test/test.dart';
 
 void main() {
   group('`generateLayout()`', () {
+    setUpAll(() async {
+      await testUtils.ensureInitialized();
+    });
     test('layoutName = "layoutName"', () {
       expect(
-          generateLayout("layoutName"),
+          generateLayout("layoutName", width: 10, height: 10),
           equals(Layout()
             ..layoutName = "layoutName"
             ..filter = false
             ..numGroups = 4
+            ..width = 10
+            ..height = 10
             ..layoutType = LayoutType.columns));
     });
     // test('layoutName = already existing layout name, "emptyLayout"', () {

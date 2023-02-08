@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ui_maker/ui_maker.dart';
 import 'package:test/test.dart';
 
+import '../../utils.dart';
+
 /// TESTS SHOULD:
 /// - Check all parameters
 /// - Check rendering (if applicable)
@@ -10,6 +12,9 @@ import 'package:test/test.dart';
 /// - GIVE THE USER FAITH IN THE CODE
 
 void main() {
+  // setUpAll(() async {
+  //   await testUtils.ensureInitialized();
+  // });
   // group('`generateLayout()`', () {
   //   test('layoutName = "layoutName"', () {
   //     expect(
