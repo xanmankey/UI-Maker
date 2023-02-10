@@ -7,6 +7,8 @@ import 'package:ui_maker/app/widgets/utility/dropdown_item_creator.dart';
 
 // TODO: POTENTIAL ISSUES:
 // FutureBuilder with dropdown
+// CreatorDropdown() builds using futureBuilder and immediately
+// shows dialog on layout load
 
 /// A dropdown widget that can be dragged in the UI by the user
 /// to create a custom UI. Useful for more dynamic selections and input,

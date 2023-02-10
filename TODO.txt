@@ -2,12 +2,11 @@
 THEN I'll start copying and going into greater detail for documentation
 
 CURRENT PROBLEM
-- Creator area build error (ran all the way until this? I'll need to restructure my code I guess...)
+- My new understanding about pumping; PUMP ONE WIDGET AT A TIME 
+(in flutter, changes in state occur, so if you pump a lot you would need to repump 
+to offset these changes anyway, so there's no point in pumping extra widgets)
 
 (almost) NO POINT IN DEBUGGING VIA FLUTTER RUN until I've written and ran successful tests
 
-I do need to rework the creator widgets to more fully incorporate the WidgetSettingsKeys enum
-
-TOMMOROW my goal is to ACTUALLY start testing (hopefully); today was just prep
-
-FIGURE OUT whether I'm using MapValues or widgets
+// I would love a generative testing framework as well;
+// What if I could create test cases for each widget?

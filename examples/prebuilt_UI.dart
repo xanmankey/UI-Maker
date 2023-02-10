@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:ui_maker/ui_maker.dart';
 import '../test/utils.dart';
 
-// CURRENT WORRIES
-// - I incorrectly handled working w/ the db on the backend (e.g. I don't
-// write data in generative functions)
-// - I should start using EXAMPLES of the code as documentation
-// (the copy and pasting of the entire thing was just for me; or maybe
-// I should combine the two)
-// - NOTHING'S BEEN TESTED
-
-// TODO: update this so I can use a prebuilt UI for testing
-// in addition to an empty UI
-
 void main() {
   runApp(MyApp());
 }
@@ -49,7 +38,7 @@ class _UIMakerState extends State<UIMaker> {
         ..layoutName = "MyUIMaker"
         ..widgets.addAll([
           for (WidgetSettings setting in TestUtils.widgetSettings.values)
-            if (setting.listviewNum == 0) setting
+            setting
         ])
         ..numGroups = 1
         ..width =

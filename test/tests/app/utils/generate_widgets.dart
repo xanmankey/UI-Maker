@@ -32,7 +32,9 @@ void main() {
         'List<WidgetSettings> widgetSettings = [], Layout layout = TestUtils.layouts["emptyLayout"]',
         () {
       expect(
-          generateWidgets([], TestUtils.layouts["emptyLayout"]!), equals([]));
+          generateWidgets(
+              [], TestUtils.layouts[layoutNames.emptyLayout.toString()]!),
+          equals([]));
     });
   });
 }

@@ -11,17 +11,23 @@ import '../../../../utils.dart';
 /// - Mock data for simulation (if applicable)
 /// - GIVE THE USER FAITH IN THE CODE
 
-// TODO: need to look into how to do a flutter_test here
-// Each widget should have tested interaction
+/// Widget tests will need to be sorted into two categories:
+/// 1. WIDGET TESTS
+///   - Do the widgets change state correctly (e.g. creator context menu + other tests)
+///   - Do the widgets preserve and update information correctly (w/ regards to db)
+/// 2. LAYOUT (SCREEN) TESTS
+///   - Do they sort correctly (including a lack of sorting)?
+///   - Do they filter correctly?
+///   - Do they drag/drop correctly (and write to the db accordingly)?
 
 void main() {
   setUpAll(() async {
     await testUtils.ensureInitialized();
   });
-  group('`CreatorCard()`', () {
-    test(
-        '''Layout layout = , WidgetSettings widgetSetting = , List<WidgetSettings>? = ''',
-        () {
+  group('''`CreatorCard(); Layout layout = TestUtils.emptyLayout??, 
+        WidgetSettings widgetSetting = TestUtils.card`''', () {
+    testWidgets('Sort', (WidgetTester tester) async {
+      await tester.pumpWidget(TestUtils.widgets[widgetNames.card.toString()]!);
       expect(
           CreatorCard(
             layout: TestUtils.emptyLayout,
@@ -32,9 +38,57 @@ void main() {
             ..filter = false
             ..numGroups = 4
             ..layoutType = LayoutType.columns));
+      return Future.value(null);
     });
-    test('default params, simulate click', () {
+    testWidgets('Filter', (WidgetTester tester) async {
+      await tester.pumpWidget(TestUtils.widgets[widgetNames.card.toString()]!);
+      expect(
+          CreatorCard(
+            layout: TestUtils.emptyLayout,
+            widgetSetting: TestUtils.card,
+          ),
+          equals(Layout()
+            ..layoutName = "layoutName"
+            ..filter = false
+            ..numGroups = 4
+            ..layoutType = LayoutType.columns));
+      return Future.value(null);
+    });
+    testWidgets('Drag/Drop', (WidgetTester tester) async {
+      await tester.pumpWidget(TestUtils.widgets[widgetNames.card.toString()]!);
+      expect(
+          CreatorCard(
+            layout: TestUtils.emptyLayout,
+            widgetSetting: TestUtils.card,
+          ),
+          equals(Layout()
+            ..layoutName = "layoutName"
+            ..filter = false
+            ..numGroups = 4
+            ..layoutType = LayoutType.columns));
+      return Future.value(null);
+    });
+    group("Context Menu State Changes", () {
+      testWidgets('Drag/Drop', (WidgetTester tester) async {
+        await tester
+            .pumpWidget(TestUtils.widgets[widgetNames.card.toString()]!);
+        expect(
+            CreatorCard(
+              layout: TestUtils.emptyLayout,
+              widgetSetting: TestUtils.card,
+            ),
+            equals(Layout()
+              ..layoutName = "layoutName"
+              ..filter = false
+              ..numGroups = 4
+              ..layoutType = LayoutType.columns));
+        return Future.value(null);
+      });
+    });
+    testWidgets('default params, simulate click', (WidgetTester tester) async {
+      await tester.pumpWidget(TestUtils.widgets["Card"]!);
       expect(generateLayout("emptyLayout"), equals(null));
+      return Future.value(null);
     });
   });
 }
