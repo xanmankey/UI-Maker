@@ -27,7 +27,7 @@ void main() {
   group('''`CreatorCard(); Layout layout = TestUtils.emptyLayout??, 
         WidgetSettings widgetSetting = TestUtils.card`''', () {
     testWidgets('Sort', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[widgetNames.card.toString()]!);
+      await tester.pumpWidget(TestUtils.widgets[WidgetNames.card.toString()]!);
       expect(
           CreatorCard(
             layout: TestUtils.emptyLayout,
@@ -41,7 +41,7 @@ void main() {
       return Future.value(null);
     });
     testWidgets('Filter', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[widgetNames.card.toString()]!);
+      await tester.pumpWidget(TestUtils.widgets[WidgetNames.card.toString()]!);
       expect(
           CreatorCard(
             layout: TestUtils.emptyLayout,
@@ -55,7 +55,7 @@ void main() {
       return Future.value(null);
     });
     testWidgets('Drag/Drop', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[widgetNames.card.toString()]!);
+      await tester.pumpWidget(TestUtils.widgets[WidgetNames.card.toString()]!);
       expect(
           CreatorCard(
             layout: TestUtils.emptyLayout,
@@ -69,9 +69,10 @@ void main() {
       return Future.value(null);
     });
     group("Context Menu State Changes", () {
+      setUp(() => Tests.contextMenuTest<T>(tester, finder));
       testWidgets('Drag/Drop', (WidgetTester tester) async {
         await tester
-            .pumpWidget(TestUtils.widgets[widgetNames.card.toString()]!);
+            .pumpWidget(TestUtils.widgets[WidgetNames.card.toString()]!);
         expect(
             CreatorCard(
               layout: TestUtils.emptyLayout,

@@ -13,3 +13,13 @@ to offset these changes anyway, so there's no point in pumping extra widgets)
 
 I think I'm going to move away from native_context_menus; 
 I'm going to try to do my own implementation using contextMenuBuilder
+
+CURRENT GOALS
+- Work on utils (45 min max from now to figure out if tests can be implemented for each creator widget)
+- Structure and plan out the rest of my tests using UnimplementedErrors()
+- DEBUG AND COMPLETE TESTING, THEN MOVE ON TO VISUAL TESTING 
+
+Today 
+- Go to mass
+- Pack and prepare
+- Read

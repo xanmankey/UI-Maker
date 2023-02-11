@@ -33,7 +33,7 @@ void main() {
         () {
       expect(
           generateWidgets(
-              [], TestUtils.layouts[layoutNames.emptyLayout.toString()]!),
+              [], TestUtils.layouts[LayoutNames.emptyLayout.toString()]!),
           equals([]));
     });
   });

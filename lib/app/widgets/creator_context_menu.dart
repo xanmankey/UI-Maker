@@ -161,7 +161,6 @@ class _CreatorContextMenuState extends State<CreatorContextMenu> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   late Isar isarDB;
-  String isEnabled = "disable";
   @override
   void initState() async {
     titleController.text = widget.widgetSetting.title;
@@ -188,18 +187,22 @@ class _CreatorContextMenuState extends State<CreatorContextMenu> {
               });
             }),
         ListTile(
-          title: Text(isEnabled),
+          title: Text(MenuOptions.enable.name),
           onTap: () {
             setState(() {
-              if (isEnabled == "Enable") {
-                widget.widgetSetting.enabled = true;
-                isEnabled = "Disable";
-              } else {
-                widget.widgetSetting.enabled = false;
-                isEnabled = "Enable";
-              }
+              widget.widgetSetting.enabled = true;
             });
           },
+          enabled: !widget.widgetSetting.enabled,
+        ),
+        ListTile(
+          title: Text(MenuOptions.disable.name),
+          onTap: () {
+            setState(() {
+              widget.widgetSetting.enabled = false;
+            });
+          },
+          enabled: widget.widgetSetting.enabled,
         ),
         ListTile(
           title: Text(MenuOptions.color.name),
