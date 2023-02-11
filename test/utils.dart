@@ -4,6 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:isar/isar.dart';
+import 'package:flutter/services.dart';
 import 'package:native_context_menu/native_context_menu.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
@@ -12,6 +13,7 @@ import 'package:ui_maker/utils/logging.dart';
 import 'package:ui_maker/utils/widget_types.dart';
 import '../examples/prebuilt_UI.dart';
 import 'package:ui_maker/app/widgets/creator_context_menu.dart';
+import 'package:ui_maker/app/utils/menu_options.dart';
 
 /// A class for shared test utilities and mock data. Includes:
 /// - isarInitialization and writing of a test database
@@ -210,10 +212,17 @@ class Tests {
         buttons: kSecondaryMouseButton,
       );
       await tester.pump();
-      // TODO: I need to somehow press the buttons of the context menu
-      // But the issue with that is that MenuItem is NOT a widget;
-      // I need to do something similar to selecting an item from a dropdown widget
-      final colorLocation = tester.getCenter(find.byWidget());
+
+      // Get the methodchannel created by the native_context_menu lib
+      final channel = find.byType(MethodChannel);
+      final widget = channel.evaluate().first.widget;
+      if (wi)
+        // Use the method channel to select the color MenuItem
+        // channel.evaluate(
+        //     return invokeMethod('onItemSelected', MenuOptions.color.toId());
+        // );
+        await channel.invokeMethod('onItemSelected', MenuOptions.color.toId());
+      channel.evaluate();
       await tester.tapAt();
 
       // Check if the CCM is visible

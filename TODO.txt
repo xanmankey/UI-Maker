@@ -10,3 +10,6 @@ to offset these changes anyway, so there's no point in pumping extra widgets)
 
 // I would love a generative testing framework as well;
 // What if I could create test cases for each widget?
+
+I think I'm going to move away from native_context_menus; 
+I'm going to try to do my own implementation using contextMenuBuilder
