@@ -40,9 +40,8 @@ class TestUtils {
     ..listviewNum = 0
     ..listviewIndex = 1
     ..widgetType = WidgetType.textField;
-  static WidgetSettings disabledImage = WidgetSettings()
-    ..title = WidgetNames.disabledImage.toString()
-    ..enabled = false
+  static WidgetSettings image = WidgetSettings()
+    ..title = WidgetNames.image.toString()
     ..color = Colors.green.value
     ..offsetX = 150
     ..offsetY = 300
@@ -57,7 +56,7 @@ class TestUtils {
     ..listviewNum = 1
     ..listviewIndex = 0
     ..widgetType = WidgetType.card
-    ..widgets.addAll([checkbox, textField, disabledImage]);
+    ..widgets.addAll([checkbox, textField, image]);
   static WidgetSettings emptyCard = WidgetSettings()
     ..title = WidgetNames.emptyCard.toString()
     ..color = Colors.blue.value
@@ -89,7 +88,7 @@ class TestUtils {
   static Map<String, WidgetSettings> widgetSettings = {
     checkbox.title: checkbox,
     textField.title: textField,
-    disabledImage.title: disabledImage,
+    image.title: image,
     card.title: card,
     emptyCard.title: emptyCard,
     dropdown.title: dropdown,
@@ -389,7 +388,7 @@ abstract class Tests {
 enum WidgetNames {
   checkbox,
   textfield,
-  disabledImage,
+  image,
   card,
   emptyCard,
   dropdown,

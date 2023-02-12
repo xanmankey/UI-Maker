@@ -144,17 +144,6 @@ List<Widget> generateWidgets(List<WidgetSettings> widgetSettings, Layout layout,
             ),
           ));
           break;
-        case WidgetType.numField:
-          widgets.add(Positioned(
-            left: widgetSettings.offsetX,
-            top: widgetSettings.offsetY,
-            child: CreatorField(
-              widgetSetting: widgetSettings,
-              layout: layout,
-              widgetType: WidgetType.numField,
-            ),
-          ));
-          break;
         case WidgetType.textField:
           widgets.add(Positioned(
             left: widgetSettings.offsetX,
@@ -204,13 +193,6 @@ List<Widget> generateWidgets(List<WidgetSettings> widgetSettings, Layout layout,
         case WidgetType.checkbox:
           widgets.add(CreatorCheckbox(
             widgetSetting: widgetSettings,
-            layout: layout,
-          ));
-          break;
-        case WidgetType.numField:
-          widgets.add(CreatorField(
-            widgetSetting: widgetSettings,
-            widgetType: WidgetType.numField,
             layout: layout,
           ));
           break;

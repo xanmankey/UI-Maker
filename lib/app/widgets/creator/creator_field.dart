@@ -107,6 +107,7 @@ class CreatorField extends StatefulWidget {
 
 class _CreatorFieldState extends State<CreatorField> {
   TextEditingController controller = TextEditingController();
+  bool isNum = false;
   @override
   void initState() {
     if (widget.title) {
@@ -117,6 +118,15 @@ class _CreatorFieldState extends State<CreatorField> {
         .containsKey(widget.widgetSetting.title)) {
       controller.text =
           widget.widgetSetting.mapValues[widget.widgetSetting.title];
+    }
+    if (widget.widgetSetting.mapValues
+        .containsKey(WidgetSettingsKeys.isNumKeyboardType.name)) {
+      if (widget
+          .widgetSetting.mapValues[WidgetSettingsKeys.isNumKeyboardType.name]) {
+        isNum = true;
+      }
+    } else {
+      isNum = false;
     }
     super.initState();
   }
@@ -132,9 +142,7 @@ class _CreatorFieldState extends State<CreatorField> {
         style: TextStyle(
           decorationColor: Color(widget.widgetSetting.color),
         ),
-        keyboardType: widget.widgetType == WidgetType.numField
-            ? TextInputType.number
-            : TextInputType.text,
+        keyboardType: isNum ? TextInputType.number : TextInputType.text,
         onFieldSubmitted: (value) {
           if (widget.title) {
             setState(() {
@@ -146,7 +154,7 @@ class _CreatorFieldState extends State<CreatorField> {
             });
           } else {
             setState(() {
-              if (widget.widgetType == WidgetType.numField) {
+              if (isNum) {
                 widget.widgetSetting.mapValues.addAll({
                   WidgetSettingsKeys.fieldText.name: int.parse(controller.text)
                 });

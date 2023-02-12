@@ -99,8 +99,6 @@ int getColor(BuildContext? context, WidgetType type) {
     switch (type) {
       case WidgetType.checkbox:
         return Theme.of(context).checkboxTheme.hashCode;
-      case WidgetType.numField:
-        return Theme.of(context).textTheme.hashCode;
       case WidgetType.textField:
         return Theme.of(context).textTheme.hashCode;
       case WidgetType.dropdown:

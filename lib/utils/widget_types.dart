@@ -9,7 +9,6 @@ enum WidgetType {
   card,
   dropdown,
   checkbox,
-  numField,
   textField,
   imageSelector;
   // get types => WidgetType.values;
@@ -22,8 +21,6 @@ enum WidgetType {
         return CreatorDropdown;
       case checkbox:
         return CreatorCheckbox;
-      case numField:
-        return CreatorField;
       case textField:
         return CreatorField;
       case imageSelector:

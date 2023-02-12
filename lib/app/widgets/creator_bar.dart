@@ -130,11 +130,6 @@ class _CreatorBarState extends State<CreatorBar> {
                 widgetSetting: widgetSettings[WidgetType.card]!,
                 layout: widget.layout,
               ),
-              CreatorField(
-                widgetSetting: widgetSettings[WidgetType.numField]!,
-                widgetType: WidgetType.numField,
-                layout: widget.layout,
-              ),
               CreatorDropdown(
                 widgetSetting: widgetSettings[WidgetType.textField]!,
                 layout: widget.layout,

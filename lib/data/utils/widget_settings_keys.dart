@@ -42,6 +42,8 @@ enum WidgetSettingsKeys {
   validator,
   // The value of a text field
   fieldText,
+  // The input allowed in a text field (numbers or text)
+  isNumKeyboardType,
   // The value of a checkbox
   checkboxState;
 
@@ -57,6 +59,8 @@ enum WidgetSettingsKeys {
         return WidgetSettingsKeys.validator;
       case "fieldText":
         return WidgetSettingsKeys.fieldText;
+      case "isNumKeyboardType":
+        return WidgetSettingsKeys.isNumKeyboardType;
       case "checkboxState":
         return WidgetSettingsKeys.checkboxState;
       default:
