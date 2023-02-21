@@ -12,20 +12,20 @@ import '../../../utils.dart';
 /// - GIVE THE USER FAITH IN THE CODE
 
 void main() {
-  setUpAll(() async {
-    await testUtils.ensureInitialized();
-  });
-  group('`generateLayout()`', () {
+  group('`generateLayout():`', () {
+    // setUp(() async {
+    //   await testUtils.ensureInitialized();
+    // });
     test('layoutName = "layoutName"', () {
       expect(
           generateLayout("layoutName", width: 10, height: 10),
-          equals(Layout()
-            ..layoutName = "layoutName"
-            ..filter = false
-            ..numGroups = 4
-            ..width = 10
-            ..height = 10
-            ..layoutType = LayoutType.columns));
+          equals(Layout(
+              layoutName: "layoutName",
+              filter: false,
+              numGroups: 4,
+              width: 10,
+              height: 10,
+              layoutType: LayoutType.columns)));
     });
     // test('layoutName = already existing layout name, "emptyLayout"', () {
     //   expect(generateLayout("emptyLayout"), equals(null));

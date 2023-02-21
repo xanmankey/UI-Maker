@@ -4,6 +4,7 @@ import 'package:ui_maker/app/widgets/creator_area.dart';
 import 'package:ui_maker/app/widgets/creator_bar.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/app/utils/generate_layout.dart';
+import 'package:ui_maker/logging.dart';
 
 /// A convenience widget for creating a UI_Maker screen
 ///
@@ -32,8 +33,12 @@ class CreatorScaffold extends StatefulWidget {
   // In case you want to have some widgets load be default
   Layout? layout;
   AppBar? appBar;
-  CreatorScaffold(
-      {super.key, required this.layoutName, this.layout, this.appBar});
+  CreatorScaffold({
+    super.key,
+    required this.layoutName,
+    this.layout,
+    this.appBar,
+  });
 
   @override
   State<CreatorScaffold> createState() => _CreatorScaffoldState();
@@ -41,6 +46,8 @@ class CreatorScaffold extends StatefulWidget {
 
 class _CreatorScaffoldState extends State<CreatorScaffold> {
   late Layout layout;
+  bool isOpen = false;
+  IconData arrowIcon = Icons.arrow_drop_up;
 
   @override
   void initState() {
@@ -60,8 +67,28 @@ class _CreatorScaffoldState extends State<CreatorScaffold> {
             title: Text(widget.layoutName),
           ),
       body: CreatorArea(layout: layout),
-      bottomNavigationBar: CreatorBar(
-        layout: layout,
+      bottomSheet: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Center(
+            child: GestureDetector(
+              child: Icon(arrowIcon),
+              onTap: () => setState(() {
+                isOpen = !isOpen;
+                // logger.info(isOpen.toString());
+                if (isOpen) {
+                  arrowIcon = Icons.arrow_drop_down;
+                } else {
+                  arrowIcon = Icons.arrow_drop_up;
+                }
+              }),
+            ),
+          ),
+          CreatorBar(
+            layout: layout,
+            isOpen: isOpen,
+          ),
+        ],
       ),
     );
   }

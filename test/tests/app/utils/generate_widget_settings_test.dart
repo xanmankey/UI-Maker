@@ -12,25 +12,25 @@ import '../../../utils.dart';
 /// - GIVE THE USER FAITH IN THE CODE
 
 void main() {
-  setUpAll(() async {
-    await testUtils.ensureInitialized();
-  });
-  group('`generateWidgetSettings()`', () {
+  group('`generateWidgetSettings():`', () {
+    // setUp(() async {
+    //   await testUtils.ensureInitialized();
+    // });
     test('List<WidgetType> widgets = [WidgetType.checkbox]', () {
       expect(
           generateWidgetSettings(
               [WidgetType.checkbox], null)[WidgetType.checkbox],
-          equals(WidgetSettings()
-            ..title = ''
-            ..description = ''
-            ..enabled = true
-            ..color = getColor(null, WidgetType.checkbox)
-            ..offsetX = null
-            ..offsetY = null
-            ..listviewNum = null
-            ..listviewIndex = null
-            ..mapValues = {}
-            ..widgetType = WidgetType.checkbox));
+          equals(WidgetSettings(
+              title: '',
+              description: '',
+              enabled: true,
+              color: getColor(null, WidgetType.checkbox),
+              offsetX: null,
+              offsetY: null,
+              listviewNum: null,
+              listviewIndex: null,
+              mapValues: {},
+              widgetType: WidgetType.checkbox)));
     });
     test('List<WidgetType> widgets = []', () {
       expect(generateWidgetSettings([], null), equals({}));

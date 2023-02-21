@@ -1,7 +1,7 @@
 import 'package:isar/isar.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
-import 'package:ui_maker/utils/logging.dart';
+import 'package:ui_maker/logging.dart';
 
 /// A class for creating and retrieving the Isar database instance.
 /// Also defines widget filter, sort, update, and delete functions.

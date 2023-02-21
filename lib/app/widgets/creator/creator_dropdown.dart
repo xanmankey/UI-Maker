@@ -73,6 +73,11 @@ import 'package:ui_maker/app/widgets/utility/dropdown_item_creator.dart';
 ///   }
 /// }
 /// ```
+
+// ALL of the creator widgets need to be reworked slightly to just be empty
+// draggable widgets when in the creator bar; perhaps even I should
+// just use images instead, and if a certain image is dropped,
+// place a creator widget there?
 class CreatorDropdown extends StatefulWidget {
   WidgetSettings widgetSetting;
   Layout layout;
@@ -83,12 +88,14 @@ class CreatorDropdown extends StatefulWidget {
   });
 
   @override
-  State<CreatorDropdown> createState() => _CreatorDropdownState();
+  State<CreatorDropdown> createState() => CreatorDropdownState();
 }
 
-class _CreatorDropdownState extends State<CreatorDropdown> {
+@visibleForTesting
+class CreatorDropdownState extends State<CreatorDropdown> {
   late DropdownMenuTypes dropdownInputType = DropdownMenuTypes.string;
   List<DropdownMenuItem<String>>? items;
+  int? testDropdownValue = 1;
 
   @override
   void initState() {
@@ -102,53 +109,86 @@ class _CreatorDropdownState extends State<CreatorDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return CreatorBase(
-        widgetSetting: widget.widgetSetting,
-        widgetType: widget.widgetSetting.widgetType,
-        layout: widget.layout,
-        creatorWidget: (widget.widgetSetting.mapValues
-                .containsKey(WidgetSettingsKeys.items.name))
-            ? DropdownButton(
-                items: items,
-                value: (widget.widgetSetting.mapValues
-                        .containsKey(WidgetSettingsKeys.currentItem.name))
-                    ? widget.widgetSetting
-                        .mapValues[WidgetSettingsKeys.currentItem.name]
-                    : items!.first.value,
-                dropdownColor: Color(widget.widgetSetting.color),
-                hint: Text(widget.widgetSetting.description ?? ''),
-                onChanged: (widget.widgetSetting.enabled)
-                    ? (value) {
-                        setState(() {
-                          widget.widgetSetting.mapValues.addAll(
-                              {WidgetSettingsKeys.currentItem.name: value});
-                        });
-                      }
-                    : null)
-            : FutureBuilder(
-                future: getItems(context),
-                builder: ((context, snapshot) {
-                  return DropdownButton(
-                      items: snapshot.data,
-                      value: (widget.widgetSetting.mapValues
-                              .containsKey(WidgetSettingsKeys.currentItem.name))
-                          ? widget.widgetSetting
-                              .mapValues[WidgetSettingsKeys.currentItem.name]
-                          : (snapshot.hasData)
-                              ? snapshot.data!.first.value
-                              : null,
-                      dropdownColor: Color(widget.widgetSetting.color),
-                      hint: Text(widget.widgetSetting.description ?? ''),
-                      onChanged: (widget.widgetSetting.enabled)
-                          ? (value) {
-                              setState(() {
-                                widget.widgetSetting.mapValues.addAll({
-                                  WidgetSettingsKeys.currentItem.name: value
-                                });
-                              });
-                            }
-                          : null);
-                })));
+    return (widget.widgetSetting.hasDropped)
+        ? CreatorBase(
+            widgetSetting: widget.widgetSetting,
+            widgetType: widget.widgetSetting.widgetType,
+            layout: widget.layout,
+            context: true,
+            creatorWidget: (widget.widgetSetting.mapValues
+                    .containsKey(WidgetSettingsKeys.items.name))
+                ? DropdownButton(
+                    items: items,
+                    value: (widget.widgetSetting.mapValues
+                            .containsKey(WidgetSettingsKeys.currentItem.name))
+                        ? widget.widgetSetting
+                            .mapValues[WidgetSettingsKeys.currentItem.name]
+                        : items!.first.value,
+                    dropdownColor: Color(widget.widgetSetting.color),
+                    hint: Text(widget.widgetSetting.description ?? ''),
+                    onChanged: (widget.widgetSetting.enabled)
+                        ? (value) {
+                            setState(() {
+                              widget.widgetSetting.mapValues.addAll(
+                                  {WidgetSettingsKeys.currentItem.name: value});
+                            });
+                          }
+                        : null,
+                  )
+                : FutureBuilder(
+                    future: getItems(context),
+                    builder: ((context, snapshot) {
+                      return DropdownButton(
+                          items: snapshot.data,
+                          value: (widget.widgetSetting.mapValues.containsKey(
+                                  WidgetSettingsKeys.currentItem.name))
+                              ? widget.widgetSetting.mapValues[
+                                  WidgetSettingsKeys.currentItem.name]
+                              : (snapshot.hasData)
+                                  ? snapshot.data!.first.value
+                                  : null,
+                          dropdownColor: Color(widget.widgetSetting.color),
+                          hint: Text(widget.widgetSetting.description ?? ''),
+                          onChanged: (widget.widgetSetting.enabled)
+                              ? (value) {
+                                  setState(() {
+                                    widget.widgetSetting.mapValues.addAll({
+                                      WidgetSettingsKeys.currentItem.name: value
+                                    });
+                                  });
+                                }
+                              : null);
+                    })))
+        : CreatorBase(
+            widgetSetting: widget.widgetSetting,
+            widgetType: widget.widgetSetting.widgetType,
+            layout: widget.layout,
+            context: false,
+            // I'm not sure why this is required here but won't work in the creator base
+            creatorWidget: DropdownButton(
+              items: const [
+                DropdownMenuItem(
+                  value: 1,
+                  child: Text("1"),
+                ),
+                DropdownMenuItem(
+                  value: 2,
+                  child: Text("2"),
+                ),
+                DropdownMenuItem(
+                  value: 3,
+                  child: Text("3"),
+                ),
+              ],
+              value: testDropdownValue ?? 1,
+              hint: Text(widget.widgetSetting.description ?? ''),
+              onChanged: (value) {
+                setState(() {
+                  testDropdownValue = value;
+                });
+              },
+            ),
+          );
   }
 }
 

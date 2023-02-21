@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:isar/isar.dart';
+import 'package:ui_maker/app/utils/calculate_dimensions.dart';
 import 'package:ui_maker/app/widgets/creator_context_menu.dart';
 import 'package:ui_maker/app/utils/generate_widget_settings.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/data/isar_db.dart';
-import 'package:ui_maker/utils/widget_types.dart';
+import 'package:ui_maker/vars/widget_types.dart';
 import 'package:ui_maker/data/collections/layout.dart';
-
-// TODO: I'm probably missing something w/ creator_area and creator_base here;
-// only testing will allow me to know for certain
 
 /// A flutter widget that can be instanced to create a creator widget.
 /// All creator widgets share a few properties:
@@ -22,11 +20,15 @@ class CreatorBase extends StatefulWidget {
   Layout layout;
   WidgetType widgetType;
   Widget creatorWidget;
+  bool context;
+  bool hasDropped;
   CreatorBase({
     super.key,
     required this.creatorWidget,
     required this.widgetType,
     required this.layout,
+    required this.context,
+    this.hasDropped = false,
     this.widgetSetting,
   });
 
@@ -35,38 +37,66 @@ class CreatorBase extends StatefulWidget {
 }
 
 class _CreatorBaseState extends State<CreatorBase> {
-  late Isar isarDB;
+  double opacity = 1;
 
   @override
-  initState() async {
+  initState() {
     widget.widgetSetting ??=
         generateWidgetSettings([widget.widgetType], context)[widget.widgetType];
-    isarDB = await db.isarDB;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CreatorContextMenu(
-      widgetSetting: widget.widgetSetting!,
-      creatorWidget: Draggable(
-        feedback: widget.creatorWidget,
-        child: widget.creatorWidget,
-        onDragCompleted: () async {
-          // Write Initial WidgetSettings data to widget settings
-          // On any change to widgetSettings, data is also written
-          // if (await isarDB.widgetSettings.get(widget.widgetSetting!.id) !=
-          //     null) {
-          //   isarDB.widgetSettings.delete(widget.widgetSetting!.id);
-          // }
-          // isarDB
-          //     .writeTxn(() => isarDB.widgetSettings.put(widget.widgetSetting!));
-          db.updateWidgetSettings([widget.widgetSetting!]);
-          widget.layout.widgets.add(widget.widgetSetting!);
-          db.updateLayouts([widget.layout]);
-        },
-        onDragEnd: (details) {},
-      ),
-    );
+    return (widget.context)
+        ? CreatorContextMenu(
+            widgetSetting: widget.widgetSetting!,
+            creatorWidget: Opacity(
+              opacity: opacity,
+              child: Draggable(
+                feedback: SizedBox(
+                  height: calculateHeight(widget.widgetType,
+                      MediaQuery.of(context).size.height, false),
+                  width: calculateWidth(widget.widgetType,
+                      MediaQuery.of(context).size.width, false),
+                  child: Material(child: widget.creatorWidget),
+                ),
+                data: {
+                  "widgetSetting": widget.widgetSetting,
+                  "layout": widget.layout,
+                  "opacity": opacity,
+                },
+                child: Material(child: widget.creatorWidget),
+                onDragEnd: (details) {
+                  setState(() {
+                    opacity = 1;
+                  });
+                },
+                onDragStarted: () {
+                  setState(() {
+                    opacity = 0.7;
+                  });
+                },
+              ),
+            ),
+          )
+        : Opacity(
+            opacity: opacity,
+            child: Draggable(
+              feedback: SizedBox(
+                  height: calculateHeight(widget.widgetType,
+                      MediaQuery.of(context).size.height, false),
+                  width: calculateWidth(widget.widgetType,
+                      MediaQuery.of(context).size.width, false),
+                  child: Material(child: widget.creatorWidget)),
+              onDragEnd: (details) {},
+              data: {
+                "widgetSetting": widget.widgetSetting,
+                "layout": widget.layout,
+                "opacity": opacity,
+              },
+              child: Material(child: widget.creatorWidget),
+            ),
+          );
   }
 }

@@ -153,16 +153,17 @@ Layout _layoutDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = Layout();
-  object.filter = reader.readBool(offsets[0]);
-  object.height = reader.readDouble(offsets[1]);
+  final object = Layout(
+    filter: reader.readBoolOrNull(offsets[0]) ?? false,
+    height: reader.readDouble(offsets[1]),
+    layoutName: reader.readString(offsets[2]),
+    layoutType:
+        _LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offsets[3])] ??
+            LayoutType.columns,
+    numGroups: reader.readLongOrNull(offsets[4]) ?? 4,
+    width: reader.readDouble(offsets[5]),
+  );
   object.id = id;
-  object.layoutName = reader.readString(offsets[2]);
-  object.layoutType =
-      _LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offsets[3])] ??
-          LayoutType.columns;
-  object.numGroups = reader.readLong(offsets[4]);
-  object.width = reader.readDouble(offsets[5]);
   return object;
 }
 
@@ -174,7 +175,7 @@ P _layoutDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readBool(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 1:
       return (reader.readDouble(offset)) as P;
     case 2:
@@ -183,7 +184,7 @@ P _layoutDeserializeProp<P>(
       return (_LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           LayoutType.columns) as P;
     case 4:
-      return (reader.readLong(offset)) as P;
+      return (reader.readLongOrNull(offset) ?? 4) as P;
     case 5:
       return (reader.readDouble(offset)) as P;
     default:

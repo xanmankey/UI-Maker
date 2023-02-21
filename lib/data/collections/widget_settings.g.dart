@@ -32,38 +32,43 @@ const WidgetSettingsSchema = CollectionSchema(
       name: r'enabled',
       type: IsarType.bool,
     ),
-    r'listviewIndex': PropertySchema(
+    r'hasDropped': PropertySchema(
       id: 3,
+      name: r'hasDropped',
+      type: IsarType.bool,
+    ),
+    r'listviewIndex': PropertySchema(
+      id: 4,
       name: r'listviewIndex',
       type: IsarType.long,
     ),
     r'listviewNum': PropertySchema(
-      id: 4,
+      id: 5,
       name: r'listviewNum',
       type: IsarType.long,
     ),
     r'offsetX': PropertySchema(
-      id: 5,
+      id: 6,
       name: r'offsetX',
       type: IsarType.double,
     ),
     r'offsetY': PropertySchema(
-      id: 6,
+      id: 7,
       name: r'offsetY',
       type: IsarType.double,
     ),
     r'title': PropertySchema(
-      id: 7,
+      id: 8,
       name: r'title',
       type: IsarType.string,
     ),
     r'values': PropertySchema(
-      id: 8,
+      id: 9,
       name: r'values',
       type: IsarType.string,
     ),
     r'widgetType': PropertySchema(
-      id: 9,
+      id: 10,
       name: r'widgetType',
       type: IsarType.byte,
       enumMap: _WidgetSettingswidgetTypeEnumValueMap,
@@ -182,13 +187,14 @@ void _widgetSettingsSerialize(
   writer.writeLong(offsets[0], object.color);
   writer.writeString(offsets[1], object.description);
   writer.writeBool(offsets[2], object.enabled);
-  writer.writeLong(offsets[3], object.listviewIndex);
-  writer.writeLong(offsets[4], object.listviewNum);
-  writer.writeDouble(offsets[5], object.offsetX);
-  writer.writeDouble(offsets[6], object.offsetY);
-  writer.writeString(offsets[7], object.title);
-  writer.writeString(offsets[8], object.values);
-  writer.writeByte(offsets[9], object.widgetType.index);
+  writer.writeBool(offsets[3], object.hasDropped);
+  writer.writeLong(offsets[4], object.listviewIndex);
+  writer.writeLong(offsets[5], object.listviewNum);
+  writer.writeDouble(offsets[6], object.offsetX);
+  writer.writeDouble(offsets[7], object.offsetY);
+  writer.writeString(offsets[8], object.title);
+  writer.writeString(offsets[9], object.values);
+  writer.writeByte(offsets[10], object.widgetType.index);
 }
 
 WidgetSettings _widgetSettingsDeserialize(
@@ -197,20 +203,22 @@ WidgetSettings _widgetSettingsDeserialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  final object = WidgetSettings();
-  object.color = reader.readLong(offsets[0]);
-  object.description = reader.readStringOrNull(offsets[1]);
-  object.enabled = reader.readBool(offsets[2]);
+  final object = WidgetSettings(
+    color: reader.readLong(offsets[0]),
+    description: reader.readStringOrNull(offsets[1]),
+    enabled: reader.readBoolOrNull(offsets[2]) ?? true,
+    hasDropped: reader.readBoolOrNull(offsets[3]) ?? false,
+    listviewIndex: reader.readLongOrNull(offsets[4]),
+    listviewNum: reader.readLongOrNull(offsets[5]),
+    offsetX: reader.readDoubleOrNull(offsets[6]),
+    offsetY: reader.readDoubleOrNull(offsets[7]),
+    title: reader.readString(offsets[8]),
+    widgetType: _WidgetSettingswidgetTypeValueEnumMap[
+            reader.readByteOrNull(offsets[10])] ??
+        WidgetType.card,
+  );
   object.id = id;
-  object.listviewIndex = reader.readLongOrNull(offsets[3]);
-  object.listviewNum = reader.readLongOrNull(offsets[4]);
-  object.offsetX = reader.readDoubleOrNull(offsets[5]);
-  object.offsetY = reader.readDoubleOrNull(offsets[6]);
-  object.title = reader.readString(offsets[7]);
-  object.values = reader.readString(offsets[8]);
-  object.widgetType = _WidgetSettingswidgetTypeValueEnumMap[
-          reader.readByteOrNull(offsets[9])] ??
-      WidgetType.card;
+  object.values = reader.readString(offsets[9]);
   return object;
 }
 
@@ -226,20 +234,22 @@ P _widgetSettingsDeserializeProp<P>(
     case 1:
       return (reader.readStringOrNull(offset)) as P;
     case 2:
-      return (reader.readBool(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? true) as P;
     case 3:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readBoolOrNull(offset) ?? false) as P;
     case 4:
       return (reader.readLongOrNull(offset)) as P;
     case 5:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readLongOrNull(offset)) as P;
     case 6:
       return (reader.readDoubleOrNull(offset)) as P;
     case 7:
-      return (reader.readString(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 8:
       return (reader.readString(offset)) as P;
     case 9:
+      return (reader.readString(offset)) as P;
+    case 10:
       return (_WidgetSettingswidgetTypeValueEnumMap[
               reader.readByteOrNull(offset)] ??
           WidgetType.card) as P;
@@ -1072,6 +1082,16 @@ extension WidgetSettingsQueryFilter
     });
   }
 
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
+      hasDroppedEqualTo(bool value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'hasDropped',
+        value: value,
+      ));
+    });
+  }
+
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition> idEqualTo(
       Id value) {
     return QueryBuilder.apply(this, (query) {
@@ -1881,6 +1901,20 @@ extension WidgetSettingsQuerySortBy
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByHasDropped() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasDropped', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      sortByHasDroppedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasDropped', Sort.desc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
       sortByListviewIndex() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'listviewIndex', Sort.asc);
@@ -2015,6 +2049,20 @@ extension WidgetSettingsQuerySortThenBy
     });
   }
 
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByHasDropped() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasDropped', Sort.asc);
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
+      thenByHasDroppedDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'hasDropped', Sort.desc);
+    });
+  }
+
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenById() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'id', Sort.asc);
@@ -2143,6 +2191,13 @@ extension WidgetSettingsQueryWhereDistinct
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QDistinct>
+      distinctByHasDropped() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'hasDropped');
+    });
+  }
+
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct>
       distinctByListviewIndex() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'listviewIndex');
@@ -2214,6 +2269,12 @@ extension WidgetSettingsQueryProperty
   QueryBuilder<WidgetSettings, bool, QQueryOperations> enabledProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'enabled');
+    });
+  }
+
+  QueryBuilder<WidgetSettings, bool, QQueryOperations> hasDroppedProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'hasDropped');
     });
   }
 

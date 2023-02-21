@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/data/isar_db.dart';
-import 'package:ui_maker/utils/widget_types.dart';
+import 'package:ui_maker/vars/widget_types.dart';
 
 /// A function for creating the creator bar settings objects
 ///
@@ -34,6 +34,7 @@ Map<WidgetType, WidgetSettings> generateWidgetSettings(
   String? title,
   String? description,
   bool? enabled,
+  bool? hasDropped,
   int? color,
   double? offsetX,
   double? offsetY,
@@ -45,17 +46,18 @@ Map<WidgetType, WidgetSettings> generateWidgetSettings(
   Map<WidgetType, WidgetSettings> items = {};
   for (WidgetType widget in widgets) {
     items.addAll({
-      widget: WidgetSettings()
-        ..title = title ?? ''
-        ..description = description ?? ''
-        ..enabled = enabled ?? true
-        ..color = color ?? getColor(context, widget)
-        ..offsetX = offsetX
-        ..offsetY = offsetY
-        ..listviewNum = listviewNum
-        ..listviewIndex = listviewIndex
-        ..mapValues = mapValues ?? {}
-        ..widgetType = widget
+      widget: WidgetSettings(
+        title: title ?? '',
+        description: description ?? '',
+        enabled: enabled ?? true,
+        hasDropped: hasDropped ?? false,
+        color: color ?? getColor(context, widget),
+        offsetX: offsetX,
+        offsetY: offsetY,
+        listviewIndex: listviewIndex,
+        listviewNum: listviewNum,
+        widgetType: widget,
+      )..mapValues = mapValues ?? {}
     });
   }
   // if (write) {

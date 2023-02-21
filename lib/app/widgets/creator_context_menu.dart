@@ -4,7 +4,6 @@ import 'package:isar/isar.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/data/isar_db.dart';
 import 'package:flutter/material.dart';
-import 'package:ui_maker/utils/sort_types.dart';
 import 'package:ui_maker/app/utils/menu_options.dart';
 import 'package:contextmenu/contextmenu.dart';
 
@@ -160,12 +159,12 @@ class CreatorContextMenu extends StatefulWidget {
 class _CreatorContextMenuState extends State<CreatorContextMenu> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  late Isar isarDB;
+  // late Isar isarDB;
   @override
-  void initState() async {
+  void initState() {
     titleController.text = widget.widgetSetting.title;
     descriptionController.text = widget.widgetSetting.description ?? '';
-    isarDB = await db.isarDB;
+    // isarDB = await db.isarDB;
     super.initState();
   }
 

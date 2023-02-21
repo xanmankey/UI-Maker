@@ -11,6 +11,8 @@ import '../../../utils.dart';
 /// - Mock data for simulation (if applicable)
 /// - GIVE THE USER FAITH IN THE CODE
 
+// This is where sorting and filtering are tested I believe
+
 void main() {
   // setUpAll(() async {
   //   await testUtils.ensureInitialized();

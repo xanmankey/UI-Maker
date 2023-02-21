@@ -19,6 +19,8 @@ export 'data/collections/layout.dart';
 export 'data/collections/widget_settings.dart';
 export 'data/utils/widget_settings_keys.dart';
 export 'data/isar_db.dart';
-export 'utils/layout_types.dart';
-export 'utils/sort_types.dart';
-export 'utils/widget_types.dart';
+export 'vars/layout_types.dart';
+export 'vars/sort_types.dart';
+export 'vars/widget_types.dart';
+
+export 'logging.dart';

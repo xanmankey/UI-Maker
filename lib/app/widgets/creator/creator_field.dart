@@ -3,7 +3,7 @@ import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_maker/data/utils/widget_settings_keys.dart';
-import 'package:ui_maker/utils/widget_types.dart';
+import 'package:ui_maker/vars/widget_types.dart';
 
 /// A field widget that can be dragged in the UI by the user
 /// to create a custom UI. Supports number and text inputs
@@ -92,6 +92,7 @@ class CreatorField extends StatefulWidget {
   bool title;
   bool description;
   Layout layout;
+  double width;
   CreatorField({
     super.key,
     required this.widgetSetting,
@@ -99,13 +100,15 @@ class CreatorField extends StatefulWidget {
     required this.layout,
     this.title = true,
     this.description = false,
+    this.width = 75,
   });
 
   @override
-  State<CreatorField> createState() => _CreatorFieldState();
+  State<CreatorField> createState() => CreatorFieldState();
 }
 
-class _CreatorFieldState extends State<CreatorField> {
+@visibleForTesting
+class CreatorFieldState extends State<CreatorField> {
   TextEditingController controller = TextEditingController();
   bool isNum = false;
   @override
@@ -133,39 +136,59 @@ class _CreatorFieldState extends State<CreatorField> {
 
   @override
   Widget build(BuildContext context) {
-    return CreatorBase(
-      widgetSetting: widget.widgetSetting,
-      widgetType: widget.widgetType,
-      layout: widget.layout,
-      creatorWidget: TextFormField(
-        controller: controller,
-        style: TextStyle(
-          decorationColor: Color(widget.widgetSetting.color),
-        ),
-        keyboardType: isNum ? TextInputType.number : TextInputType.text,
-        onFieldSubmitted: (value) {
-          if (widget.title) {
-            setState(() {
-              widget.widgetSetting.title = controller.text;
-            });
-          } else if (widget.description) {
-            setState(() {
-              widget.widgetSetting.description = controller.text;
-            });
-          } else {
-            setState(() {
-              if (isNum) {
-                widget.widgetSetting.mapValues.addAll({
-                  WidgetSettingsKeys.fieldText.name: int.parse(controller.text)
-                });
-              } else {
-                widget.widgetSetting.mapValues.addAll(
-                    {WidgetSettingsKeys.fieldText.name: controller.text});
-              }
-            });
-          }
-        },
-      ),
-    );
+    return (widget.widgetSetting.hasDropped)
+        ? CreatorBase(
+            widgetSetting: widget.widgetSetting,
+            widgetType: widget.widgetType,
+            layout: widget.layout,
+            context: true,
+            creatorWidget: TextFormField(
+              controller: controller,
+              style: TextStyle(
+                decorationColor: Color(widget.widgetSetting.color),
+              ),
+              keyboardType: isNum ? TextInputType.number : TextInputType.text,
+              onFieldSubmitted: (value) {
+                if (widget.title) {
+                  setState(() {
+                    widget.widgetSetting.title = controller.text;
+                  });
+                } else if (widget.description) {
+                  setState(() {
+                    widget.widgetSetting.description = controller.text;
+                  });
+                } else {
+                  setState(() {
+                    if (isNum) {
+                      widget.widgetSetting.mapValues.addAll({
+                        WidgetSettingsKeys.fieldText.name:
+                            int.parse(controller.text)
+                      });
+                    } else {
+                      widget.widgetSetting.mapValues.addAll(
+                          {WidgetSettingsKeys.fieldText.name: controller.text});
+                    }
+                  });
+                }
+              },
+            ),
+          )
+        : CreatorBase(
+            widgetSetting: widget.widgetSetting,
+            widgetType: widget.widgetType,
+            layout: widget.layout,
+            context: false,
+            creatorWidget: Flexible(
+              // width: widget.width,
+              child: SizedBox(
+                height: 25,
+                child: TextFormField(
+                  controller: null,
+                  enabled: true,
+                  onFieldSubmitted: (value) {},
+                ),
+              ),
+            ),
+          );
   }
 }

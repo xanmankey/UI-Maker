@@ -6,7 +6,7 @@ import 'package:ui_maker/app/widgets/creator/creator_dropdown.dart';
 import 'package:ui_maker/app/widgets/creator/creator_field.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
-import 'package:ui_maker/utils/widget_types.dart';
+import 'package:ui_maker/vars/widget_types.dart';
 
 /// A function for creating a widget based off of widget data
 ///

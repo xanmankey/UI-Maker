@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:logging/logging.dart';
+import 'package:flutter/foundation.dart';
 
 /// A class for handling logging
 class Logging {
@@ -10,7 +12,7 @@ class Logging {
     Logger.root.onRecord.listen((record) {
       dynamic e = record.error;
       String m = e.toString();
-      print(
+      debugPrint(
           '${record.loggerName}: ${record.level.name}: ${record.message} ${m != 'null' ? m : ''}');
     });
     Logger.root.info("Logging initialized.");

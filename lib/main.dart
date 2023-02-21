@@ -10,7 +10,7 @@ import 'package:ui_maker/ui_maker.dart';
 // - NOTHING'S BEEN TESTED
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -39,6 +39,7 @@ class UIMaker extends StatefulWidget {
 class _UIMakerState extends State<UIMaker> {
   @override
   Widget build(BuildContext context) {
+    logger.info("test");
     return CreatorScaffold(layoutName: "MyUIMaker");
   }
 }

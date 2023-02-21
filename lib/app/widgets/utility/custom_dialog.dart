@@ -65,11 +65,11 @@ class CreatorDialog extends StatefulWidget {
 }
 
 class _CreatorDialogState extends State<CreatorDialog> {
-  late Isar isarDB;
+  // late Isar isarDB;
 
   @override
-  initState() async {
-    isarDB = await db.isarDB;
+  initState() {
+    // isarDB = await db.isarDB;
     super.initState();
   }
 

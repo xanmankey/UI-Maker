@@ -51,30 +51,45 @@ class CreatorImage extends StatefulWidget {
   CreatorImage({super.key, required this.widgetSetting, required this.layout});
 
   @override
-  State<CreatorImage> createState() => _CreatorImageState();
+  State<CreatorImage> createState() => CreatorImageState();
 }
 
-class _CreatorImageState extends State<CreatorImage> {
+@visibleForTesting
+class CreatorImageState extends State<CreatorImage> {
   File? image;
   @override
   Widget build(BuildContext context) {
-    return CreatorBase(
-      widgetSetting: widget.widgetSetting,
-      widgetType: widget.widgetSetting.widgetType,
-      layout: widget.layout,
-      creatorWidget: ElevatedButton(
-          onPressed: () async {
-            FilePickerResult? result = await FilePicker.platform.pickFiles();
-            if (result != null) {
-              setState(() {
-                image = File(result.files.single.path!);
-                widget.widgetSetting.mapValues
-                    .addAll({WidgetSettingsKeys.imagePath.name: result});
-              });
-            }
-          },
-          child:
-              (image != null) ? Image.file(image!) : const Icon(Icons.image)),
-    );
+    return (widget.widgetSetting.hasDropped)
+        ? CreatorBase(
+            widgetSetting: widget.widgetSetting,
+            widgetType: widget.widgetSetting.widgetType,
+            layout: widget.layout,
+            context: true,
+            creatorWidget: ElevatedButton(
+                onPressed: () async {
+                  FilePickerResult? result =
+                      await FilePicker.platform.pickFiles();
+                  if (result != null) {
+                    setState(() {
+                      image = File(result.files.single.path!);
+                      widget.widgetSetting.mapValues
+                          .addAll({WidgetSettingsKeys.imagePath.name: result});
+                    });
+                  }
+                },
+                child: (image != null)
+                    ? Image.file(image!)
+                    : const Icon(Icons.image)),
+          )
+        : CreatorBase(
+            widgetSetting: widget.widgetSetting,
+            widgetType: widget.widgetSetting.widgetType,
+            layout: widget.layout,
+            context: false,
+            creatorWidget: ElevatedButton(
+              onPressed: () {},
+              child: const Icon(Icons.image),
+            ),
+          );
   }
 }

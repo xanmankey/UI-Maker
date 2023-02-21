@@ -2,7 +2,7 @@
 
 import 'package:isar/isar.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
-import 'package:ui_maker/utils/layout_types.dart';
+import 'package:ui_maker/vars/layout_types.dart';
 
 part 'layout.g.dart';
 
@@ -44,28 +44,40 @@ part 'layout.g.dart';
 ///
 @collection
 class Layout {
+  Layout({
+    required this.layoutName,
+    required this.width,
+    required this.height,
+    this.layoutType = LayoutType.columns,
+    this.numGroups = 4,
+    this.filter = false,
+  })  : id = Isar.autoIncrement,
+        widgets = IsarLinks<WidgetSettings>();
+
   /// The id of each widget; autoincremented by Isar
-  Id id = Isar.autoIncrement;
+  Id id;
 
   @Index(unique: true)
-  late String layoutName;
+  String layoutName;
 
   /// The widgets that a particular layout has
-  IsarLinks<WidgetSettings> widgets = IsarLinks<WidgetSettings>();
+  IsarLinks<WidgetSettings> widgets;
 
   /// The structure of the layout; by default it is columns,
   /// but horizontal rows are also supported, as well as no layout
   /// (widgets will retain their current position)
   @Index()
   @enumerated
-  LayoutType layoutType = LayoutType.columns;
+  LayoutType layoutType;
 
   /// The number of listviews alloted by the layout
   @Index()
-  int numGroups = 4;
+  int numGroups;
 
-  late double width;
-  late double height;
+  /// The width and height of the particular layout
+  /// TODO: potentially late?
+  double width;
+  double height;
 
   /// A boolean to determine whether the widgets should be filtered or sorted
   @Index()

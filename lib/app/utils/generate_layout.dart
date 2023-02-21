@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/isar_db.dart';
-import 'package:ui_maker/utils/layout_types.dart';
-import 'package:ui_maker/utils/logging.dart';
+import 'package:ui_maker/vars/layout_types.dart';
+import 'package:ui_maker/logging.dart';
 
 // TODO: my generative functions don't actually WRITE the data; should they?
 // TODO: e.g. I feel like this one should, because it needs to check if the
@@ -35,15 +35,17 @@ Layout generateLayout(
   LayoutType layoutType = LayoutType.columns,
   // bool write = false
 }) {
-  Layout layout = Layout()
-    ..filter = filter
-    ..layoutName = layoutName
-    ..numGroups = numGroups
-    ..layoutType = layoutType
-    ..width = width ??
-        MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width
-    ..height = height ??
-        MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height;
+  Layout layout = Layout(
+      filter: filter,
+      layoutName: layoutName,
+      numGroups: numGroups,
+      layoutType: layoutType,
+      width: width ??
+          MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width,
+      height: height ??
+          MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+              .size
+              .height);
   // write layout
   // if (write) {
   //   Future<List<Layout?>?> layouts = db.updateLayouts([layout]);

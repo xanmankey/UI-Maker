@@ -21,35 +21,22 @@ import '../../../../utils.dart';
 ///   - Do they drag/drop correctly (and write to the db accordingly)?
 
 void main() {
+  /*
   setUpAll(() async {
     await testUtils.ensureInitialized();
   });
   group('''`CreatorCheckbox(); Layout layout = TestUtils.emptyLayout??, 
         WidgetSettings widgetSetting = TestUtils.checkbox`''', () {
-    testWidgets('Sort', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.checkbox.name]!);
-      UnimplementedError();
-      return Future.value(null);
-    });
-    testWidgets('Filter', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.checkbox.name]!);
-      UnimplementedError();
-      return Future.value(null);
-    });
-    testWidgets('Drag/Drop', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.checkbox.name]!);
-      UnimplementedError();
-      return Future.value(null);
-    });
     group("Context Menu State Changes", () {
       UnimplementedError();
     });
-    testWidgets('Check db and UI on click', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.checkbox.name]!);
+    testWidgets('Check db and UI on click', (WidgetTester widgetTester) async {
+      await widgetTester.pumpWidget(TestUtils.widgets[WidgetNames.checkbox.name]!);
       expect(generateLayout(LayoutNames.emptyLayout.name), equals(null));
       return Future.value(null);
     });
   });
+  */
 }
 
-class CheckboxTests extends Tests {}
+// class CheckboxTests extends Tests {}

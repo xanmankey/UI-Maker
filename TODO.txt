@@ -1,25 +1,28 @@
-- Once I'm SATISFIED with testing and how the package works, 
-THEN I'll start copying and going into greater detail for documentation
-
 CURRENT PROBLEM
-- My new understanding about pumping; PUMP ONE WIDGET AT A TIME 
-(in flutter, changes in state occur, so if you pump a lot you would need to repump 
-to offset these changes anyway, so there's no point in pumping extra widgets)
+- The finder "zero widgets with widget matching predicate (Closure: (Widget) => bool) that has
+ancestor(s) with type "ListTile" (ignoring offstage widgets)" (used in a call to "tap()") could not
+find any matching widgets.
+(I need to rework context menu selection apparently)
 
-(almost) NO POINT IN DEBUGGING VIA FLUTTER RUN until I've written and ran successful tests
+I changed to pumpAndSettle and some things changed
 
-// I would love a generative testing framework as well;
-// What if I could create test cases for each widget?
+NOTE that my widget tests are DIFFERENT than integration tests (see more about that here: https://docs.flutter.dev/testing#integration-tests)
+TODO: I'm not sure the context menu is actually opening
 
-I think I'm going to move away from native_context_menus; 
-I'm going to try to do my own implementation using contextMenuBuilder
+I like the idea of lots of expect statements to ensure that everything is working as intended
+In order to visualize widgetTree, you can just log using debugDumpApp() or perhaps tester.allWidgets.toString()
 
-CURRENT GOALS
-- Work on utils (45 min max from now to figure out if tests can be implemented for each creator widget)
-- Structure and plan out the rest of my tests using UnimplementedErrors()
-- DEBUG AND COMPLETE TESTING, THEN MOVE ON TO VISUAL TESTING 
+It seems like you can potentially run `flutter run -t my_test.dart' to visualize your test on a simulator in addition to running it
+(but it will only render the final outcome; that's why you want to break your tests into even smaller pieces)
 
-Today 
-- Go to mass
-- Pack and prepare
-- Read
+Right now I think the best way to go about things is to root out the problems visually if I can; I can't 
+work with the tests in an effective way right now because of some of the logic errors, but if I can get 
+those I should be able to move forward with the tests (not TDD unfortunately though)
+
+MY GOAL is to test and rewrite to get the visual test working so I can start working on the behind the scenes tests
+I guess I'll work on creator_bar, scaffold, etc tmrs
+
+Once I'm done writing my tests I'm going to do some tests of my own by using my library to make DWTP
+
+I got a lot done, but I'm not sure why the Drag and Drop isn't triggering ANYTHING in the CreatorArea (that's a little concerning, as it 
+is a core part of my library functionality)

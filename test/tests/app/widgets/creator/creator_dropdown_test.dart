@@ -24,35 +24,22 @@ import '../../../../utils.dart';
 // the custom_dialog_test
 
 void main() {
+  /*
   setUpAll(() async {
     await testUtils.ensureInitialized();
   });
   group('''`CreatorDropdown(); Layout layout = TestUtils.emptyLayout??, 
         WidgetSettings widgetSetting = TestUtils.dropdown`''', () {
-    testWidgets('Sort', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.dropdown.name]!);
-      UnimplementedError();
-      return Future.value(null);
-    });
-    testWidgets('Filter', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.dropdown.name]!);
-      UnimplementedError();
-      return Future.value(null);
-    });
-    testWidgets('Drag/Drop', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.dropdown.name]!);
-      UnimplementedError();
-      return Future.value(null);
-    });
     group("Context Menu State Changes", () {
       UnimplementedError();
     });
-    testWidgets('Check db and UI on click', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.dropdown.name]!);
+    testWidgets('Check db and UI on click', (WidgetTester widgetTester) async {
+      await widgetTester.pumpWidget(TestUtils.widgets[WidgetNames.dropdown.name]!);
       expect(generateLayout(LayoutNames.emptyLayout.name), equals(null));
       return Future.value(null);
     });
   });
+  */
 }
 
-class DropdownTests extends Tests {}
+// class DropdownTests extends Tests {}

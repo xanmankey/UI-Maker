@@ -33,19 +33,19 @@ class _UIMakerState extends State<UIMaker> {
   @override
   Widget build(BuildContext context) {
     return CreatorScaffold(
-      layoutName: "MyUIMaker",
-      layout: Layout()
-        ..layoutName = "MyUIMaker"
-        ..widgets.addAll([
-          for (WidgetSettings setting in TestUtils.widgetSettings.values)
-            setting
-        ])
-        ..numGroups = 1
-        ..width =
-            MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.width
-        ..height = MediaQueryData.fromWindow(WidgetsBinding.instance.window)
-            .size
-            .height,
-    );
+        layoutName: "MyUIMaker",
+        layout: Layout(
+          layoutName: "MyUIMaker",
+          numGroups: 1,
+          width: MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+              .size
+              .width,
+          height: MediaQueryData.fromWindow(WidgetsBinding.instance.window)
+              .size
+              .height,
+        )..widgets.addAll([
+            for (WidgetSettings setting in TestUtils.widgetSettings.values)
+              setting
+          ]));
   }
 }

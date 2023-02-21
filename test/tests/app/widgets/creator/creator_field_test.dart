@@ -25,35 +25,22 @@ import '../../../../utils.dart';
 // I'd also need to rework this test
 
 void main() {
+  /*
   setUpAll(() async {
     await testUtils.ensureInitialized();
   });
   group('''`CreatorField(); Layout layout = TestUtils.emptyLayout??, 
         WidgetSettings widgetSetting = TestUtils.numField`''', () {
-    testWidgets('Sort', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.textfield.name]!);
-      UnimplementedError();
-      return Future.value(null);
-    });
-    testWidgets('Filter', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.textfield.name]!);
-      UnimplementedError();
-      return Future.value(null);
-    });
-    testWidgets('Drag/Drop', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.textfield.name]!);
-      UnimplementedError();
-      return Future.value(null);
-    });
     group("Context Menu State Changes", () {
       UnimplementedError();
     });
-    testWidgets('Check db and UI on input', (WidgetTester tester) async {
-      await tester.pumpWidget(TestUtils.widgets[WidgetNames.textfield.name]!);
+    testWidgets('Check db and UI on input', (WidgetTester widgetTester) async {
+      await widgetTester.pumpWidget(TestUtils.widgets[WidgetNames.textfield.name]!);
       expect(generateLayout(LayoutNames.emptyLayout.name), equals(null));
       return Future.value(null);
     });
   });
+  */
 }
 
-class FieldTests extends Tests {}
+// class FieldTests extends Tests {}

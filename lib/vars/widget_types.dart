@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:ui_maker/app/widgets/creator/creator_card.dart';
 import 'package:ui_maker/app/widgets/creator/creator_checkbox.dart';
 import 'package:ui_maker/app/widgets/creator/creator_dropdown.dart';
@@ -27,29 +28,4 @@ enum WidgetType {
         return CreatorImage;
     }
   }
-}
-
-// I suppose I could create a CreatorType type, but that would need
-// to be inherited from
-
-/// A function for creating the default settings for a widget
-createWidgetSettings(List<WidgetType> widgets,
-    {String? title,
-    String? description,
-    bool? enabled,
-    bool? individual,
-    bool? ready,
-    Map<String, dynamic>? mapValues}) {
-  Map<WidgetType, WidgetSettings> items = {};
-  for (WidgetType widgetType in widgets) {
-    items.addAll({
-      widgetType: WidgetSettings()
-        ..title = title ?? ''
-        ..description = description
-        ..enabled = enabled ?? true
-        ..mapValues = mapValues ?? {}
-        ..widgetType = widgetType
-    });
-  }
-  return items;
 }
