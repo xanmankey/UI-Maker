@@ -4,6 +4,7 @@ import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/data/isar_db.dart';
 import 'package:ui_maker/vars/layout_types.dart';
 import 'package:ui_maker/logging.dart';
+import 'package:ui_maker/vars/sort_types.dart';
 
 // TODO: my generative functions don't actually WRITE the data; should they?
 // TODO: e.g. I feel like this one should, because it needs to check if the
@@ -28,7 +29,7 @@ import 'package:ui_maker/logging.dart';
 /// ```
 Layout generateLayout(
   String layoutName, {
-  bool filter = false,
+  SortOption sortOption = SortOption.sort,
   int numGroups = 4,
   double? width,
   double? height,
@@ -36,7 +37,7 @@ Layout generateLayout(
   // bool write = false
 }) {
   Layout layout = Layout(
-      filter: filter,
+      sortOption: sortOption,
       layoutName: layoutName,
       numGroups: numGroups,
       layoutType: layoutType,

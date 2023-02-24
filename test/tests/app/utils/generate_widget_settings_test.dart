@@ -27,8 +27,7 @@ void main() {
               color: getColor(null, WidgetType.checkbox),
               offsetX: null,
               offsetY: null,
-              listviewNum: null,
-              listviewIndex: null,
+              listNum: null,
               mapValues: {},
               widgetType: WidgetType.checkbox)));
     });

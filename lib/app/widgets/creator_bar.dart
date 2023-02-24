@@ -102,13 +102,13 @@ import 'package:ui_maker/vars/widget_types.dart';
 /// ```
 class CreatorBar extends StatefulWidget {
   Layout layout;
-  bool isOpen;
+  // bool isOpen;
   Color borderColor;
   double borderWidth;
   CreatorBar({
     super.key,
     required this.layout,
-    this.isOpen = false,
+    // this.isOpen = false,
     this.borderColor = Colors.blue,
     this.borderWidth = 3,
   });
@@ -118,11 +118,12 @@ class CreatorBar extends StatefulWidget {
 }
 
 class _CreatorBarState extends State<CreatorBar> {
-  bool isOpen = false;
+  // bool isOpen = false;
   IconData arrowIcon = Icons.arrow_drop_up;
   Map<WidgetType, WidgetSettings> widgetSettings = generateWidgetSettings(
       [for (WidgetType type in WidgetType.values) type], null);
   List<Widget> items = [];
+  late PersistentBottomSheetController bottomSheetController;
 
   @override
   void initState() {
@@ -154,59 +155,37 @@ class _CreatorBarState extends State<CreatorBar> {
 
   @override
   Widget build(BuildContext context) {
-    return (widget.isOpen)
-        ? Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: widget.borderColor,
-                width: widget.borderWidth,
-              ),
-            ),
-            child: BottomSheet(
-              enableDrag: false,
-              constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height *
-                      creatorBarHeightRatio),
-              // builder: (context) => LayoutBuilder(
-              //   builder: (BuildContext context, BoxConstraints constraints) {
-              //     double height = MediaQuery.of(context).size.height;
-              //     double width = MediaQuery.of(context).size.width;
-              //     // Spacing of each widget is equal to the total width / (numCreatorWidgets * 4)
-              //     double spacing = (width / (WidgetType.values.length * 3));
-              //     return ListView.builder(
-              //       scrollDirection: Axis.horizontal,
-              //       itemBuilder: (context, index) {
-              //         return Padding(
-              //           padding: EdgeInsets.symmetric(
-              //             vertical: (height * creatorBarHeightRatio) / 6,
-              //             horizontal: spacing,
-              //           ),
-              //           child: items[index],
-              //         );
-              //       },
-              //       itemCount: items.length,
-              //     );
-              //   },
-              // ),
-              builder: (context) {
-                double height = MediaQuery.of(context).size.height;
-                double width = MediaQuery.of(context).size.width;
-                double spacing = (width / (WidgetType.values.length * 4));
-                return Row(children: [
-                  for (Widget widget in items)
-                    Expanded(
-                        child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: height * 0.015,
-                        horizontal: spacing,
-                      ),
-                      child: widget,
-                    ))
-                ]);
-              },
-              onClosing: () {},
-            ),
-          )
-        : const SizedBox();
+    // return (widget.isOpen)
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: widget.borderColor,
+          width: widget.borderWidth,
+        ),
+      ),
+      child: BottomSheet(
+        enableDrag: false,
+        constraints: BoxConstraints(
+            maxHeight:
+                MediaQuery.of(context).size.height * creatorBarHeightRatio),
+        builder: (context) {
+          double height = MediaQuery.of(context).size.height;
+          double width = MediaQuery.of(context).size.width;
+          double spacing = (width / (WidgetType.values.length * 4));
+          return Row(children: [
+            for (Widget widget in items)
+              Expanded(
+                  child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: height * 0.015,
+                  horizontal: spacing,
+                ),
+                child: widget,
+              ))
+          ]);
+        },
+        onClosing: () {},
+      ),
+    );
   }
 }

@@ -17,31 +17,32 @@ const LayoutSchema = CollectionSchema(
   name: r'Layout',
   id: -8976498532819133435,
   properties: {
-    r'filter': PropertySchema(
-      id: 0,
-      name: r'filter',
-      type: IsarType.bool,
-    ),
     r'height': PropertySchema(
-      id: 1,
+      id: 0,
       name: r'height',
       type: IsarType.double,
     ),
     r'layoutName': PropertySchema(
-      id: 2,
+      id: 1,
       name: r'layoutName',
       type: IsarType.string,
     ),
     r'layoutType': PropertySchema(
-      id: 3,
+      id: 2,
       name: r'layoutType',
       type: IsarType.byte,
       enumMap: _LayoutlayoutTypeEnumValueMap,
     ),
     r'numGroups': PropertySchema(
-      id: 4,
+      id: 3,
       name: r'numGroups',
       type: IsarType.long,
+    ),
+    r'sortOption': PropertySchema(
+      id: 4,
+      name: r'sortOption',
+      type: IsarType.byte,
+      enumMap: _LayoutsortOptionEnumValueMap,
     ),
     r'width': PropertySchema(
       id: 5,
@@ -94,14 +95,14 @@ const LayoutSchema = CollectionSchema(
         )
       ],
     ),
-    r'filter': IndexSchema(
-      id: -922835903960088867,
-      name: r'filter',
+    r'sortOption': IndexSchema(
+      id: 3501856697699648544,
+      name: r'sortOption',
       unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
-          name: r'filter',
+          name: r'sortOption',
           type: IndexType.value,
           caseSensitive: false,
         )
@@ -139,11 +140,11 @@ void _layoutSerialize(
   List<int> offsets,
   Map<Type, List<int>> allOffsets,
 ) {
-  writer.writeBool(offsets[0], object.filter);
-  writer.writeDouble(offsets[1], object.height);
-  writer.writeString(offsets[2], object.layoutName);
-  writer.writeByte(offsets[3], object.layoutType.index);
-  writer.writeLong(offsets[4], object.numGroups);
+  writer.writeDouble(offsets[0], object.height);
+  writer.writeString(offsets[1], object.layoutName);
+  writer.writeByte(offsets[2], object.layoutType.index);
+  writer.writeLong(offsets[3], object.numGroups);
+  writer.writeByte(offsets[4], object.sortOption.index);
   writer.writeDouble(offsets[5], object.width);
 }
 
@@ -154,13 +155,15 @@ Layout _layoutDeserialize(
   Map<Type, List<int>> allOffsets,
 ) {
   final object = Layout(
-    filter: reader.readBoolOrNull(offsets[0]) ?? false,
-    height: reader.readDouble(offsets[1]),
-    layoutName: reader.readString(offsets[2]),
+    height: reader.readDouble(offsets[0]),
+    layoutName: reader.readString(offsets[1]),
     layoutType:
-        _LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offsets[3])] ??
+        _LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offsets[2])] ??
             LayoutType.columns,
-    numGroups: reader.readLongOrNull(offsets[4]) ?? 4,
+    numGroups: reader.readLongOrNull(offsets[3]) ?? 4,
+    sortOption:
+        _LayoutsortOptionValueEnumMap[reader.readByteOrNull(offsets[4])] ??
+            SortOption.sort,
     width: reader.readDouble(offsets[5]),
   );
   object.id = id;
@@ -175,16 +178,17 @@ P _layoutDeserializeProp<P>(
 ) {
   switch (propertyId) {
     case 0:
-      return (reader.readBoolOrNull(offset) ?? false) as P;
-    case 1:
       return (reader.readDouble(offset)) as P;
-    case 2:
+    case 1:
       return (reader.readString(offset)) as P;
-    case 3:
+    case 2:
       return (_LayoutlayoutTypeValueEnumMap[reader.readByteOrNull(offset)] ??
           LayoutType.columns) as P;
-    case 4:
+    case 3:
       return (reader.readLongOrNull(offset) ?? 4) as P;
+    case 4:
+      return (_LayoutsortOptionValueEnumMap[reader.readByteOrNull(offset)] ??
+          SortOption.sort) as P;
     case 5:
       return (reader.readDouble(offset)) as P;
     default:
@@ -201,6 +205,14 @@ const _LayoutlayoutTypeValueEnumMap = {
   0: LayoutType.columns,
   1: LayoutType.rows,
   2: LayoutType.none,
+};
+const _LayoutsortOptionEnumValueMap = {
+  'filter': 0,
+  'sort': 1,
+};
+const _LayoutsortOptionValueEnumMap = {
+  0: SortOption.filter,
+  1: SortOption.sort,
 };
 
 Id _layoutGetId(Layout object) {
@@ -295,10 +307,10 @@ extension LayoutQueryWhereSort on QueryBuilder<Layout, Layout, QWhere> {
     });
   }
 
-  QueryBuilder<Layout, Layout, QAfterWhere> anyFilter() {
+  QueryBuilder<Layout, Layout, QAfterWhere> anySortOption() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'filter'),
+        const IndexWhereClause.any(indexName: r'sortOption'),
       );
     });
   }
@@ -595,62 +607,98 @@ extension LayoutQueryWhere on QueryBuilder<Layout, Layout, QWhereClause> {
     });
   }
 
-  QueryBuilder<Layout, Layout, QAfterWhereClause> filterEqualTo(bool filter) {
+  QueryBuilder<Layout, Layout, QAfterWhereClause> sortOptionEqualTo(
+      SortOption sortOption) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'filter',
-        value: [filter],
+        indexName: r'sortOption',
+        value: [sortOption],
       ));
     });
   }
 
-  QueryBuilder<Layout, Layout, QAfterWhereClause> filterNotEqualTo(
-      bool filter) {
+  QueryBuilder<Layout, Layout, QAfterWhereClause> sortOptionNotEqualTo(
+      SortOption sortOption) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'filter',
+              indexName: r'sortOption',
               lower: [],
-              upper: [filter],
+              upper: [sortOption],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'filter',
-              lower: [filter],
+              indexName: r'sortOption',
+              lower: [sortOption],
               includeLower: false,
               upper: [],
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'filter',
-              lower: [filter],
+              indexName: r'sortOption',
+              lower: [sortOption],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'filter',
+              indexName: r'sortOption',
               lower: [],
-              upper: [filter],
+              upper: [sortOption],
               includeUpper: false,
             ));
       }
     });
   }
-}
 
-extension LayoutQueryFilter on QueryBuilder<Layout, Layout, QFilterCondition> {
-  QueryBuilder<Layout, Layout, QAfterFilterCondition> filterEqualTo(
-      bool value) {
+  QueryBuilder<Layout, Layout, QAfterWhereClause> sortOptionGreaterThan(
+    SortOption sortOption, {
+    bool include = false,
+  }) {
     return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'filter',
-        value: value,
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'sortOption',
+        lower: [sortOption],
+        includeLower: include,
+        upper: [],
       ));
     });
   }
 
+  QueryBuilder<Layout, Layout, QAfterWhereClause> sortOptionLessThan(
+    SortOption sortOption, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'sortOption',
+        lower: [],
+        upper: [sortOption],
+        includeUpper: include,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterWhereClause> sortOptionBetween(
+    SortOption lowerSortOption,
+    SortOption upperSortOption, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addWhereClause(IndexWhereClause.between(
+        indexName: r'sortOption',
+        lower: [lowerSortOption],
+        includeLower: includeLower,
+        upper: [upperSortOption],
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+}
+
+extension LayoutQueryFilter on QueryBuilder<Layout, Layout, QFilterCondition> {
   QueryBuilder<Layout, Layout, QAfterFilterCondition> heightEqualTo(
     double value, {
     double epsilon = Query.epsilon,
@@ -1001,6 +1049,59 @@ extension LayoutQueryFilter on QueryBuilder<Layout, Layout, QFilterCondition> {
     });
   }
 
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> sortOptionEqualTo(
+      SortOption value) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.equalTo(
+        property: r'sortOption',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> sortOptionGreaterThan(
+    SortOption value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.greaterThan(
+        include: include,
+        property: r'sortOption',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> sortOptionLessThan(
+    SortOption value, {
+    bool include = false,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.lessThan(
+        include: include,
+        property: r'sortOption',
+        value: value,
+      ));
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterFilterCondition> sortOptionBetween(
+    SortOption lower,
+    SortOption upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return QueryBuilder.apply(this, (query) {
+      return query.addFilterCondition(FilterCondition.between(
+        property: r'sortOption',
+        lower: lower,
+        includeLower: includeLower,
+        upper: upper,
+        includeUpper: includeUpper,
+      ));
+    });
+  }
+
   QueryBuilder<Layout, Layout, QAfterFilterCondition> widthEqualTo(
     double value, {
     double epsilon = Query.epsilon,
@@ -1125,18 +1226,6 @@ extension LayoutQueryLinks on QueryBuilder<Layout, Layout, QFilterCondition> {
 }
 
 extension LayoutQuerySortBy on QueryBuilder<Layout, Layout, QSortBy> {
-  QueryBuilder<Layout, Layout, QAfterSortBy> sortByFilter() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'filter', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Layout, Layout, QAfterSortBy> sortByFilterDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'filter', Sort.desc);
-    });
-  }
-
   QueryBuilder<Layout, Layout, QAfterSortBy> sortByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.asc);
@@ -1185,6 +1274,18 @@ extension LayoutQuerySortBy on QueryBuilder<Layout, Layout, QSortBy> {
     });
   }
 
+  QueryBuilder<Layout, Layout, QAfterSortBy> sortBySortOption() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sortOption', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterSortBy> sortBySortOptionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sortOption', Sort.desc);
+    });
+  }
+
   QueryBuilder<Layout, Layout, QAfterSortBy> sortByWidth() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'width', Sort.asc);
@@ -1199,18 +1300,6 @@ extension LayoutQuerySortBy on QueryBuilder<Layout, Layout, QSortBy> {
 }
 
 extension LayoutQuerySortThenBy on QueryBuilder<Layout, Layout, QSortThenBy> {
-  QueryBuilder<Layout, Layout, QAfterSortBy> thenByFilter() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'filter', Sort.asc);
-    });
-  }
-
-  QueryBuilder<Layout, Layout, QAfterSortBy> thenByFilterDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'filter', Sort.desc);
-    });
-  }
-
   QueryBuilder<Layout, Layout, QAfterSortBy> thenByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'height', Sort.asc);
@@ -1271,6 +1360,18 @@ extension LayoutQuerySortThenBy on QueryBuilder<Layout, Layout, QSortThenBy> {
     });
   }
 
+  QueryBuilder<Layout, Layout, QAfterSortBy> thenBySortOption() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sortOption', Sort.asc);
+    });
+  }
+
+  QueryBuilder<Layout, Layout, QAfterSortBy> thenBySortOptionDesc() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addSortBy(r'sortOption', Sort.desc);
+    });
+  }
+
   QueryBuilder<Layout, Layout, QAfterSortBy> thenByWidth() {
     return QueryBuilder.apply(this, (query) {
       return query.addSortBy(r'width', Sort.asc);
@@ -1285,12 +1386,6 @@ extension LayoutQuerySortThenBy on QueryBuilder<Layout, Layout, QSortThenBy> {
 }
 
 extension LayoutQueryWhereDistinct on QueryBuilder<Layout, Layout, QDistinct> {
-  QueryBuilder<Layout, Layout, QDistinct> distinctByFilter() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'filter');
-    });
-  }
-
   QueryBuilder<Layout, Layout, QDistinct> distinctByHeight() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'height');
@@ -1316,6 +1411,12 @@ extension LayoutQueryWhereDistinct on QueryBuilder<Layout, Layout, QDistinct> {
     });
   }
 
+  QueryBuilder<Layout, Layout, QDistinct> distinctBySortOption() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addDistinctBy(r'sortOption');
+    });
+  }
+
   QueryBuilder<Layout, Layout, QDistinct> distinctByWidth() {
     return QueryBuilder.apply(this, (query) {
       return query.addDistinctBy(r'width');
@@ -1327,12 +1428,6 @@ extension LayoutQueryProperty on QueryBuilder<Layout, Layout, QQueryProperty> {
   QueryBuilder<Layout, int, QQueryOperations> idProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'id');
-    });
-  }
-
-  QueryBuilder<Layout, bool, QQueryOperations> filterProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'filter');
     });
   }
 
@@ -1357,6 +1452,12 @@ extension LayoutQueryProperty on QueryBuilder<Layout, Layout, QQueryProperty> {
   QueryBuilder<Layout, int, QQueryOperations> numGroupsProperty() {
     return QueryBuilder.apply(this, (query) {
       return query.addPropertyName(r'numGroups');
+    });
+  }
+
+  QueryBuilder<Layout, SortOption, QQueryOperations> sortOptionProperty() {
+    return QueryBuilder.apply(this, (query) {
+      return query.addPropertyName(r'sortOption');
     });
   }
 

@@ -24,8 +24,7 @@ class TestUtils {
     color: Colors.blue.value,
     offsetX: 50,
     offsetY: 100,
-    listviewNum: 0,
-    listviewIndex: 0,
+    listNum: 0,
     widgetType: WidgetType.checkbox,
   );
 
@@ -34,8 +33,7 @@ class TestUtils {
     color: Colors.red.value,
     offsetX: 100,
     offsetY: 200,
-    listviewNum: 0,
-    listviewIndex: 1,
+    listNum: 0,
     widgetType: WidgetType.textField,
   );
 
@@ -44,8 +42,7 @@ class TestUtils {
     color: Colors.green.value,
     offsetX: 150,
     offsetY: 300,
-    listviewNum: 0,
-    listviewIndex: 2,
+    listNum: 0,
     widgetType: WidgetType.imageSelector,
   );
 
@@ -54,8 +51,7 @@ class TestUtils {
     color: Colors.red.value,
     offsetX: 20,
     offsetY: 300,
-    listviewNum: 1,
-    listviewIndex: 0,
+    listNum: 1,
     widgetType: WidgetType.card,
   )..widgets.addAll(
       [checkbox, textField, image],
@@ -66,8 +62,7 @@ class TestUtils {
     color: Colors.blue.value,
     offsetX: 70,
     offsetY: 300,
-    listviewNum: 1,
-    listviewIndex: 1,
+    listNum: 1,
     widgetType: WidgetType.card,
   );
 
@@ -76,8 +71,7 @@ class TestUtils {
     color: Colors.red.value,
     offsetX: 110,
     offsetY: 300,
-    listviewNum: 1,
-    listviewIndex: 2,
+    listNum: 1,
     widgetType: WidgetType.dropdown,
     mapValues: {
       WidgetSettingsKeys.items.name: [0, 1, 2],
@@ -89,8 +83,7 @@ class TestUtils {
     color: Colors.blue.value,
     offsetX: 190,
     offsetY: 300,
-    listviewNum: 1,
-    listviewIndex: 3,
+    listNum: 1,
     widgetType: WidgetType.dropdown,
   );
 
@@ -112,7 +105,7 @@ class TestUtils {
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).size.height,
   )..widgets.addAll([
       for (WidgetSettings setting in widgetSettings.values)
-        if (setting.listviewNum == 0) setting
+        if (setting.listNum == 0) setting
     ]);
 
   static Layout allWidgetsLayout = Layout(

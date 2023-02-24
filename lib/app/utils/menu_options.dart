@@ -4,5 +4,6 @@ enum MenuOptions {
   color,
   enable,
   disable,
-  delete;
+  delete,
+  items;
 }

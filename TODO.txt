@@ -1,28 +1,8 @@
-CURRENT PROBLEM
-- The finder "zero widgets with widget matching predicate (Closure: (Widget) => bool) that has
-ancestor(s) with type "ListTile" (ignoring offstage widgets)" (used in a call to "tap()") could not
-find any matching widgets.
-(I need to rework context menu selection apparently)
+Right now there's a number of problems I need to tackle: 
+- Widget display. This is my number one priority
+- DropdownItemCreator Dialog breaks
+- Sorting and other layouts haven't been tested, I don't think filtering has even been implemented in UI
 
-I changed to pumpAndSettle and some things changed
 
-NOTE that my widget tests are DIFFERENT than integration tests (see more about that here: https://docs.flutter.dev/testing#integration-tests)
-TODO: I'm not sure the context menu is actually opening
-
-I like the idea of lots of expect statements to ensure that everything is working as intended
-In order to visualize widgetTree, you can just log using debugDumpApp() or perhaps tester.allWidgets.toString()
-
-It seems like you can potentially run `flutter run -t my_test.dart' to visualize your test on a simulator in addition to running it
-(but it will only render the final outcome; that's why you want to break your tests into even smaller pieces)
-
-Right now I think the best way to go about things is to root out the problems visually if I can; I can't 
-work with the tests in an effective way right now because of some of the logic errors, but if I can get 
-those I should be able to move forward with the tests (not TDD unfortunately though)
-
-MY GOAL is to test and rewrite to get the visual test working so I can start working on the behind the scenes tests
-I guess I'll work on creator_bar, scaffold, etc tmrs
-
-Once I'm done writing my tests I'm going to do some tests of my own by using my library to make DWTP
-
-I got a lot done, but I'm not sure why the Drag and Drop isn't triggering ANYTHING in the CreatorArea (that's a little concerning, as it 
-is a core part of my library functionality)
+FUTURE GOALS
+- Tests

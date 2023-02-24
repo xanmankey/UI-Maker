@@ -38,8 +38,7 @@ Map<WidgetType, WidgetSettings> generateWidgetSettings(
   int? color,
   double? offsetX,
   double? offsetY,
-  int? listviewNum,
-  int? listviewIndex,
+  int? listNum,
   Map<String, dynamic>? mapValues,
   // bool write = false,
 }) {
@@ -54,8 +53,9 @@ Map<WidgetType, WidgetSettings> generateWidgetSettings(
         color: color ?? getColor(context, widget),
         offsetX: offsetX,
         offsetY: offsetY,
-        listviewIndex: listviewIndex,
-        listviewNum: listviewNum,
+        listNum: (listNum != null && listNum > initialListNum)
+            ? listNum
+            : initialListNum,
         widgetType: widget,
       )..mapValues = mapValues ?? {}
     });
@@ -71,6 +71,8 @@ Map<WidgetType, WidgetSettings> generateWidgetSettings(
   // }
   return items;
 }
+
+const int initialListNum = 0;
 
 /// A function for getting the initial color of a widget (if not speicifed)
 /// based on theme color and current context
@@ -100,15 +102,21 @@ int getColor(BuildContext? context, WidgetType type) {
   if (context != null) {
     switch (type) {
       case WidgetType.checkbox:
-        return Theme.of(context).checkboxTheme.hashCode;
+        return Theme.of(context).primaryColor.value;
       case WidgetType.textField:
-        return Theme.of(context).textTheme.hashCode;
+        return Theme.of(context).primaryColorDark.value;
       case WidgetType.dropdown:
-        return Theme.of(context).buttonTheme.hashCode;
+        return Theme.of(context)
+            .dropdownMenuTheme
+            .inputDecorationTheme!
+            .fillColor!
+            .value;
       case WidgetType.imageSelector:
-        return Theme.of(context).buttonTheme.hashCode;
+        return Theme.of(context).buttonTheme.colorScheme!.onBackground.value;
       case WidgetType.card:
-        return Theme.of(context).cardTheme.hashCode;
+        return Theme.of(context).cardColor.value;
+      default:
+        return Theme.of(context).primaryColor.value;
     }
   }
   return Colors.blue.hashCode;

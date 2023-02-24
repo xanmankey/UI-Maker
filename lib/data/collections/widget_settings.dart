@@ -6,11 +6,6 @@ import 'package:ui_maker/vars/widget_types.dart';
 
 part 'widget_settings.g.dart';
 
-// TODO: left off here, reworking my constructors (in particular,
-// adding factory constructors to simplify default creation)
-// I'm experimenting with this to make my objects more precise and
-// hopefully find a solution to the Unique Index Error issue
-
 /// A collection for storing all user_created widgets and their info
 ///
 /// ```
@@ -80,8 +75,7 @@ class WidgetSettings {
     this.hasDropped = false,
     this.offsetX,
     this.offsetY,
-    this.listviewIndex,
-    this.listviewNum,
+    this.listNum,
   })  : id = Isar.autoIncrement,
         widgets = IsarLinks<WidgetSettings>();
 
@@ -123,11 +117,7 @@ class WidgetSettings {
 
   /// The listview number the widget is a part of
   @Index()
-  int? listviewNum;
-
-  /// The widget's index in that listview (if LayoutType not none)
-  @Index()
-  int? listviewIndex;
+  int? listNum;
 
   /// The type of widget selected from the creator bar;
   /// used for recreating the widget
@@ -168,8 +158,7 @@ class WidgetSettings {
         color == otherSettings.color &&
         offsetX == otherSettings.offsetX &&
         offsetY == otherSettings.offsetY &&
-        listviewNum == otherSettings.listviewNum &&
-        listviewIndex == otherSettings.listviewIndex &&
+        listNum == otherSettings.listNum &&
         widgetType == otherSettings.widgetType &&
         mapValues.length == otherSettings.mapValues.length;
   }

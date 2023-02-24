@@ -6,6 +6,7 @@ import 'package:ui_maker/data/isar_db.dart';
 import 'package:flutter/material.dart';
 import 'package:ui_maker/app/utils/menu_options.dart';
 import 'package:contextmenu/contextmenu.dart';
+import 'package:ui_maker/ui_maker.dart';
 
 /// A widget that uses the native_context_menus package to create
 /// ```ContextMenuRegions``` for creator widgets.
@@ -159,12 +160,12 @@ class CreatorContextMenu extends StatefulWidget {
 class _CreatorContextMenuState extends State<CreatorContextMenu> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  // late Isar isarDB;
+  bool update = false;
+
   @override
   void initState() {
     titleController.text = widget.widgetSetting.title;
     descriptionController.text = widget.widgetSetting.description ?? '';
-    // isarDB = await db.isarDB;
     super.initState();
   }
 
@@ -172,18 +173,71 @@ class _CreatorContextMenuState extends State<CreatorContextMenu> {
   Widget build(BuildContext context) {
     return ContextMenuArea(
       builder: (context) => [
+        // Widget specific options go at the top
+        (widget.widgetSetting.widgetType == WidgetType.dropdown)
+            ? ListTile(
+                title: Text(MenuOptions.items.name),
+                onTap: () async {
+                  await getItems(context);
+                })
+            : Container(),
+        ListTile(
+            title: Text(MenuOptions.title.name),
+            onTap: () async {
+              await showDialog(
+                context: context,
+                builder: ((context) => AlertDialog(
+                      title: const Text("Edit your widget's title"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(controller: titleController),
+                          ElevatedButton(
+                              onPressed: () {
+                                update = true;
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("Submit")),
+                        ],
+                      ),
+                    )),
+              );
+              if (update) {
+                setState(() {
+                  widget.widgetSetting.title = titleController.text;
+                });
+                update = false;
+              }
+              Navigator.of(context).pop();
+            }),
         ListTile(
             title: Text(MenuOptions.description.name),
             onTap: () async {
               await showDialog(
                 context: context,
                 builder: ((context) => AlertDialog(
-                      title: TextField(controller: descriptionController),
+                      title: const Text("Edit your widget's description"),
+                      content: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          TextField(controller: descriptionController),
+                          ElevatedButton(
+                              onPressed: () {
+                                update = true;
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text("Submit")),
+                        ],
+                      ),
                     )),
               );
-              setState(() {
-                widget.widgetSetting.title = descriptionController.text;
-              });
+              if (update) {
+                setState(() {
+                  widget.widgetSetting.description = descriptionController.text;
+                });
+                update = false;
+              }
+              Navigator.of(context).pop();
             }),
         ListTile(
           title: Text(MenuOptions.enable.name),
@@ -191,6 +245,7 @@ class _CreatorContextMenuState extends State<CreatorContextMenu> {
             setState(() {
               widget.widgetSetting.enabled = true;
             });
+            Navigator.of(context).pop();
           },
           enabled: !widget.widgetSetting.enabled,
         ),
@@ -200,6 +255,7 @@ class _CreatorContextMenuState extends State<CreatorContextMenu> {
             setState(() {
               widget.widgetSetting.enabled = false;
             });
+            Navigator.of(context).pop();
           },
           enabled: widget.widgetSetting.enabled,
         ),
@@ -212,6 +268,8 @@ class _CreatorContextMenuState extends State<CreatorContextMenu> {
                     title: const Text("Select the widget's color"),
                     content: ColorPicker(
                         pickerColor: Color(widget.widgetSetting.color),
+                        colorPickerWidth: MediaQuery.of(context).size.width / 3,
+                        // pickerAreaHeightPercent: 1,
                         onColorChanged: (color) {
                           setState(() {
                             widget.widgetSetting.color = color.value;
@@ -219,6 +277,7 @@ class _CreatorContextMenuState extends State<CreatorContextMenu> {
                         }),
                   )),
             );
+            Navigator.of(context).pop();
           },
         ),
         ListTile(
@@ -244,6 +303,7 @@ class _CreatorContextMenuState extends State<CreatorContextMenu> {
                     ),
                   )),
             );
+            Navigator.of(context).pop();
           },
         ),
       ],

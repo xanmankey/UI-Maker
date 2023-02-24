@@ -3,6 +3,7 @@
 import 'package:isar/isar.dart';
 import 'package:ui_maker/data/collections/widget_settings.dart';
 import 'package:ui_maker/vars/layout_types.dart';
+import 'package:ui_maker/vars/sort_types.dart';
 
 part 'layout.g.dart';
 
@@ -50,7 +51,7 @@ class Layout {
     required this.height,
     this.layoutType = LayoutType.columns,
     this.numGroups = 4,
-    this.filter = false,
+    this.sortOption = SortOption.sort,
   })  : id = Isar.autoIncrement,
         widgets = IsarLinks<WidgetSettings>();
 
@@ -81,12 +82,13 @@ class Layout {
 
   /// A boolean to determine whether the widgets should be filtered or sorted
   @Index()
-  bool filter = false;
+  @enumerated
+  SortOption sortOption;
 
   @override
   String toString() {
     return '''$id: {layoutType: $layoutType, widgets: ${widgets.toList()}, filter: 
-    $filter}''';
+    $sortOption}''';
   }
 
   @override
@@ -98,7 +100,7 @@ class Layout {
         layoutName == otherLayout.layoutName &&
         layoutType == otherLayout.layoutType &&
         widgets.length == otherLayout.widgets.length &&
-        filter == otherLayout.filter &&
+        sortOption == otherLayout.sortOption &&
         numGroups == otherLayout.numGroups &&
         width == otherLayout.width &&
         height == otherLayout.height;

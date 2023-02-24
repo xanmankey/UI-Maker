@@ -53,7 +53,7 @@ class _CreatorBaseState extends State<CreatorBase> {
             widgetSetting: widget.widgetSetting!,
             creatorWidget: Opacity(
               opacity: opacity,
-              child: Draggable(
+              child: Draggable<Map<String, dynamic>>(
                 feedback: SizedBox(
                   height: calculateHeight(widget.widgetType,
                       MediaQuery.of(context).size.height, false),
@@ -64,7 +64,6 @@ class _CreatorBaseState extends State<CreatorBase> {
                 data: {
                   "widgetSetting": widget.widgetSetting,
                   "layout": widget.layout,
-                  "opacity": opacity,
                 },
                 child: Material(child: widget.creatorWidget),
                 onDragEnd: (details) {
@@ -82,7 +81,7 @@ class _CreatorBaseState extends State<CreatorBase> {
           )
         : Opacity(
             opacity: opacity,
-            child: Draggable(
+            child: Draggable<Map<String, dynamic>>(
               feedback: SizedBox(
                   height: calculateHeight(widget.widgetType,
                       MediaQuery.of(context).size.height, false),
@@ -93,7 +92,6 @@ class _CreatorBaseState extends State<CreatorBase> {
               data: {
                 "widgetSetting": widget.widgetSetting,
                 "layout": widget.layout,
-                "opacity": opacity,
               },
               child: Material(child: widget.creatorWidget),
             ),

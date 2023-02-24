@@ -115,50 +115,58 @@ class CreatorDropdownState extends State<CreatorDropdown> {
             widgetType: widget.widgetSetting.widgetType,
             layout: widget.layout,
             context: true,
-            creatorWidget: (widget.widgetSetting.mapValues
-                    .containsKey(WidgetSettingsKeys.items.name))
-                ? DropdownButton(
-                    items: items,
-                    value: (widget.widgetSetting.mapValues
-                            .containsKey(WidgetSettingsKeys.currentItem.name))
-                        ? widget.widgetSetting
-                            .mapValues[WidgetSettingsKeys.currentItem.name]
-                        : items!.first.value,
-                    dropdownColor: Color(widget.widgetSetting.color),
-                    hint: Text(widget.widgetSetting.description ?? ''),
-                    onChanged: (widget.widgetSetting.enabled)
-                        ? (value) {
-                            setState(() {
-                              widget.widgetSetting.mapValues.addAll(
-                                  {WidgetSettingsKeys.currentItem.name: value});
-                            });
-                          }
-                        : null,
-                  )
-                : FutureBuilder(
-                    future: getItems(context),
-                    builder: ((context, snapshot) {
-                      return DropdownButton(
-                          items: snapshot.data,
-                          value: (widget.widgetSetting.mapValues.containsKey(
-                                  WidgetSettingsKeys.currentItem.name))
-                              ? widget.widgetSetting.mapValues[
-                                  WidgetSettingsKeys.currentItem.name]
-                              : (snapshot.hasData)
-                                  ? snapshot.data!.first.value
-                                  : null,
-                          dropdownColor: Color(widget.widgetSetting.color),
-                          hint: Text(widget.widgetSetting.description ?? ''),
-                          onChanged: (widget.widgetSetting.enabled)
-                              ? (value) {
-                                  setState(() {
-                                    widget.widgetSetting.mapValues.addAll({
-                                      WidgetSettingsKeys.currentItem.name: value
-                                    });
-                                  });
-                                }
-                              : null);
-                    })))
+            // creatorWidget: (widget.widgetSetting.mapValues
+            //         .containsKey(WidgetSettingsKeys.items.name))
+            // ?
+            creatorWidget: DropdownButton(
+              items: items,
+              value: (widget.widgetSetting.mapValues
+                      .containsKey(WidgetSettingsKeys.currentItem.name))
+                  ? widget.widgetSetting
+                      .mapValues[WidgetSettingsKeys.currentItem.name]
+                  : (items != null)
+                      ? items!.first.value
+                      : null,
+              dropdownColor: Color(widget.widgetSetting.color),
+              hint: Text(widget.widgetSetting.description ?? ''),
+              onChanged: (widget.widgetSetting.enabled)
+                  ? (value) {
+                      setState(() {
+                        widget.widgetSetting.mapValues.addAll(
+                            {WidgetSettingsKeys.currentItem.name: value});
+                      });
+                    }
+                  : null,
+            ),
+            // : FutureBuilder(
+            //     future: getItems(context),
+            //     builder: ((context, snapshot) {
+            //       if (snapshot.hasData) {
+            //         return DropdownButton(
+            //             items: snapshot.data,
+            //             value: (widget.widgetSetting.mapValues.containsKey(
+            //                     WidgetSettingsKeys.currentItem.name))
+            //                 ? widget.widgetSetting.mapValues[
+            //                     WidgetSettingsKeys.currentItem.name]
+            //                 : (snapshot.hasData)
+            //                     ? snapshot.data!.first.value
+            //                     : null,
+            //             dropdownColor: Color(widget.widgetSetting.color),
+            //             hint: Text(widget.widgetSetting.description ?? ''),
+            //             onChanged: (widget.widgetSetting.enabled)
+            //                 ? (value) {
+            //                     setState(() {
+            //                       widget.widgetSetting.mapValues.addAll({
+            //                         WidgetSettingsKeys.currentItem.name:
+            //                             value
+            //                       });
+            //                     });
+            //                   }
+            //                 : null);
+            // } else {
+            //   return const SizedBox();
+            // }
+          )
         : CreatorBase(
             widgetSetting: widget.widgetSetting,
             widgetType: widget.widgetSetting.widgetType,
@@ -193,7 +201,7 @@ class CreatorDropdownState extends State<CreatorDropdown> {
 }
 
 /// A function for returning the DropdownMenuItems from the ```DropdownItemCreator```
-/// dialog
+/// dialog. This should only be called on context menu
 ///
 /// ```
 /// Future<List<DropdownMenuItem<String>>?> getItems(BuildContext context) async {

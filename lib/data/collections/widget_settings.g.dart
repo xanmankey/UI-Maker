@@ -37,38 +37,33 @@ const WidgetSettingsSchema = CollectionSchema(
       name: r'hasDropped',
       type: IsarType.bool,
     ),
-    r'listviewIndex': PropertySchema(
+    r'listNum': PropertySchema(
       id: 4,
-      name: r'listviewIndex',
-      type: IsarType.long,
-    ),
-    r'listviewNum': PropertySchema(
-      id: 5,
-      name: r'listviewNum',
+      name: r'listNum',
       type: IsarType.long,
     ),
     r'offsetX': PropertySchema(
-      id: 6,
+      id: 5,
       name: r'offsetX',
       type: IsarType.double,
     ),
     r'offsetY': PropertySchema(
-      id: 7,
+      id: 6,
       name: r'offsetY',
       type: IsarType.double,
     ),
     r'title': PropertySchema(
-      id: 8,
+      id: 7,
       name: r'title',
       type: IsarType.string,
     ),
     r'values': PropertySchema(
-      id: 9,
+      id: 8,
       name: r'values',
       type: IsarType.string,
     ),
     r'widgetType': PropertySchema(
-      id: 10,
+      id: 9,
       name: r'widgetType',
       type: IsarType.byte,
       enumMap: _WidgetSettingswidgetTypeEnumValueMap,
@@ -106,27 +101,14 @@ const WidgetSettingsSchema = CollectionSchema(
         )
       ],
     ),
-    r'listviewNum': IndexSchema(
-      id: 8814354607143194053,
-      name: r'listviewNum',
+    r'listNum': IndexSchema(
+      id: 6249257470989466024,
+      name: r'listNum',
       unique: false,
       replace: false,
       properties: [
         IndexPropertySchema(
-          name: r'listviewNum',
-          type: IndexType.value,
-          caseSensitive: false,
-        )
-      ],
-    ),
-    r'listviewIndex': IndexSchema(
-      id: 1148815002659656814,
-      name: r'listviewIndex',
-      unique: false,
-      replace: false,
-      properties: [
-        IndexPropertySchema(
-          name: r'listviewIndex',
+          name: r'listNum',
           type: IndexType.value,
           caseSensitive: false,
         )
@@ -188,13 +170,12 @@ void _widgetSettingsSerialize(
   writer.writeString(offsets[1], object.description);
   writer.writeBool(offsets[2], object.enabled);
   writer.writeBool(offsets[3], object.hasDropped);
-  writer.writeLong(offsets[4], object.listviewIndex);
-  writer.writeLong(offsets[5], object.listviewNum);
-  writer.writeDouble(offsets[6], object.offsetX);
-  writer.writeDouble(offsets[7], object.offsetY);
-  writer.writeString(offsets[8], object.title);
-  writer.writeString(offsets[9], object.values);
-  writer.writeByte(offsets[10], object.widgetType.index);
+  writer.writeLong(offsets[4], object.listNum);
+  writer.writeDouble(offsets[5], object.offsetX);
+  writer.writeDouble(offsets[6], object.offsetY);
+  writer.writeString(offsets[7], object.title);
+  writer.writeString(offsets[8], object.values);
+  writer.writeByte(offsets[9], object.widgetType.index);
 }
 
 WidgetSettings _widgetSettingsDeserialize(
@@ -208,17 +189,16 @@ WidgetSettings _widgetSettingsDeserialize(
     description: reader.readStringOrNull(offsets[1]),
     enabled: reader.readBoolOrNull(offsets[2]) ?? true,
     hasDropped: reader.readBoolOrNull(offsets[3]) ?? false,
-    listviewIndex: reader.readLongOrNull(offsets[4]),
-    listviewNum: reader.readLongOrNull(offsets[5]),
-    offsetX: reader.readDoubleOrNull(offsets[6]),
-    offsetY: reader.readDoubleOrNull(offsets[7]),
-    title: reader.readString(offsets[8]),
+    listNum: reader.readLongOrNull(offsets[4]),
+    offsetX: reader.readDoubleOrNull(offsets[5]),
+    offsetY: reader.readDoubleOrNull(offsets[6]),
+    title: reader.readString(offsets[7]),
     widgetType: _WidgetSettingswidgetTypeValueEnumMap[
-            reader.readByteOrNull(offsets[10])] ??
+            reader.readByteOrNull(offsets[9])] ??
         WidgetType.card,
   );
   object.id = id;
-  object.values = reader.readString(offsets[9]);
+  object.values = reader.readString(offsets[8]);
   return object;
 }
 
@@ -240,16 +220,14 @@ P _widgetSettingsDeserializeProp<P>(
     case 4:
       return (reader.readLongOrNull(offset)) as P;
     case 5:
-      return (reader.readLongOrNull(offset)) as P;
+      return (reader.readDoubleOrNull(offset)) as P;
     case 6:
       return (reader.readDoubleOrNull(offset)) as P;
     case 7:
-      return (reader.readDoubleOrNull(offset)) as P;
+      return (reader.readString(offset)) as P;
     case 8:
       return (reader.readString(offset)) as P;
     case 9:
-      return (reader.readString(offset)) as P;
-    case 10:
       return (_WidgetSettingswidgetTypeValueEnumMap[
               reader.readByteOrNull(offset)] ??
           WidgetType.card) as P;
@@ -304,18 +282,10 @@ extension WidgetSettingsQueryWhereSort
     });
   }
 
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhere> anyListviewNum() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhere> anyListNum() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'listviewNum'),
-      );
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhere> anyListviewIndex() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(
-        const IndexWhereClause.any(indexName: r'listviewIndex'),
+        const IndexWhereClause.any(indexName: r'listNum'),
       );
     });
   }
@@ -537,20 +507,20 @@ extension WidgetSettingsQueryWhere
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewNumIsNull() {
+      listNumIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'listviewNum',
+        indexName: r'listNum',
         value: [null],
       ));
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewNumIsNotNull() {
+      listNumIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'listviewNum',
+        indexName: r'listNum',
         lower: [null],
         includeLower: false,
         upper: [],
@@ -559,44 +529,44 @@ extension WidgetSettingsQueryWhere
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewNumEqualTo(int? listviewNum) {
+      listNumEqualTo(int? listNum) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'listviewNum',
-        value: [listviewNum],
+        indexName: r'listNum',
+        value: [listNum],
       ));
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewNumNotEqualTo(int? listviewNum) {
+      listNumNotEqualTo(int? listNum) {
     return QueryBuilder.apply(this, (query) {
       if (query.whereSort == Sort.asc) {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'listviewNum',
+              indexName: r'listNum',
               lower: [],
-              upper: [listviewNum],
+              upper: [listNum],
               includeUpper: false,
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'listviewNum',
-              lower: [listviewNum],
+              indexName: r'listNum',
+              lower: [listNum],
               includeLower: false,
               upper: [],
             ));
       } else {
         return query
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'listviewNum',
-              lower: [listviewNum],
+              indexName: r'listNum',
+              lower: [listNum],
               includeLower: false,
               upper: [],
             ))
             .addWhereClause(IndexWhereClause.between(
-              indexName: r'listviewNum',
+              indexName: r'listNum',
               lower: [],
-              upper: [listviewNum],
+              upper: [listNum],
               includeUpper: false,
             ));
       }
@@ -604,14 +574,14 @@ extension WidgetSettingsQueryWhere
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewNumGreaterThan(
-    int? listviewNum, {
+      listNumGreaterThan(
+    int? listNum, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'listviewNum',
-        lower: [listviewNum],
+        indexName: r'listNum',
+        lower: [listNum],
         includeLower: include,
         upper: [],
       ));
@@ -619,148 +589,33 @@ extension WidgetSettingsQueryWhere
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewNumLessThan(
-    int? listviewNum, {
+      listNumLessThan(
+    int? listNum, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'listviewNum',
+        indexName: r'listNum',
         lower: [],
-        upper: [listviewNum],
+        upper: [listNum],
         includeUpper: include,
       ));
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewNumBetween(
-    int? lowerListviewNum,
-    int? upperListviewNum, {
+      listNumBetween(
+    int? lowerListNum,
+    int? upperListNum, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'listviewNum',
-        lower: [lowerListviewNum],
+        indexName: r'listNum',
+        lower: [lowerListNum],
         includeLower: includeLower,
-        upper: [upperListviewNum],
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewIndexIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'listviewIndex',
-        value: [null],
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewIndexIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'listviewIndex',
-        lower: [null],
-        includeLower: false,
-        upper: [],
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewIndexEqualTo(int? listviewIndex) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.equalTo(
-        indexName: r'listviewIndex',
-        value: [listviewIndex],
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewIndexNotEqualTo(int? listviewIndex) {
-    return QueryBuilder.apply(this, (query) {
-      if (query.whereSort == Sort.asc) {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'listviewIndex',
-              lower: [],
-              upper: [listviewIndex],
-              includeUpper: false,
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'listviewIndex',
-              lower: [listviewIndex],
-              includeLower: false,
-              upper: [],
-            ));
-      } else {
-        return query
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'listviewIndex',
-              lower: [listviewIndex],
-              includeLower: false,
-              upper: [],
-            ))
-            .addWhereClause(IndexWhereClause.between(
-              indexName: r'listviewIndex',
-              lower: [],
-              upper: [listviewIndex],
-              includeUpper: false,
-            ));
-      }
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewIndexGreaterThan(
-    int? listviewIndex, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'listviewIndex',
-        lower: [listviewIndex],
-        includeLower: include,
-        upper: [],
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewIndexLessThan(
-    int? listviewIndex, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'listviewIndex',
-        lower: [],
-        upper: [listviewIndex],
-        includeUpper: include,
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterWhereClause>
-      listviewIndexBetween(
-    int? lowerListviewIndex,
-    int? upperListviewIndex, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addWhereClause(IndexWhereClause.between(
-        indexName: r'listviewIndex',
-        lower: [lowerListviewIndex],
-        includeLower: includeLower,
-        upper: [upperListviewIndex],
+        upper: [upperListNum],
         includeUpper: includeUpper,
       ));
     });
@@ -1148,63 +1003,63 @@ extension WidgetSettingsQueryFilter
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewIndexIsNull() {
+      listNumIsNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'listviewIndex',
+        property: r'listNum',
       ));
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewIndexIsNotNull() {
+      listNumIsNotNull() {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'listviewIndex',
+        property: r'listNum',
       ));
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewIndexEqualTo(int? value) {
+      listNumEqualTo(int? value) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'listviewIndex',
+        property: r'listNum',
         value: value,
       ));
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewIndexGreaterThan(
+      listNumGreaterThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.greaterThan(
         include: include,
-        property: r'listviewIndex',
+        property: r'listNum',
         value: value,
       ));
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewIndexLessThan(
+      listNumLessThan(
     int? value, {
     bool include = false,
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.lessThan(
         include: include,
-        property: r'listviewIndex',
+        property: r'listNum',
         value: value,
       ));
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewIndexBetween(
+      listNumBetween(
     int? lower,
     int? upper, {
     bool includeLower = true,
@@ -1212,81 +1067,7 @@ extension WidgetSettingsQueryFilter
   }) {
     return QueryBuilder.apply(this, (query) {
       return query.addFilterCondition(FilterCondition.between(
-        property: r'listviewIndex',
-        lower: lower,
-        includeLower: includeLower,
-        upper: upper,
-        includeUpper: includeUpper,
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewNumIsNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNull(
-        property: r'listviewNum',
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewNumIsNotNull() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(const FilterCondition.isNotNull(
-        property: r'listviewNum',
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewNumEqualTo(int? value) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.equalTo(
-        property: r'listviewNum',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewNumGreaterThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.greaterThan(
-        include: include,
-        property: r'listviewNum',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewNumLessThan(
-    int? value, {
-    bool include = false,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.lessThan(
-        include: include,
-        property: r'listviewNum',
-        value: value,
-      ));
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterFilterCondition>
-      listviewNumBetween(
-    int? lower,
-    int? upper, {
-    bool includeLower = true,
-    bool includeUpper = true,
-  }) {
-    return QueryBuilder.apply(this, (query) {
-      return query.addFilterCondition(FilterCondition.between(
-        property: r'listviewNum',
+        property: r'listNum',
         lower: lower,
         includeLower: includeLower,
         upper: upper,
@@ -1914,31 +1695,16 @@ extension WidgetSettingsQuerySortBy
     });
   }
 
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
-      sortByListviewIndex() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> sortByListNum() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'listviewIndex', Sort.asc);
+      return query.addSortBy(r'listNum', Sort.asc);
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
-      sortByListviewIndexDesc() {
+      sortByListNumDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'listviewIndex', Sort.desc);
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
-      sortByListviewNum() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'listviewNum', Sort.asc);
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
-      sortByListviewNumDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'listviewNum', Sort.desc);
+      return query.addSortBy(r'listNum', Sort.desc);
     });
   }
 
@@ -2075,31 +1841,16 @@ extension WidgetSettingsQuerySortThenBy
     });
   }
 
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
-      thenByListviewIndex() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy> thenByListNum() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'listviewIndex', Sort.asc);
+      return query.addSortBy(r'listNum', Sort.asc);
     });
   }
 
   QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
-      thenByListviewIndexDesc() {
+      thenByListNumDesc() {
     return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'listviewIndex', Sort.desc);
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
-      thenByListviewNum() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'listviewNum', Sort.asc);
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QAfterSortBy>
-      thenByListviewNumDesc() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addSortBy(r'listviewNum', Sort.desc);
+      return query.addSortBy(r'listNum', Sort.desc);
     });
   }
 
@@ -2197,17 +1948,9 @@ extension WidgetSettingsQueryWhereDistinct
     });
   }
 
-  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct>
-      distinctByListviewIndex() {
+  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct> distinctByListNum() {
     return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'listviewIndex');
-    });
-  }
-
-  QueryBuilder<WidgetSettings, WidgetSettings, QDistinct>
-      distinctByListviewNum() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addDistinctBy(r'listviewNum');
+      return query.addDistinctBy(r'listNum');
     });
   }
 
@@ -2278,15 +2021,9 @@ extension WidgetSettingsQueryProperty
     });
   }
 
-  QueryBuilder<WidgetSettings, int?, QQueryOperations> listviewIndexProperty() {
+  QueryBuilder<WidgetSettings, int?, QQueryOperations> listNumProperty() {
     return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'listviewIndex');
-    });
-  }
-
-  QueryBuilder<WidgetSettings, int?, QQueryOperations> listviewNumProperty() {
-    return QueryBuilder.apply(this, (query) {
-      return query.addPropertyName(r'listviewNum');
+      return query.addPropertyName(r'listNum');
     });
   }
 

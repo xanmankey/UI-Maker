@@ -10,11 +10,11 @@ import 'package:ui_maker/ui_maker.dart';
 // - NOTHING'S BEEN TESTED
 
 void main() {
-  runApp(const MyApp());
+  runApp(const UIMaker());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class UIMaker extends StatelessWidget {
+  const UIMaker({super.key});
 
   // This widget is the root of your application.
   @override
@@ -24,22 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: UIMaker(),
+      home: CreatorScaffold(layoutName: "MyUIMaker"),
     );
-  }
-}
-
-class UIMaker extends StatefulWidget {
-  UIMaker({super.key});
-
-  @override
-  State<UIMaker> createState() => _UIMakerState();
-}
-
-class _UIMakerState extends State<UIMaker> {
-  @override
-  Widget build(BuildContext context) {
-    logger.info("test");
-    return CreatorScaffold(layoutName: "MyUIMaker");
   }
 }

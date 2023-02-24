@@ -76,3 +76,8 @@ class SortTypes {
     }
   }
 }
+
+enum SortOption {
+  filter,
+  sort;
+}

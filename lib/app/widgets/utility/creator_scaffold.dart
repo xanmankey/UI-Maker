@@ -4,6 +4,7 @@ import 'package:ui_maker/app/widgets/creator_area.dart';
 import 'package:ui_maker/app/widgets/creator_bar.dart';
 import 'package:ui_maker/data/collections/layout.dart';
 import 'package:ui_maker/app/utils/generate_layout.dart';
+import 'package:ui_maker/data/isar_db.dart';
 import 'package:ui_maker/logging.dart';
 
 /// A convenience widget for creating a UI_Maker screen
@@ -45,51 +46,125 @@ class CreatorScaffold extends StatefulWidget {
 }
 
 class _CreatorScaffoldState extends State<CreatorScaffold> {
-  late Layout layout;
+  Layout? layout;
   bool isOpen = false;
   IconData arrowIcon = Icons.arrow_drop_up;
+  late PersistentBottomSheetController bottomSheetController;
+  late Future<List<Layout>> layoutFuture;
 
   @override
   void initState() {
     if (widget.layout != null) {
       layout = widget.layout!;
-    } else {
-      layout = generateLayout(widget.layoutName);
     }
+    layoutFuture = db.getLayouts([
+      {
+        "filter": {"layoutName": widget.layoutName}
+      }
+    ]);
+    // If the layout widget with that layoutName already exists,
+    // load it just in case
+    layoutFuture.then(
+      (value) {
+        logger.info("layoutFuture: ${value.toString()}");
+        if (value.isNotEmpty) {
+          layout = value.first;
+        }
+        logger.info(layout);
+      },
+    );
+    // if (layout == null) {
+    //   logger.warning("layout is null");
+    //   layout = generateLayout(widget.layoutName);
+    //   db.updateLayouts([layout!]);
+    // }
     super.initState();
   }
 
+//   @override
+//   Widget build(BuildContext context) {
+//     // Else, generate a layout
+//     return Scaffold(
+//       appBar: widget.appBar ??
+//           AppBar(
+//             title: Text(widget.layoutName),
+//           ),
+//       body: CreatorArea(layout: layout!),
+//       persistentFooterButtons: [
+//         Builder(builder: (context) {
+//           return Center(
+//             child: GestureDetector(
+//               child: Icon(arrowIcon),
+//               onTap: () => setState(() {
+//                 isOpen = !isOpen;
+//                 // logger.info(isOpen.toString());
+//                 if (isOpen) {
+//                   arrowIcon = Icons.arrow_drop_down;
+//                   bottomSheetController = showBottomSheet(
+//                     context: context,
+//                     builder: (context) => CreatorBar(layout: layout!),
+//                   );
+//                 } else {
+//                   arrowIcon = Icons.arrow_drop_up;
+//                   bottomSheetController.close();
+//                 }
+//               }),
+//             ),
+//           );
+//         }),
+//       ],
+//     );
+//   }
+// }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: widget.appBar ??
-          AppBar(
-            title: Text(widget.layoutName),
-          ),
-      body: CreatorArea(layout: layout),
-      bottomSheet: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Center(
-            child: GestureDetector(
-              child: Icon(arrowIcon),
-              onTap: () => setState(() {
-                isOpen = !isOpen;
-                // logger.info(isOpen.toString());
-                if (isOpen) {
-                  arrowIcon = Icons.arrow_drop_down;
-                } else {
-                  arrowIcon = Icons.arrow_drop_up;
-                }
+    return FutureBuilder<List<Layout>>(
+      future: layoutFuture,
+      builder: (BuildContext context, AsyncSnapshot<List<Layout>> snapshot) {
+        if (snapshot.hasData) {
+          final layouts = snapshot.data!;
+          if (layouts.isNotEmpty) {
+            layout = layouts.first;
+          }
+          if (layout == null) {
+            layout = generateLayout(widget.layoutName);
+            db.updateLayouts([layout!]);
+          }
+          return Scaffold(
+            appBar: widget.appBar ??
+                AppBar(
+                  title: Text(widget.layoutName),
+                ),
+            body: CreatorArea(layout: layout!),
+            persistentFooterButtons: [
+              Builder(builder: (context) {
+                return Center(
+                  child: GestureDetector(
+                    child: Icon(arrowIcon),
+                    onTap: () => setState(() {
+                      isOpen = !isOpen;
+                      if (isOpen) {
+                        arrowIcon = Icons.arrow_drop_down;
+                        bottomSheetController = showBottomSheet(
+                          context: context,
+                          builder: (context) => CreatorBar(layout: layout!),
+                        );
+                      } else {
+                        arrowIcon = Icons.arrow_drop_up;
+                        bottomSheetController.close();
+                      }
+                    }),
+                  ),
+                );
               }),
-            ),
-          ),
-          CreatorBar(
-            layout: layout,
-            isOpen: isOpen,
-          ),
-        ],
-      ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return ErrorWidget(snapshot.error.toString());
+        } else {
+          return const CircularProgressIndicator();
+        }
+      },
     );
   }
 }

@@ -280,8 +280,19 @@ class DB {
       List<WidgetSettings> widgetSettings) async {
     try {
       Isar db = await isarDB;
-      List<int> ids = await db.widgetSettings.putAll(widgetSettings);
-      return await db.widgetSettings.getAll(ids);
+      List<int>? ids;
+      await db.writeTxn(() async {
+        ids = await db.widgetSettings.putAll(widgetSettings);
+        for (WidgetSettings setting in widgetSettings) {
+          await setting.widgets.save();
+        }
+      });
+      if (ids != null) {
+        return await db.widgetSettings.getAll(ids!);
+      } else {
+        logger.warning("widgetSettings write/update failed");
+        return null;
+      }
     } catch (e, stacktrace) {
       logger.warning("$stacktrace: $e");
       return null;
@@ -393,8 +404,19 @@ class DB {
   Future<List<Layout?>?> updateLayouts(List<Layout> layouts) async {
     try {
       Isar db = await isarDB;
-      List<int> ids = await db.layouts.putAll(layouts);
-      return await db.layouts.getAll(ids);
+      List<int>? ids;
+      await db.writeTxn(() async {
+        ids = await db.layouts.putAll(layouts);
+        for (Layout layout in layouts) {
+          await layout.widgets.save();
+        }
+      });
+      if (ids != null) {
+        return await db.layouts.getAll(ids!);
+      } else {
+        logger.warning("layout write/update failed");
+        return null;
+      }
     } catch (e, stacktrace) {
       logger.warning("$stacktrace: $e");
       return null;

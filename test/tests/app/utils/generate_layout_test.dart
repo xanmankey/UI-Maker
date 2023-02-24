@@ -21,7 +21,7 @@ void main() {
           generateLayout("layoutName", width: 10, height: 10),
           equals(Layout(
               layoutName: "layoutName",
-              filter: false,
+              sortOption: SortOption.sort,
               numGroups: 4,
               width: 10,
               height: 10,
