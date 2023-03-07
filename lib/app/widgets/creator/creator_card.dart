@@ -98,6 +98,9 @@ class CreatorCardState extends State<CreatorCard> {
                       widget.widgetSetting.title,
                     ),
                   ),
+                  // child: AutoSizeText(
+                  //   widget.widgetSetting.title,
+                  // ),
                 ),
               ),
             ),

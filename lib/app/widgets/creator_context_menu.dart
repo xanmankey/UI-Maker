@@ -192,6 +192,10 @@ class _CreatorContextMenuState extends State<CreatorContextMenu> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           TextField(controller: titleController),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 0),
+                          ),
                           ElevatedButton(
                               onPressed: () {
                                 update = true;

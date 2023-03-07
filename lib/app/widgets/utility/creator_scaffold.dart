@@ -49,30 +49,31 @@ class _CreatorScaffoldState extends State<CreatorScaffold> {
   Layout? layout;
   bool isOpen = false;
   IconData arrowIcon = Icons.arrow_drop_up;
+  Future<List<Layout>>? layoutFuture;
   late PersistentBottomSheetController bottomSheetController;
-  late Future<List<Layout>> layoutFuture;
 
   @override
   void initState() {
     if (widget.layout != null) {
       layout = widget.layout!;
-    }
-    layoutFuture = db.getLayouts([
-      {
-        "filter": {"layoutName": widget.layoutName}
-      }
-    ]);
-    // If the layout widget with that layoutName already exists,
-    // load it just in case
-    layoutFuture.then(
-      (value) {
-        logger.info("layoutFuture: ${value.toString()}");
-        if (value.isNotEmpty) {
-          layout = value.first;
+    } else {
+      layoutFuture = db.getLayouts([
+        {
+          "filter": {"layoutName": widget.layoutName}
         }
-        logger.info(layout);
-      },
-    );
+      ]);
+      // If the layout widget with that layoutName already exists,
+      // load it just in case
+      layoutFuture!.then(
+        (value) {
+          logger.info("layoutFuture: ${value.toString()}");
+          if (value.isNotEmpty) {
+            layout = value.first;
+          }
+          logger.info(layout);
+        },
+      );
+    }
     // if (layout == null) {
     //   logger.warning("layout is null");
     //   layout = generateLayout(widget.layoutName);
@@ -118,7 +119,8 @@ class _CreatorScaffoldState extends State<CreatorScaffold> {
 // }
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Layout>>(
+    (layout != null) ? : 
+    FutureBuilder<List<Layout>>(
       future: layoutFuture,
       builder: (BuildContext context, AsyncSnapshot<List<Layout>> snapshot) {
         if (snapshot.hasData) {

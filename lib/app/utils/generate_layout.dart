@@ -6,10 +6,6 @@ import 'package:ui_maker/vars/layout_types.dart';
 import 'package:ui_maker/logging.dart';
 import 'package:ui_maker/vars/sort_types.dart';
 
-// TODO: my generative functions don't actually WRITE the data; should they?
-// TODO: e.g. I feel like this one should, because it needs to check if the
-// layoutName is unique...
-
 /// A function for creating layout instances
 ///
 /// ```
@@ -27,15 +23,13 @@ import 'package:ui_maker/vars/sort_types.dart';
 ///   return layout;
 /// }
 /// ```
-Layout generateLayout(
-  String layoutName, {
-  SortOption sortOption = SortOption.sort,
-  int numGroups = 4,
-  double? width,
-  double? height,
-  LayoutType layoutType = LayoutType.columns,
-  // bool write = false
-}) {
+Future<Layout> generateLayout(String layoutName,
+    {SortOption sortOption = SortOption.sort,
+    int numGroups = 4,
+    double? width,
+    double? height,
+    LayoutType layoutType = LayoutType.columns,
+    bool write = false}) async {
   Layout layout = Layout(
       sortOption: sortOption,
       layoutName: layoutName,
@@ -47,16 +41,13 @@ Layout generateLayout(
           MediaQueryData.fromWindow(WidgetsBinding.instance.window)
               .size
               .height);
-  // write layout
-  // if (write) {
-  //   Future<List<Layout?>?> layouts = db.updateLayouts([layout]);
-  //   // .then() returns a new future; it doesn't actually block the code...
-  //   // so what do I do? Can I make generateLayout synchronous?
-  //   layouts.then((value) {
-  //     if (value == null) {
-  //       return null;
-  //     }
-  //   });
-  // }
+  // attempt to write the layout
+  if (write) {
+    List<Layout?>? layouts = await db.updateLayouts([layout]);
+    if (layouts == null) {
+      TODO: what to do about exceptions;
+      throw Exception("Invalid layout name; make sure it is a unique string!");
+    }
+  }
   return layout;
 }
