@@ -119,8 +119,7 @@ class _CreatorScaffoldState extends State<CreatorScaffold> {
 // }
   @override
   Widget build(BuildContext context) {
-    (layout != null) ? : 
-    FutureBuilder<List<Layout>>(
+    return FutureBuilder<List<Layout>>(
       future: layoutFuture,
       builder: (BuildContext context, AsyncSnapshot<List<Layout>> snapshot) {
         if (snapshot.hasData) {

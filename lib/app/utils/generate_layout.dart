@@ -23,13 +23,13 @@ import 'package:ui_maker/vars/sort_types.dart';
 ///   return layout;
 /// }
 /// ```
-Future<Layout> generateLayout(String layoutName,
+Layout generateLayout(String layoutName,
     {SortOption sortOption = SortOption.sort,
     int numGroups = 4,
     double? width,
     double? height,
     LayoutType layoutType = LayoutType.columns,
-    bool write = false}) async {
+    bool write = false}) {
   Layout layout = Layout(
       sortOption: sortOption,
       layoutName: layoutName,
@@ -42,12 +42,5 @@ Future<Layout> generateLayout(String layoutName,
               .size
               .height);
   // attempt to write the layout
-  if (write) {
-    List<Layout?>? layouts = await db.updateLayouts([layout]);
-    if (layouts == null) {
-      TODO: what to do about exceptions;
-      throw Exception("Invalid layout name; make sure it is a unique string!");
-    }
-  }
   return layout;
 }
