@@ -1,15 +1,38 @@
 # ui_maker
 
-> Isn't flutter already a tool for building UIs?
+:warning: After careful consideration, I've decided to abandon this project (the code and project are public as a learning resource). For more about the project and reasons why, continue reading. 
 
-Yes, in the same way that a game engine is a tool for building a game. The purpose of this package is to help make the process more accessible by enabling users to drag and drop widgets, easily sort by an index, and reorganize the UI as they see fit. This also gives app designers more freedom as they get to define specific areas (using the ```CreatorArea``` widget) where users can add their own widgets from a selection. 
+## Purpose
+- The original intent of the ui_maker flutter-dart library was to provide a collection of flutter widgets that could be used 
+to allow users to create their own permanent interfaces inside an app. One specific usecase could've been if a developer wanted to allow an app to be easily expandable, but the users don't know about the flutter framework or the underlying code.
 
-## Q&A
+## Code
+I coded and planned a few widgets:
+- ```CreatorArea```: a DragTarget widget that can take in draggable widgets. Each CreatorArea widget would have an Isar collection (a form of database management) in which the json of the widget would be written as a map and then rendered procedurally upon loading of the CreatorArea
+- ```CreatorBase```: a base widget for wrapping implemented widgets in if you want users to be able to drag and add them to the app (currently basic or incomplete implementations were created for the card, checkbox, dropdown, text input, and image (elevated button) widgets)
+- ```CreatorBar```: a scaffold bar for all the implemented widgets supported by the library 
+- ```CreatorScaffold```: an example scaffold including the CreatorBar and a CreatorArea
+- ```CreatorContextMenu```: a context menu widget for changing widget properties (I was considering creating a designated ```WidgetEditor``` widget that could be accessed through context menu, which is what I would have done if I ended up continuing my implementation of this library)
 
-> Can I add a widget to the CreatorBar widgets?
+I also wrote some Isar collections for my widgets themselves:
+- Layout: for storing data about a layout and the widgets inside it
+- WidgetSettings: for storing settings about widgets
 
-Yes, although only the provided widgets have been tested. Note that if you want right click functionality, you will need to wrap your widget with the ```CreatorBase``` widget.
+along with other utilities. 
 
-> Do you have any updates planned for this library?
+I learned a bit about dart, flutter, dart-flutter libraries, and testing throughout the course of this project, 
+so I am glad about those takeaways irrespective of the project's outcome.
 
-As of right now, I have other projects I want to pursue. That doesn't mean that you can't help update it though! This was my first flutter-dart package (and I'm sure it shows), so there's bound to be a lot that needs refactoring. Personally, I think the project has potential to be useful, but right now it's lacking customization and proper package configuration and organization. I think it could use a bit more user-choice for developers (ironic, for a package that's all about user choice).
+## Reasoning
+After experimenting with this idea, I realized a couple of things: 
+    - The solution I theorized (involving a mixture of db writing and code generation) in order to handle draggable 
+    widgets ended up being complex, which defeated the purpose of simplicity.
+    - The ways I approached the idea didn't seem to integrate well with the flutter framework; 
+    for example if I were to use code generations to update the code for a dropped and then edited stateful widget, 
+    setState wouldn't get called to update a variable, instead code would be generated DURING the runtime of the app, 
+    increasing app size and (at least to me) appearing to be bad practice (or at least inefficient).
+    - I just recently found flutterviz (https://flutterviz.com/), which, while not the exact same thing as my original 
+    idea, is a better implementation of some of the core ideas.
+
+## Future plans
+NA (but that doesn't mean that **YOU** can't examine the code or repository if you have any ideas to move the project forward)
